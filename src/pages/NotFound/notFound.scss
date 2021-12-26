@@ -1,0 +1,19 @@
+@import '../../base';
+.notFound{
+    background-color: #E2BCB7;
+    height:auto;
+    font-size: large;
+    padding: 30px;
+    &__content-icon {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%; 
+        height: 500px;
+    }
+    &__content-text {
+    text-align: center
+    }
+
+  
+}

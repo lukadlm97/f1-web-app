@@ -1,0 +1,40 @@
+@import '../../base';
+
+.footer{
+    margin-top: auto;
+    height:auto;
+    padding-top:20px;
+    padding-right:2rem;
+    padding-left:2rem;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    background-color: #9E9D89;
+   &__content{
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+   }
+   &__content-left{
+    display: flex;
+    align-items: center;
+    //increse the font-size of icons
+    svg.MuiSvgIcon-root {
+     font-size: 5rem;
+     color:$black;
+ }
+}
+&__content-right{
+        align-items: right;
+        //increse the font-size of icons
+        svg.MuiSvgIcon-root {
+         font-size: 5rem;
+         color:$black;
+     }
+    
+}
+
+    &__root{
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+}
