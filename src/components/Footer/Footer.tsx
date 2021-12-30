@@ -20,7 +20,7 @@ function Footer() {
                         @2021 All right reserved to site owner
                     </Typography>
                     <Typography component="p">
-                    &copy; Luka Radovanovic
+                    &copy; Luka Radovanovic & his sleepy koala
                     </Typography>
                 </Grid>
               </Grid>

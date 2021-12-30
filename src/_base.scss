@@ -2,7 +2,7 @@
 @import './reset';
 
 //fonts 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dosis&display=swap');
 
 //functions
 @function weight($weight-name){
@@ -25,8 +25,8 @@ $max-width:1040px;
     font-weight: weight(regular);
     font-family: $font-family;
     //colors
-    --primary-color:#3D89E9;
-    --primary-color-hover:#1F7AED;
+    --primary-color:#D3E4CD;
+    --primary-color-hover:#F2DDC1;
 
 };
 .container{
@@ -46,6 +46,16 @@ $blackLight:#898B8E;
 $boxShadow: 0px 6px 16px rgba(165, 155, 151, 0.19);
 
 
+
+//Colors
+$secondary: #9096b4;
+$danger: crimson;
+$success: #80a842;
+$ligth: #fff;
+$dark: rgb(20, 20, 20);
+
+//trasition & times
+$transition: 300ms ease;
 
 .body{
     background-color: #B67162;

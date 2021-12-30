@@ -4,8 +4,7 @@
     height:70px;
     padding-top:10px;
     padding-right:2rem;
-    padding-left:2rem;
-    background-color: #9E9D89;
+    background-color: #99a799;
    &__content{
        display: flex;
        justify-content: space-between;
@@ -14,6 +13,7 @@
    &__content-small-icon{
     width: 150px;
     height: 50px;
+    margin-left: 500px;
 }
    &__content-left{
        img{

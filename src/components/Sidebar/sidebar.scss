@@ -11,11 +11,12 @@
 }
 &__drawer-content{
     display: flex;
-    background-color: #9E9D89;
+    background-color: #d3e4cd;
     flex-direction: column;
     align-items: flex-end;
     padding-top:2.5rem;
     padding-right:5rem;
+    padding-left:5rem;
     svg.MuiSvgIcon-root {
         font-size: 5rem;
         color:$black;
@@ -24,7 +25,7 @@
 
 }
 &__navigation{
-    margin-top:2.5rem;
+    margin-top:1.5rem;
     padding-right:1rem;
     text-align: left;
     ul{
@@ -33,9 +34,9 @@
             margin-bottom:5rem;
             display: flex;
             align-items: center;   
-            justify-content: flex-end;         
+            justify-content: flex-start;         
         }
-
+/*
 .blue{
     background-color: #3D89E9;
 }
@@ -44,9 +45,9 @@
 }
 .red{
     background-color: #F1622F;
-}
+}}*/
     }
-}
+
 &__color-box{
     width:80px;
     height:50px;
@@ -54,4 +55,4 @@
     
 }
 
-}
+    }}

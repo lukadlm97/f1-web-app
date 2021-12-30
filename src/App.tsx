@@ -4,10 +4,9 @@ import {createTheme} from '@material-ui/core'
 import {ThemeProvider} from '@material-ui/styles'
 
 import Appbar from './components/Appbar/Appbar'
-
 import Sidebar from './components/Sidebar/Sidebar'
-
 import Footer from './components/Footer/Footer'
+
 //base style
 import './_base.scss'
 
@@ -18,7 +17,7 @@ import Navigator from './Navigator'
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#f2aa26',
+      main: '#D3E4CD',
       dark: '#f09c01',
     },
     secondary: {
