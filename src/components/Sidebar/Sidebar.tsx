@@ -8,6 +8,7 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import PagesIcon from '@mui/icons-material/Pages';
 import BuildIcon from '@mui/icons-material/Build';
 import RouteIcon from '@mui/icons-material/Route';
+import FlagIcon from '@mui/icons-material/Flag';
 
 
 
@@ -66,6 +67,10 @@ const Sidebar=(props:SidebarProps) =>{
                             <li className="cursor-pointer" onClick={()=>onMenuItemClick('/drivers')}>
                                     <span ><GroupsIcon/></span>
                                     <h2>Drivers</h2>
+                            </li>
+                            <li className="cursor-pointer" onClick={()=>onMenuItemClick('/countries')}>
+                                    <span ><FlagIcon/></span>
+                                    <h2>Countries</h2>
                             </li>
                             <li className="cursor-pointer" onClick={()=>switchPrimaryColor("#23F0DC", "#18D4C2")}>
                                 <span> <EmojiEventsIcon/> </span>

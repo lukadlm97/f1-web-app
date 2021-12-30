@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useDispatch, useSelector } from 'react-redux'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -10,51 +11,27 @@ import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
 import TablePaginationActions from './TablePaginationActions'
 
+
+import {fetchAllDrivers} from '../../redux/actions/DriverAction'
+import {AppState} from '../../types/AppState'
+
 import { makeStyles } from '@material-ui/core/styles';
 
 import './driverTable.scss'
 
 
-function createData(
-    name: string,
-    calories: number,
-    fat: number,
-    carbs: number,
-    protein: number,
-  ) {
-    return { name, calories, fat, carbs, protein };
-  }
-  
-  const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-    createData('KitKat', 518, 26.0,49, 3.9),
-  createData('Lollipop', 392, 0.2,49, 3.9),
-  createData('Marshmallow', 318, 0,49, 3.9),
-  createData('Nougat', 360, 19.0,49, 3.9),
-  createData('Oreo', 437, 18.0,49, 3.9),
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('KitKat', 518, 26.0,49, 3.9),
-createData('Lollipop', 392, 0.2,49, 3.9),
-createData('Marshmallow', 318, 0,49, 3.9),
-createData('Nougat', 360, 19.0,49, 3.9),
-createData('Oreo', 437, 18.0,49, 3.9),
-  ];
-
 const  DriverTable=()=>{
+  //get all drivers from redux state
+  const drivers= useSelector((state:AppState)=>state.driverReducer.drivers)
+  const isLoading= useSelector((state:AppState)=>state.driverReducer.isLoading)
+  const error=useSelector((state:AppState)=>state.driverReducer.error)
+
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
   
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
-      page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+      page > 0 ? Math.max(0, (1 + page) * rowsPerPage - drivers.length) : 0;
   
     const handleChangePage = (
       event: React.MouseEvent<HTMLButtonElement> | null,
@@ -69,39 +46,53 @@ const  DriverTable=()=>{
       setRowsPerPage(parseInt(event.target.value, 10));
       setPage(0);
     };
+
+
+  //initialize dispatch
+  const dispatch=useDispatch()
+
+
+  React.useEffect(() => {
+      dispatch(fetchAllDrivers());
+  }, [dispatch]);
+
   
+  
+  return(
 
-
-    return(
-        <div className='driverTable'> 
+    <div className='driverTable'> 
+    
         <TableContainer component={Paper} color='green'>
             <Table className='table' sx={{ minWidth: 650 }} size="medium"   aria-label="a dense table">
             <TableHead>
                 <TableRow className='header-color'>
-                <TableCell align="center" className='header-font'>Dessert (100g serving)</TableCell>
-                <TableCell align="right" className='header-font'>Calories</TableCell>
-                <TableCell align="right" className='header-font'>Fat&nbsp;(g)</TableCell>
-                <TableCell align="right" className='header-font'>Carbs&nbsp;(g)</TableCell>
-                <TableCell align="right" className='header-font'>Protein&nbsp;(g)</TableCell>
+                <TableCell align="center" className='header-font'>Driver No.</TableCell>
+                <TableCell align="center" className='header-font'>Forename</TableCell>
+                <TableCell align="center" className='header-font'>Surename</TableCell>
+                <TableCell align="center" className='header-font'>Ages</TableCell>
+                <TableCell align="center" className='header-font'>Is Retired</TableCell>
+                <TableCell align="center" className='header-font'>Country</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody >
-                {(rowsPerPage > 0
-                    ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    : rows
-                ).map((row) => (
+                 {isLoading && <h2>Loading...</h2>}
+                {!isLoading  &&  (rowsPerPage>0?drivers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage):
+                drivers).map((row) => (
                 <TableRow
-                    key={row.name}
+                    key={row.number}
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
-                    <TableCell component="th" scope="row" align='center' className='body-font'>
-                    {row.name}
+                   <TableCell component="th" scope="row" align='center' className='body-font'>
+                    {row.number}
                     </TableCell>
-                    <TableCell align="right" className='body-font'>{row.calories}</TableCell>
-                    <TableCell align="right" className='body-font'>{row.fat}</TableCell>
-                    <TableCell align="right" className='body-font'>{row.carbs}</TableCell>
-                    <TableCell align="right" className='body-font'>{row.protein}</TableCell>
-                </TableRow>
+                    <TableCell component="th" scope="row" align='center' className='body-font'>
+                    {row.forename}
+                    </TableCell>
+                    <TableCell align="center" className='body-font'>{row.surname}</TableCell>
+                    <TableCell align="center" className='body-font'>{row.dateOfBirth}</TableCell>
+                    <TableCell align="center" className='body-font'>{row.isRetired}</TableCell>
+                    <TableCell align="center" className='body-font'>{row.countryId}</TableCell>
+                </TableRow>                
                 ))}
             </TableBody>
             <TableFooter className='header-color'>
@@ -110,7 +101,7 @@ const  DriverTable=()=>{
                         className='menuItem'
                         rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                         colSpan={3}
-                        count={rows.length}
+                        count={drivers.length}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         SelectProps={{
@@ -127,6 +118,7 @@ const  DriverTable=()=>{
             </TableFooter>
             </Table>
         </TableContainer>
+                      
         </div>
     )
 }
