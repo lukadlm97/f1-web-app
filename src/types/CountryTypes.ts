@@ -11,6 +11,7 @@ export type CountryReducerState={
 }
 
 export type CountryState={
+    id:number
     name:string 
     population:number 
     nominalGDP:number

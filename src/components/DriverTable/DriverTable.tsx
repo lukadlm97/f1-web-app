@@ -23,8 +23,12 @@ import './driverTable.scss'
 const  DriverTable=()=>{
   //get all drivers from redux state
   const drivers= useSelector((state:AppState)=>state.driverReducer.drivers)
-  const isLoading= useSelector((state:AppState)=>state.driverReducer.isLoading)
+  const isLoadingDriver= useSelector((state:AppState)=>state.driverReducer.isLoading)
   const error=useSelector((state:AppState)=>state.driverReducer.error)
+  
+  const countires = useSelector((state:AppState)=>state.countryReducer.countries)
+  const isLoadingCountries= useSelector((state:AppState)=>state.countryReducer.isLoading)
+  
 
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -56,8 +60,52 @@ const  DriverTable=()=>{
       dispatch(fetchAllDrivers());
   }, [dispatch]);
 
+const handleCountyConversion=(countryId:number)=>{
+
+  if(countryId==undefined)
+    return "Not supplied";
+
+  const findedCountry = countires.find(x=>x.id==countryId);
+  if(findedCountry!=null) 
+    return findedCountry.name;
+
+  return "Not supplied";
+};
+const handleStatus=(isRetired:boolean)=>{
+  if(isRetired)
+    return "Retired";
+  return "Active";
+}
+
+const caclucalteAge=(birthday:Date)=>{
+  let date1 = new Date(birthday);   
+   let date2 = new Date();   
+    let yearsDiff =  date2.getFullYear() - date1.getFullYear();    
+    return yearsDiff;
+
+
+  /*
+  const birthdayYear = birthday.getUTCFullYear();
+  const birthdayMonth=birthday.getMonth();
+  const birthdayDay = birthday.getDay();
+
+   const today=new Date();
+
+  const todayYear = today.getUTCFullYear();
+  const todayMonth=today.getMonth();
+  const todayDay = today.getDay();
+
+  const years = todayYear-birthdayYear;
+
+  if(todayMonth>birthdayMonth)
+    return years;
   
-  
+  if(todayMonth==birthdayMonth && todayDay>=birthdayDay)
+    return years;
+
+  return years-1;*/
+}
+
   return(
 
     <div className='driverTable'> 
@@ -75,8 +123,8 @@ const  DriverTable=()=>{
                 </TableRow>
             </TableHead>
             <TableBody >
-                 {isLoading && <h2>Loading...</h2>}
-                {!isLoading  &&  (rowsPerPage>0?drivers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage):
+                 {isLoadingDriver && <h2>Loading...</h2>}
+                {!isLoadingDriver  &&  (rowsPerPage>0?drivers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage):
                 drivers).map((row) => (
                 <TableRow
                     key={row.number}
@@ -89,11 +137,12 @@ const  DriverTable=()=>{
                     {row.forename}
                     </TableCell>
                     <TableCell align="center" className='body-font'>{row.surname}</TableCell>
-                    <TableCell align="center" className='body-font'>{row.dateOfBirth}</TableCell>
-                    <TableCell align="center" className='body-font'>{row.isRetired}</TableCell>
-                    <TableCell align="center" className='body-font'>{row.countryId}</TableCell>
+                    <TableCell align="center" className='body-font'>{caclucalteAge(row.dateOfBirth)}</TableCell>
+                    <TableCell align="center" className='body-font'>{handleStatus(row.isRetired)}</TableCell>
+                    <TableCell align="center" className='body-font'>{handleCountyConversion(row.countryId)}</TableCell>
                 </TableRow>                
                 ))}
+
             </TableBody>
             <TableFooter className='header-color'>
                     <TableRow className='header-color'>

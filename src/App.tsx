@@ -10,7 +10,10 @@ import Footer from './components/Footer/Footer'
 //base style
 import './_base.scss'
 
-import Navigator from './Navigator'
+import Navigator from './Navigator';
+import {useDispatch, useSelector } from 'react-redux'
+
+import {fetchAllCountries} from './redux/actions/CountryAction'
 
 
 //create material UI theme 
@@ -41,7 +44,12 @@ const theme = createTheme({
 })
 
 function App() {
+//initialize dispatch
+const dispatch=useDispatch()
 
+  React.useEffect(()=>{
+    dispatch(fetchAllCountries())
+},[])
 
   const [drawerState, setDrawerState] = React.useState(false)
 

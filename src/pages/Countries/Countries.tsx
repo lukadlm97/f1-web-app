@@ -11,14 +11,7 @@ const Countries=()=> {
     //get all countries from redux state
     const countries= useSelector((state:AppState)=>state.countryReducer.countries)
     const isLoading= useSelector((state:AppState)=>state.countryReducer.isLoading)
-     //initialize dispatch
-     const dispatch=useDispatch()
-
-
-     //dispatch fetchAllCountries when page loads
-     React.useEffect(()=>{
-         dispatch(fetchAllCountries())
-     },[dispatch])
+    
  
     return (
         <div className="countires">
@@ -29,7 +22,7 @@ const Countries=()=> {
 
            {!isLoading && countries && 
             countries.map((country)=>(                    
-                country.name
+                country.id
             ))
             }
 

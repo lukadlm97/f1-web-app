@@ -1,7 +1,7 @@
 import {Dispatch} from 'redux'
 import axios from 'axios'
 
-import {FETCH_DRIVERS_LOADING, DriverActions, FETCH_DRIVERS_FAILURE, FetchAllDriversSuccessAction, DriverState, FETCH_DRIVERS_SUCCESS} from '../../types/DriverTypes'
+import {FETCH_DRIVERS_LOADING, DriverActions, FETCH_DRIVERS_FAILURE, FETCH_DRIVERS_SUCCESS} from '../../types/DriverTypes'
 
 
 //fetch all countries
