@@ -15,8 +15,6 @@ import TablePaginationActions from './TablePaginationActions'
 import {fetchAllDrivers} from '../../redux/actions/DriverAction'
 import {AppState} from '../../types/AppState'
 
-import { makeStyles } from '@material-ui/core/styles';
-
 import './driverTable.scss'
 
 
@@ -29,29 +27,6 @@ const  DriverTable=()=>{
   const countires = useSelector((state:AppState)=>state.countryReducer.countries)
   const isLoadingCountries= useSelector((state:AppState)=>state.countryReducer.isLoading)
   
-
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  
-    // Avoid a layout jump when reaching the last page with empty rows.
-    const emptyRows =
-      page > 0 ? Math.max(0, (1 + page) * rowsPerPage - drivers.length) : 0;
-  
-    const handleChangePage = (
-      event: React.MouseEvent<HTMLButtonElement> | null,
-      newPage: number,
-    ) => {
-      setPage(newPage);
-    };
-  
-    const handleChangeRowsPerPage = (
-      event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    ) => {
-      setRowsPerPage(parseInt(event.target.value, 10));
-      setPage(0);
-    };
-
-
   //initialize dispatch
   const dispatch=useDispatch()
 
@@ -60,51 +35,53 @@ const  DriverTable=()=>{
       dispatch(fetchAllDrivers());
   }, [dispatch]);
 
-const handleCountyConversion=(countryId:number)=>{
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  if(countryId==undefined)
+    // Avoid a layout jump when reaching the last page with empty rows.
+  const emptyRows =
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - drivers.length) : 0;
+
+  const handleChangePage = (
+    event: React.MouseEvent<HTMLButtonElement> | null,
+    newPage: number,
+  ) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+
+
+  const handleCountyConversion=(countryId:number)=>{
+
+    if(countryId==undefined)
+      return "Not supplied";
+
+    const findedCountry = countires.find(x=>x.id==countryId);
+    if(findedCountry!=null) 
+      return findedCountry.name;
+
     return "Not supplied";
+  };
 
-  const findedCountry = countires.find(x=>x.id==countryId);
-  if(findedCountry!=null) 
-    return findedCountry.name;
+  const handleActiveStatus=(isRetired:boolean)=>{
+    if(isRetired)
+      return "Retired";
+    return "Active";
+  }
 
-  return "Not supplied";
-};
-const handleStatus=(isRetired:boolean)=>{
-  if(isRetired)
-    return "Retired";
-  return "Active";
-}
-
-const caclucalteAge=(birthday:Date)=>{
-  let date1 = new Date(birthday);   
-   let date2 = new Date();   
-    let yearsDiff =  date2.getFullYear() - date1.getFullYear();    
-    return yearsDiff;
-
-
-  /*
-  const birthdayYear = birthday.getUTCFullYear();
-  const birthdayMonth=birthday.getMonth();
-  const birthdayDay = birthday.getDay();
-
-   const today=new Date();
-
-  const todayYear = today.getUTCFullYear();
-  const todayMonth=today.getMonth();
-  const todayDay = today.getDay();
-
-  const years = todayYear-birthdayYear;
-
-  if(todayMonth>birthdayMonth)
-    return years;
-  
-  if(todayMonth==birthdayMonth && todayDay>=birthdayDay)
-    return years;
-
-  return years-1;*/
-}
+  const handlingAgeCaclucalte=(birthday:Date)=>{
+    let date1 = new Date(birthday);   
+    let date2 = new Date();   
+      let yearsDiff =  date2.getFullYear() - date1.getFullYear();    
+      return yearsDiff;
+  }
 
   return(
 
@@ -137,8 +114,8 @@ const caclucalteAge=(birthday:Date)=>{
                     {row.forename}
                     </TableCell>
                     <TableCell align="center" className='body-font'>{row.surname}</TableCell>
-                    <TableCell align="center" className='body-font'>{caclucalteAge(row.dateOfBirth)}</TableCell>
-                    <TableCell align="center" className='body-font'>{handleStatus(row.isRetired)}</TableCell>
+                    <TableCell align="center" className='body-font'>{handlingAgeCaclucalte(row.dateOfBirth)}</TableCell>
+                    <TableCell align="center" className='body-font'>{handleActiveStatus(row.isRetired)}</TableCell>
                     <TableCell align="center" className='body-font'>{handleCountyConversion(row.countryId)}</TableCell>
                 </TableRow>                
                 ))}

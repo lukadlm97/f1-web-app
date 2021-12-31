@@ -1,4 +1,6 @@
 import React from 'react';
+import {ClipLoader} from 'react-spinners'
+import { css } from "@emotion/react";
 
 import {createTheme} from '@material-ui/core'
 import {ThemeProvider} from '@material-ui/styles'
@@ -14,6 +16,7 @@ import Navigator from './Navigator';
 import {useDispatch, useSelector } from 'react-redux'
 
 import {fetchAllCountries} from './redux/actions/CountryAction'
+import {AppState} from './types/AppState';
 
 
 //create material UI theme 
@@ -44,6 +47,9 @@ const theme = createTheme({
 })
 
 function App() {
+
+  const isLoading= useSelector((state:AppState)=>state.countryReducer.isLoading)
+
 //initialize dispatch
 const dispatch=useDispatch()
 
@@ -60,20 +66,37 @@ const dispatch=useDispatch()
     }
 
 
-
+const override = css`
+    display: block;
+    margin-top:200px;
+    margin-left:auto;
+    margin-right:auto;
+  `;
 
   return (
-    <ThemeProvider theme={theme}>
-    <div className="App">
-       {/* appbar component  */}
-       <Appbar onClick={handleDrawerState} drawerState={drawerState}/>
+    <div>
 
-      {/* Sidebar  */}             
-      <Sidebar onClick={handleDrawerState} drawerState={drawerState}/>
-      <Navigator />
-      <Footer />
-    </div>
-    </ThemeProvider>
+      {isLoading && 
+        <div>
+          <ClipLoader speedMultiplier={2}  css={override} size={150} color='#99a799'/>
+        </div>
+      }
+         
+      {!isLoading &&
+        <ThemeProvider theme={theme}>
+          <div className="App">
+            {/* appbar component  */}
+            <Appbar onClick={handleDrawerState} drawerState={drawerState}/>
+
+            {/* Sidebar  */}             
+            <Sidebar onClick={handleDrawerState} drawerState={drawerState}/>
+            <Navigator />
+            <Footer />
+          </div>
+        </ThemeProvider>
+      }
+      </div>
+    
   );
 }
 
