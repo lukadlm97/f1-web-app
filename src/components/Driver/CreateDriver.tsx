@@ -4,6 +4,10 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import DriverForm from './DriverForm'
+import Grid from '@mui/material/Grid'
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { Margin } from '@mui/icons-material';
+import { margin } from '@mui/system';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -24,7 +28,14 @@ export default function CreateDriver() {
 
   return (
     <div> 
-      <Button onClick={handleOpen}>Create new driver</Button>
+      <Grid style={{marginTop:20,marginBottom:20}}>
+        <Button onClick={handleOpen} variant='contained' style={{width:300,height:40,fontSize:14,background:'#444444'}}>
+          <AddCircleOutlineIcon fontSize='large' style={{marginRight:20}}/>
+         
+          Create new driver
+        </Button>
+
+      </Grid>
       <Modal
         open={open}
         onClose={handleClose}

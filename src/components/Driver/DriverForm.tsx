@@ -9,9 +9,12 @@ import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import Autocomplete from '@mui/material/Autocomplete';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
 
 import {useDispatch, useSelector } from 'react-redux'
 import {AppState} from '../../types/AppState'
+import { CountryState } from '../../types/CountryTypes';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -67,35 +70,30 @@ export default function DriverForm() {
       const handleDateOfBirthSubmit = () => console.log(dateOfBirth);
       const handleDateOfBirthReset = () => setDateOfBirth(null);
 
-    const [countryValue, setCountryValue] = React.useState<string>('');
-
-    const handleCountryChange = (newValue: any) => {
-        console.log(newValue)
-        setCountryValue(newValue.target.value);
-    };
+    const [countryValue, setCountryValue] = React.useState<CountryState|null>();
 
     const handleCountrySubmit = () => console.log(countryValue);
-      const handleCountryReset = () => setCountryValue('');
+    const handleCountryReset = () => setCountryValue(null);
 
 
-const onSubmitDriver=()=>{
-    handleCodeSubmit()
-    handleNumberSubmit()
-    handleForenameSubmit()
-    handleSurnameSubmit()
-    handleDateOfBirthSubmit()
+    const onSubmitDriver=()=>{
+        handleCodeSubmit()
+        handleNumberSubmit()
+        handleForenameSubmit()
+        handleSurnameSubmit()
+        handleDateOfBirthSubmit()
+        handleCountrySubmit()
+    }
 
-}
 
-
-const onResetDriver=()=>{
-    handleNumberReset()
-    handleNumberReset()
-    handleForenameReset()
-    handleSurnameReset()
-    handleDateOfBirthReset()
-
-}
+    const onResetDriver=()=>{
+        handleCodeReset()
+        handleNumberReset()
+        handleForenameReset()
+        handleSurnameReset()
+        handleDateOfBirthReset()
+        handleCountryReset()
+    }
 
     /*
     forename:string
@@ -106,10 +104,7 @@ const onResetDriver=()=>{
     */
    
    return (
-
-
        <LocalizationProvider dateAdapter={AdapterDateFns}>
-         
         <Box sx={style}>
             <Grid>
                 <Typography id="modal-modal-title" variant="h6" component="h2" style={{ display: 'inline-block', width: 400, height: 80 }}>
@@ -122,7 +117,7 @@ const onResetDriver=()=>{
                     Driver code:
                 </Typography>
                 <TextField
-                    style={{ display: 'inline-block',  width: 200 }}
+                    style={{ display: 'inline-block',  width: 200,background:'#AAAAAA'}}
                     required
                     id="outlined-required"
                     label="Required"
@@ -138,7 +133,7 @@ const onResetDriver=()=>{
                     Enter driver number:
                 </Typography>
                 <TextField
-                    style={{ display: 'inline-block', width: 200 }}
+                    style={{ display: 'inline-block', width: 200,background:'#AAAAAA' }}
                     required
                     id="outlined-required"
                     label="Required"
@@ -154,7 +149,7 @@ const onResetDriver=()=>{
                     Enter driver forename:
                 </Typography>
                 <TextField
-                    style={{ display: 'inline-block',  width: 200 }}
+                    style={{ display: 'inline-block',  width: 200 ,background:'#AAAAAA'}}
                     required
                     id="outlined-required"
                     label="Required"
@@ -169,7 +164,7 @@ const onResetDriver=()=>{
                     Enter driver surename:
                     </Typography>
                     <TextField
-                        style={{ display: 'inline-block',  width: 200 }}
+                        style={{ display: 'inline-block',  width: 200 ,background:'#AAAAAA'}}
                         required
                         id="outlined-required"
                         label="Required"
@@ -177,7 +172,7 @@ const onResetDriver=()=>{
                         size='small'
                         value={surname}
                         onChange={onSurnameChange}
-                    />
+                        />
             </Grid>
             <Grid >
                 
@@ -185,14 +180,17 @@ const onResetDriver=()=>{
                     Enter driver citizenship:
                 </Typography>
                 <Autocomplete
-                    style={{ display: 'inline-block',  width: 200 }}
+                    style={{ display: 'inline-block',  width: 200,fontSize:14,background:'#AAAAAA' }}
                     size='small'
                     disablePortal
                     options={countries}
                     getOptionLabel={option => option.name}
+                    value={countryValue}
                     sx={{ width: 200 }}
                     renderInput={(params) => <TextField {...params} label="Country" />}
-                    onChange={handleCountryChange}
+                    onChange={(_, newValue) => {
+                        setCountryValue(newValue)
+                    }}
                     />
             </Grid>
             <Grid >
@@ -204,17 +202,18 @@ const onResetDriver=()=>{
                     label="Date desktop"
                     inputFormat="MM/dd/yyyy"
                     value={dateOfBirth}
-                   
                     onChange={handleDateOfBirthChange}
                     renderInput={(params) => <TextField {...params} />}
                     />
             </Grid>
             <Grid >
-                <Button variant="outlined" color="error" style={{ display: 'inline-block', width: 150, height: 50,marginRight:120 }} onClick={()=>onResetDriver()} >
+                <Button variant="outlined" color="error" style={{ display: 'inline-block', width: 150, height: 50,fontSize:14,background:'#545454' }} onClick={()=>onResetDriver()} >
+                    <RestartAltIcon fontSize='large' style={{marginRight:10}}/>
                     Reset
                 </Button>
 
-                <Button variant="contained" color="success" style={{ display: 'inline-flex', width: 150, height: 50  }} onClick={()=>onSubmitDriver()}>
+                <Button variant="contained" color="success" style={{ float: 'right', width: 150, height: 50,fontSize:14,marginRight:50   }} onClick={()=>onSubmitDriver()}>
+                   <HowToRegIcon fontSize='large' style={{marginRight:10}} />
                     Register
                 </Button>
 
