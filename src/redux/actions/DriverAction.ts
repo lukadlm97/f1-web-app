@@ -1,7 +1,8 @@
 import {Dispatch} from 'redux'
 import axios from 'axios'
 
-import {FETCH_DRIVERS_LOADING, DriverActions, FETCH_DRIVERS_FAILURE, FETCH_DRIVERS_SUCCESS} from '../../types/DriverTypes'
+import {FETCH_DRIVERS_LOADING, DriverActions, FETCH_DRIVERS_FAILURE, FETCH_DRIVERS_SUCCESS,
+    ADD_DRIVER_SUCCESS,ADD_DRIVER_LOADING,ADD_DRIVER_ERROR, DriverState} from '../../types/DriverTypes'
 
 
 //fetch all countries
@@ -15,8 +16,6 @@ export function fetchAllDriversLoading():DriverActions{
 
 // fetch all countries success
 export function fetchAllDriversSuccess(drivers:[]):DriverActions{
-    console.log(drivers);
-    
     return {
         type:FETCH_DRIVERS_SUCCESS,
         payload:drivers
@@ -48,9 +47,62 @@ export function fetchAllDrivers(){
         }).catch((err)=>{
             console.log(err);
             dispatch(fetchAllDriversFailure(err))
-
         })
     }
-
-    
 }
+
+export function addNewDriverLoading():DriverActions{
+    return{
+        type:ADD_DRIVER_LOADING
+    }
+}
+
+//  add new  driver success
+export function addNewDriverSuccess(driver:DriverState):DriverActions{
+    return {
+        type:ADD_DRIVER_SUCCESS,
+        payload:driver
+    }
+
+}
+
+// add new driver failure
+export function addNewDriverError(error:string):DriverActions{
+    return {
+        type:ADD_DRIVER_ERROR,
+        payload:error
+    }
+}
+
+// add driver data
+
+export function addNewDriver(driver:DriverState){
+
+    return (dispatch:Dispatch)=>{
+
+        console.log("addNewDriver dispetched");
+        
+        dispatch(addNewDriverLoading())
+        //axios call 
+        axios.post('https://localhost:6001/api/v1/Driver/create',driver)
+        .then((res)=>{
+            console.log(res);
+            const driver=res.data 
+            dispatch(addNewDriverSuccess(driver))
+        }).catch((err)=>{
+            console.log(err);
+            dispatch(addNewDriverError(err))
+        })
+    }
+}
+
+
+
+
+
+
+
+
+
+
+

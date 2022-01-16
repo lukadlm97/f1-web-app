@@ -1,9 +1,14 @@
-import {DriverReducerState, FETCH_DRIVERS_LOADING, FETCH_DRIVERS_FAILURE, FETCH_DRIVERS_SUCCESS} from '../../types/DriverTypes'
+import { DriveEtaSharp } from '@mui/icons-material'
+import {DriverReducerState, FETCH_DRIVERS_LOADING, FETCH_DRIVERS_FAILURE, FETCH_DRIVERS_SUCCESS
+,ADD_DRIVER_LOADING,ADD_DRIVER_ERROR,ADD_DRIVER_SUCCESS} from '../../types/DriverTypes'
 
 const initiState:DriverReducerState={
     drivers:[],
     isLoading:false, 
-    error:''
+    error:'',
+    isLoadingAddNewDriver:false,
+    isCreated:false,
+    isErrorOccuredOnCreation:false
 }
 
 export default function countryReducer(state:DriverReducerState=initiState, action:any){
@@ -31,6 +36,30 @@ export default function countryReducer(state:DriverReducerState=initiState, acti
                 isLoading:false, 
                 error:action.payload
             }
+
+        case ADD_DRIVER_LOADING:
+            return {
+                ...state,
+                isLoadingAddNewDriver:true
+            }
+
+        case ADD_DRIVER_ERROR:
+            return {
+                ...state,
+                isLoadingAddNewDriver:false,
+                error:action.payload,
+                isErrorOccuredOnCreation:true
+            }
+
+        
+        case ADD_DRIVER_SUCCESS:
+            return {
+                ...state,
+                isLoadingAddNewDriver:false,
+                error:'',
+                isCreated:true,
+                drivers:[...state.drivers,action.payload]
+            }    
 
         default:
             return state

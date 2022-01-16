@@ -15,6 +15,9 @@ import HowToRegIcon from '@mui/icons-material/HowToReg';
 import {useDispatch, useSelector } from 'react-redux'
 import {AppState} from '../../types/AppState'
 import { CountryState } from '../../types/CountryTypes';
+import { DriverState } from '../../types/DriverTypes';
+
+import {addNewDriver} from '../../redux/actions/DriverAction';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -31,7 +34,13 @@ const style = {
 export default function DriverForm() {
 
     const countries= useSelector((state:AppState)=>state.countryReducer.countries)
-    const isLoading= useSelector((state:AppState)=>state.countryReducer.isLoading)
+    const isLoading= useSelector((state:AppState)=>state.driverReducer.isLoading)
+    const isLoadingAddNewDriver= useSelector((state:AppState)=>state.driverReducer.isLoadingAddNewDriver)
+    const isCreated= useSelector((state:AppState)=>state.driverReducer.isCreated)
+    const isErrorOccured= useSelector((state:AppState)=>state.driverReducer.isErrorOccuredOnCreation)
+    const [submitFired,setSubmitFired] = React.useState<boolean>(false);
+    //initialize dispatch
+    const dispatch=useDispatch()
     
 
     const [codeValue, setCodeValue] = React.useState<string>('');
@@ -48,41 +57,60 @@ export default function DriverForm() {
     const handleNumberSubmit = () => console.log(numberValue);
     const handleNumberReset = () => setNumberValue(0);
 
-    const [forename, setForenameValue] = React.useState<string>('');
+    const [forenameValue, setForenameValue] = React.useState<string>('');
 
     const onForenameChange = (e: any) => setForenameValue(e.target.value);
-    const handleForenameSubmit = () => console.log(forename);
+    const handleForenameSubmit = () => console.log(forenameValue);
     const handleForenameReset = () => setForenameValue("");
 
-    const [surname, setSurnameValue] = React.useState<string>('');
+    const [surnameValue, setSurnameValue] = React.useState<string>('');
 
     const onSurnameChange = (e: any) => setSurnameValue(e.target.value);
-    const handleSurnameSubmit = () => console.log(surname);
+    const handleSurnameSubmit = () => console.log(surnameValue);
     const handleSurnameReset = () => setSurnameValue("");
 
-    const [dateOfBirth, setDateOfBirth] = React.useState<Date | null>(
+    const [dateOfBirth, setDateOfBirth] = React.useState<Date>(
         new Date('2000-01-01'),
       );
     
-      const handleDateOfBirthChange = (newValue: Date | null) => {
+      const handleDateOfBirthChange = (newValue: Date|null) => {
+          if(newValue==null){
+                setDateOfBirth(new Date('2000-01-01'))
+                return
+          }
           setDateOfBirth(newValue);
       };
       const handleDateOfBirthSubmit = () => console.log(dateOfBirth);
-      const handleDateOfBirthReset = () => setDateOfBirth(null);
+      const handleDateOfBirthReset = () => setDateOfBirth(new Date('2000-01-01'));
 
-    const [countryValue, setCountryValue] = React.useState<CountryState|null>();
+    const [countryValue, setCountryValue] = React.useState<CountryState>();
 
     const handleCountrySubmit = () => console.log(countryValue);
-    const handleCountryReset = () => setCountryValue(null);
+    const handleCountryReset = () => setCountryValue(countries[0]);
 
 
     const onSubmitDriver=()=>{
+        const newDriver:DriverState =  
+        {
+            id:0,
+            code:codeValue,
+            forename:forenameValue,
+            surname:surnameValue,
+            dateOfBirth:dateOfBirth,
+            isRetired:false,
+            number:numberValue,
+            countryId:countryValue==null?3:countryValue.id
+        };
+
         handleCodeSubmit()
         handleNumberSubmit()
         handleForenameSubmit()
         handleSurnameSubmit()
         handleDateOfBirthSubmit()
         handleCountrySubmit()
+
+        dispatch(addNewDriver(newDriver))
+        setSubmitFired(true)
     }
 
 
@@ -105,6 +133,7 @@ export default function DriverForm() {
    
    return (
        <LocalizationProvider dateAdapter={AdapterDateFns}>
+       {!submitFired? 
         <Box sx={style}>
             <Grid>
                 <Typography id="modal-modal-title" variant="h6" component="h2" style={{ display: 'inline-block', width: 400, height: 80 }}>
@@ -155,7 +184,7 @@ export default function DriverForm() {
                     label="Required"
                     defaultValue="Hello World"
                     size='small'
-                    value={forename}
+                    value={forenameValue}
                     onChange={onForenameChange}
                     />
             </Grid>
@@ -170,7 +199,7 @@ export default function DriverForm() {
                         label="Required"
                         defaultValue="Hello World"
                         size='small'
-                        value={surname}
+                        value={surnameValue}
                         onChange={onSurnameChange}
                         />
             </Grid>
@@ -189,7 +218,7 @@ export default function DriverForm() {
                     sx={{ width: 200 }}
                     renderInput={(params) => <TextField {...params} label="Country" />}
                     onChange={(_, newValue) => {
-                        setCountryValue(newValue)
+                        setCountryValue(newValue==null?countries[0]:newValue)
                     }}
                     />
             </Grid>
@@ -220,7 +249,25 @@ export default function DriverForm() {
             </Grid>
            
         </Box>
-           
+           :
+             <Box sx={style}>
+                 {isLoadingAddNewDriver &&
+                <Grid >
+                    Loading
+                </Grid>
+                 }
+                  {isCreated &&
+                <Grid >
+                    Driver created
+                </Grid>
+                 }
+                  {isErrorOccured &&
+                <Grid >
+                    Driver not created.
+                </Grid>
+                 }
+             </Box>  
+        }
         </LocalizationProvider>
     );
 }

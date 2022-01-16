@@ -2,12 +2,18 @@
 export const FETCH_DRIVERS_LOADING="FETCH_DRIVERS_LOADING"
 export const FETCH_DRIVERS_SUCCESS="FETCH_DRIVERS_SUCCESS"
 export const FETCH_DRIVERS_FAILURE="FETCH_DRIVERS_FAILURE"
+export const ADD_DRIVER_LOADING="ADD_DRIVER_LOADING"
+export const ADD_DRIVER_SUCCESS="ADD_DRIVER_SUCCESS"
+export const ADD_DRIVER_ERROR="ADD_DRIVER_ERROR"
 
 //types 
 export type DriverReducerState={
     drivers:DriverState[],
     isLoading:boolean, 
     error:string
+    isLoadingAddNewDriver:boolean
+    isCreated:boolean
+    isErrorOccuredOnCreation:boolean
 }
 
 export type DriverState={
@@ -20,6 +26,7 @@ export type DriverState={
     isRetired:boolean
     countryId:number
 }
+
 
 //action types
 export type FetchAllDriversLoadingAction={
@@ -35,4 +42,26 @@ export type FetchAllDriversFailureAction={
     payload: string
 }
 
+export type AddNewDriverLoadingAction={
+    type:typeof ADD_DRIVER_LOADING
+    payload?:string
+}
+
+export type AddNewDriverSuccessAction={
+    type:typeof ADD_DRIVER_SUCCESS
+    payload:DriverState
+}
+
+export type AddNewDriverErrorAction={
+    type:typeof ADD_DRIVER_ERROR
+    payload:string
+}
+
+
+
+
+
+
+
 export type DriverActions= FetchAllDriversLoadingAction | FetchAllDriversSuccessAction | FetchAllDriversFailureAction
+| AddNewDriverLoadingAction | AddNewDriverSuccessAction | AddNewDriverErrorAction
