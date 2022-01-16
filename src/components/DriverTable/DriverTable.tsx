@@ -10,10 +10,14 @@ import TableFooter from '@mui/material/TableFooter';
 import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
-
+import EditIcon from '@mui/icons-material/Edit';
+import FlagIcon from '@mui/icons-material/Flag';
+import GroupRemoveIcon from '@mui/icons-material/GroupRemove';
+import Tooltip from '@mui/material/Tooltip';
 
 import TablePaginationActions from './TablePaginationActions';
 import { fetchAllDrivers } from '../../redux/actions/DriverAction'
+import { removeDriver } from '../../redux/actions/DriverAction'
 import { AppState } from '../../types/AppState'
 import CreateDriver from '../Driver/CreateDriver';
 
@@ -63,6 +67,10 @@ const DriverTable = () => {
   };
 
 
+  const handleRemoveDriver = (driverId:number) => 
+  {
+      dispatch(removeDriver(driverId))
+  };
 
   const handleCountyConversion = (countryId: number) => {
 
@@ -98,11 +106,13 @@ const DriverTable = () => {
           <TableHead>
             <TableRow className='header-color'>
               <TableCell align="center" className='header-font'>Driver No.</TableCell>
+              <TableCell align="center" className='header-font'>Code</TableCell>
               <TableCell align="center" className='header-font'>Forename</TableCell>
               <TableCell align="center" className='header-font'>Surename</TableCell>
               <TableCell align="center" className='header-font'>Ages</TableCell>
               <TableCell align="center" className='header-font'>Is Retired</TableCell>
               <TableCell align="center" className='header-font'>Country</TableCell>
+              <TableCell align="center" className='header-font'>Activity</TableCell>
             </TableRow>
           </TableHead>
           <TableBody >
@@ -117,12 +127,32 @@ const DriverTable = () => {
                     {row.number}
                   </TableCell>
                   <TableCell component="th" scope="row" align='center' className='body-font'>
+                    {row.code}
+                  </TableCell>
+                  <TableCell component="th" scope="row" align='center' className='body-font'>
                     {row.forename}
                   </TableCell>
                   <TableCell align="center" className='body-font'>{row.surname}</TableCell>
                   <TableCell align="center" className='body-font'>{handlingAgeCaclucalte(row.dateOfBirth)}</TableCell>
                   <TableCell align="center" className='body-font'>{handleActiveStatus(row.isRetired)}</TableCell>
                   <TableCell align="center" className='body-font'>{handleCountyConversion(row.countryId)}</TableCell>
+                  <TableCell align="center" className='body-font'>
+                    <Tooltip title="Change bio information" style={{fontSize:'12'}}>
+                      <Button style={{fontSize:8,background:'gray',color:'blue'}}>
+                          <EditIcon fontSize='large'/>
+                      </Button>
+                    </Tooltip>
+                    <Tooltip title="Change citizenship">
+                      <Button style={{fontSize:8,background:'gray',color:'yellow',marginLeft:10}}>
+                          <FlagIcon fontSize='large'/>
+                      </Button>
+                    </Tooltip>
+                    <Tooltip title="Remove from active drivers">
+                    <Button style={{fontSize:8,background:'red',color:'gray',marginLeft:10}} onClick={()=>handleRemoveDriver(row.id)}>
+                          <GroupRemoveIcon fontSize='large'/>
+                      </Button>
+                    </Tooltip>
+                  </TableCell>
                 </TableRow>
               ))}
 

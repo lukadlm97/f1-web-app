@@ -29,7 +29,7 @@ export default function CreateDriver() {
   return (
     <div> 
       <Grid style={{marginTop:20,marginBottom:20}}>
-        <Button onClick={handleOpen} variant='contained' style={{width:300,height:40,fontSize:14,background:'#444444'}}>
+        <Button onClick={handleOpen} variant='contained' style={{display: 'inline-flex', width:300,height:40,fontSize:14,background:'#444444'}}>
           <AddCircleOutlineIcon fontSize='large' style={{marginRight:20}}/>
          
           Create new driver
@@ -41,8 +41,9 @@ export default function CreateDriver() {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+    
       >
-      <DriverForm />
+      <DriverForm closeForm={handleClose} />
       </Modal>
     </div>
   );

@@ -2,7 +2,7 @@ import {Dispatch} from 'redux'
 import axios from 'axios'
 
 import {FETCH_DRIVERS_LOADING, DriverActions, FETCH_DRIVERS_FAILURE, FETCH_DRIVERS_SUCCESS,
-    ADD_DRIVER_SUCCESS,ADD_DRIVER_LOADING,ADD_DRIVER_ERROR, DriverState} from '../../types/DriverTypes'
+    ADD_DRIVER_SUCCESS,ADD_DRIVER_LOADING,ADD_DRIVER_ERROR, DriverState, REMOVE_DRIVER_SUCCESS} from '../../types/DriverTypes'
 
 
 //fetch all countries
@@ -99,6 +99,44 @@ export function addNewDriver(driver:DriverState){
 
 
 
+//  add new  driver success
+export function removeDriverSuccess(driverId:number):DriverActions{
+    return {
+        type:REMOVE_DRIVER_SUCCESS,
+        payload:driverId
+    }
+
+}
+
+// add new driver failure
+export function removeDriverError(error:string):DriverActions{
+    return {
+        type:ADD_DRIVER_ERROR,
+        payload:error
+    }
+}
+
+// add driver data
+
+export function removeDriver(driverId:number){
+
+    return (dispatch:Dispatch)=>{
+
+        console.log("removeDriver dispetched");
+        
+        dispatch(addNewDriverLoading())
+        //axios call 
+        axios.get(`https://localhost:6001/api/v1/Driver/${driverId}/deactivate`)
+        .then((res)=>{
+            console.log(res);
+            const driver=res.data 
+            dispatch(removeDriverSuccess(driverId))
+        }).catch((err)=>{
+            console.log(err);
+            dispatch(removeDriverError(err))
+        })
+    }
+}
 
 
 

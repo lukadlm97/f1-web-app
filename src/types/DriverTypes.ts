@@ -5,6 +5,9 @@ export const FETCH_DRIVERS_FAILURE="FETCH_DRIVERS_FAILURE"
 export const ADD_DRIVER_LOADING="ADD_DRIVER_LOADING"
 export const ADD_DRIVER_SUCCESS="ADD_DRIVER_SUCCESS"
 export const ADD_DRIVER_ERROR="ADD_DRIVER_ERROR"
+export const REMOVE_DRIVER_LOADING="REMOVE_DRIVER_LOADING"
+export const REMOVE_DRIVER_SUCCESS="REMOVE_DRIVER_SUCCESS"
+export const REMOVE_DRIVER_ERROR="REMOVE_DRIVER_ERROR"
 
 //types 
 export type DriverReducerState={
@@ -14,6 +17,7 @@ export type DriverReducerState={
     isLoadingAddNewDriver:boolean
     isCreated:boolean
     isErrorOccuredOnCreation:boolean
+    isLoadingRemoveDriver:boolean
 }
 
 export type DriverState={
@@ -57,7 +61,20 @@ export type AddNewDriverErrorAction={
     payload:string
 }
 
+export type RemoveDriverLoadingAction={
+    type:typeof REMOVE_DRIVER_LOADING
+    payload?:string
+}
 
+export type RemoveDriverSuccessAction={
+    type:typeof REMOVE_DRIVER_SUCCESS
+    payload:number
+}
+
+export type RemoveDriverErrorAction={
+    type:typeof REMOVE_DRIVER_ERROR
+    payload:string
+}
 
 
 
@@ -65,3 +82,4 @@ export type AddNewDriverErrorAction={
 
 export type DriverActions= FetchAllDriversLoadingAction | FetchAllDriversSuccessAction | FetchAllDriversFailureAction
 | AddNewDriverLoadingAction | AddNewDriverSuccessAction | AddNewDriverErrorAction
+|RemoveDriverLoadingAction|RemoveDriverErrorAction|RemoveDriverSuccessAction

@@ -11,6 +11,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import Autocomplete from '@mui/material/Autocomplete';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 import {useDispatch, useSelector } from 'react-redux'
 import {AppState} from '../../types/AppState'
@@ -31,7 +32,11 @@ const style = {
     p: 4,
 };
 
-export default function DriverForm() {
+interface IDriverForm{
+    closeForm:()=>void
+}
+
+export default function DriverForm(props:IDriverForm) {
 
     const countries= useSelector((state:AppState)=>state.countryReducer.countries)
     const isLoading= useSelector((state:AppState)=>state.driverReducer.isLoading)
@@ -121,6 +126,16 @@ export default function DriverForm() {
         handleSurnameReset()
         handleDateOfBirthReset()
         handleCountryReset()
+    }
+
+    const onCloseForm=()=>{
+        handleCodeReset()
+        handleNumberReset()
+        handleForenameReset()
+        handleSurnameReset()
+        handleDateOfBirthReset()
+        handleCountryReset()
+        props.closeForm()
     }
 
     /*
@@ -236,14 +251,19 @@ export default function DriverForm() {
                     />
             </Grid>
             <Grid >
-                <Button variant="outlined" color="error" style={{ display: 'inline-block', width: 150, height: 50,fontSize:14,background:'#545454' }} onClick={()=>onResetDriver()} >
-                    <RestartAltIcon fontSize='large' style={{marginRight:10}}/>
-                    Reset
+                <Button variant="outlined" style={{ display: 'inline-flex', color:'#545454', background:'red', width: 150,padding:2, height: 50,fontSize:14}} onClick={()=>onCloseForm()} >
+                    <CancelIcon fontSize='large' style={{marginRight:10}}/>
+                    Close Form
                 </Button>
 
-                <Button variant="contained" color="success" style={{ float: 'right', width: 150, height: 50,fontSize:14,marginRight:50   }} onClick={()=>onSubmitDriver()}>
+                <Button variant="outlined" style={{ display: 'inline-flex',color:'red', background:'#545454',padding:2, width: 150, height: 50,fontSize:14,marginLeft:20 }} onClick={()=>onResetDriver()} >
+                    <RestartAltIcon fontSize='large' style={{marginRight:10}}/>
+                    Reset Form
+                </Button>
+
+                <Button variant="contained" style={{ display: 'inline-flex',color:'white', background:'green', width: 150,padding:2, height: 50,fontSize:14,marginLeft:20}} onClick={()=>onSubmitDriver()}>
                    <HowToRegIcon fontSize='large' style={{marginRight:10}} />
-                    Register
+                    Register Driver
                 </Button>
 
             </Grid>
@@ -257,13 +277,21 @@ export default function DriverForm() {
                 </Grid>
                  }
                   {isCreated &&
-                <Grid >
+                 <Grid style={{fontSize:14}}>
                     Driver created
+                    <Button variant="outlined" style={{display: 'inline-flex',float: 'right' ,color:'#545454', background:'red', padding:2, width: 200, height: 25,fontSize:14,marginLeft:20}} onClick={()=>onCloseForm()} >
+                        <CancelIcon fontSize='large' style={{marginRight:10}}/>
+                        Close Form
+                    </Button>
                 </Grid>
                  }
                   {isErrorOccured &&
-                <Grid >
+                <Grid style={{fontSize:14}}>
                     Driver not created.
+                    <Button variant="outlined" style={{float: 'right',display: 'inline-flex',color:'#545454', background:'red', padding:2, width: 200, height: 25,fontSize:14,marginLeft:20}} onClick={()=>onCloseForm()} >
+                        <CancelIcon fontSize='large' style={{marginRight:10}}/>
+                        Close Form
+                    </Button>
                 </Grid>
                  }
              </Box>  
