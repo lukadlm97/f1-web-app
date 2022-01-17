@@ -9,6 +9,10 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Margin } from '@mui/icons-material';
 import { margin } from '@mui/system';
 
+import { useDispatch, useSelector } from 'react-redux'
+import {selectDriver} from '../../redux/actions/DriverAction'
+import { DriverState } from '../../types/DriverTypes';
+
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
@@ -23,8 +27,16 @@ const style = {
 
 export default function CreateDriver() {
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+  const dispatch = useDispatch();
+
+  const handleOpen = () =>{
+    dispatch(selectDriver(null));
+    setOpen(true);
+  } 
+
+
   const handleClose = () => setOpen(false);
+
 
   return (
     <div> 
@@ -43,7 +55,7 @@ export default function CreateDriver() {
         aria-describedby="modal-modal-description"
     
       >
-      <DriverForm closeForm={handleClose} />
+      <DriverForm closeForm={handleClose}/>
       </Modal>
     </div>
   );

@@ -13,11 +13,16 @@ import Button from '@mui/material/Button';
 import EditIcon from '@mui/icons-material/Edit';
 import FlagIcon from '@mui/icons-material/Flag';
 import GroupRemoveIcon from '@mui/icons-material/GroupRemove';
+import FaceRetouchingOffIcon from '@mui/icons-material/FaceRetouchingOff';
 import Tooltip from '@mui/material/Tooltip';
+import Modal from '@mui/material/Modal';
 
 import TablePaginationActions from './TablePaginationActions';
+import DriverForm from '../Driver/DriverForm';
+import CitizenshipForm from '../Citizenship/ChangeCitizenshipForm';
 import { fetchAllDrivers } from '../../redux/actions/DriverAction'
 import { removeDriver } from '../../redux/actions/DriverAction'
+import { selectDriver } from '../../redux/actions/DriverAction'
 import { AppState } from '../../types/AppState'
 import CreateDriver from '../Driver/CreateDriver';
 
@@ -37,6 +42,9 @@ const DriverTable = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const [openCitizenship, setOpenCitizenship] = React.useState(false);
+  const handleOpenCitizenship = () => setOpenCitizenship(true);
+  const handleCloseCitizenship = () => setOpenCitizenship(false);
   //initialize dispatch
   const dispatch = useDispatch()
 
@@ -70,6 +78,36 @@ const DriverTable = () => {
   const handleRemoveDriver = (driverId:number) => 
   {
       dispatch(removeDriver(driverId))
+  };
+
+  const handleEditDriver = (driverId:number) => 
+  {
+    const driver = drivers.find(x=>x.id==driverId)
+
+    if(driver == null){
+      //must pick
+      console.log("Must pick driver");
+      
+      return
+    }
+
+    dispatch(selectDriver(driver));
+    handleOpen();
+  };
+
+  const handleChangeCitizenship = (driverId:number) => 
+  {
+    const driver = drivers.find(x=>x.id==driverId)
+
+    if(driver == null){
+      //must pick
+      console.log("Must pick driver");
+      
+      return
+    }
+
+    dispatch(selectDriver(driver));
+    handleOpenCitizenship();
   };
 
   const handleCountyConversion = (countryId: number) => {
@@ -138,18 +176,23 @@ const DriverTable = () => {
                   <TableCell align="center" className='body-font'>{handleCountyConversion(row.countryId)}</TableCell>
                   <TableCell align="center" className='body-font'>
                     <Tooltip title="Change bio information" style={{fontSize:'12'}}>
-                      <Button style={{fontSize:8,background:'gray',color:'blue'}}>
+                      <Button style={{fontSize:8,background:'gray',color:'blue',marginLeft:10,marginTop:5}} onClick={()=>handleEditDriver(row.id)}>
                           <EditIcon fontSize='large'/>
                       </Button>
                     </Tooltip>
                     <Tooltip title="Change citizenship">
-                      <Button style={{fontSize:8,background:'gray',color:'yellow',marginLeft:10}}>
+                      <Button style={{fontSize:8,background:'gray',color:'yellow',marginLeft:10,marginTop:5}} onClick={()=>handleChangeCitizenship(row.id)}>
                           <FlagIcon fontSize='large'/>
                       </Button>
                     </Tooltip>
                     <Tooltip title="Remove from active drivers">
-                    <Button style={{fontSize:8,background:'red',color:'gray',marginLeft:10}} onClick={()=>handleRemoveDriver(row.id)}>
+                    <Button style={{fontSize:8,background:'gray',color:'red',marginLeft:10,marginTop:5}} onClick={()=>handleRemoveDriver(row.id)}>
                           <GroupRemoveIcon fontSize='large'/>
+                      </Button>
+                    </Tooltip>
+                    <Tooltip title="Retire drivers">
+                    <Button style={{fontSize:8,background:'gray',color:'blue',marginLeft:10,marginTop:5}} onClick={()=>handleRemoveDriver(row.id)}>
+                          <FaceRetouchingOffIcon fontSize='large'/>
                       </Button>
                     </Tooltip>
                   </TableCell>
@@ -180,8 +223,25 @@ const DriverTable = () => {
           </TableFooter>
         </Table>
       </TableContainer>
-      <CreateDriver />
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <DriverForm closeForm={handleClose}/>
+      </Modal>
+      <Modal
+        open={openCitizenship}
+        onClose={handleCloseCitizenship}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <CitizenshipForm closeForm={handleCloseCitizenship}/>
+      </Modal>
 
+      <CreateDriver />
+    
     </div>
   )
 }

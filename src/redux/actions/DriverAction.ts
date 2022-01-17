@@ -2,7 +2,8 @@ import {Dispatch} from 'redux'
 import axios from 'axios'
 
 import {FETCH_DRIVERS_LOADING, DriverActions, FETCH_DRIVERS_FAILURE, FETCH_DRIVERS_SUCCESS,
-    ADD_DRIVER_SUCCESS,ADD_DRIVER_LOADING,ADD_DRIVER_ERROR, DriverState, REMOVE_DRIVER_SUCCESS} from '../../types/DriverTypes'
+    ADD_DRIVER_SUCCESS,ADD_DRIVER_LOADING,ADD_DRIVER_ERROR, DriverState, REMOVE_DRIVER_SUCCESS, SELECT_DRIVER_SUCCESS,
+    UPDATE_DRIVER_LOADING, UPDATE_DRIVER_SUCCESS,UPDATE_DRIVER_ERROR, CHANGE_DRIVER_CITIZENSHIP_SUCCESS, CHANGE_DRIVER_CITIZENSHIP_ERROR, CHANGE_DRIVER_CITIZENSHIP_LOADING} from '../../types/DriverTypes'
 
 
 //fetch all countries
@@ -138,8 +139,116 @@ export function removeDriver(driverId:number){
     }
 }
 
+export function selectDriverSuccess(driver:DriverState|null):DriverActions{
+    return {
+        type:SELECT_DRIVER_SUCCESS,
+        payload:driver
+    }
+
+}
+
+export function selectDriver(driver:DriverState|null){
+    return (dispatch:Dispatch)=>{
+
+        console.log("selectDriver dispetched");
+        
+        dispatch(selectDriverSuccess(driver))
+      
+    }
+}
 
 
+export function updateDriverLoading():DriverActions{
+    return{
+        type:UPDATE_DRIVER_LOADING
+    }
+}
+
+//  update  driver success
+export function updateDriverSuccess(driver:DriverState):DriverActions{
+    return {
+        type:UPDATE_DRIVER_SUCCESS,
+        payload:driver
+    }
+
+}
+
+// update driver failure
+export function updateDriverError(error:string):DriverActions{
+    return {
+        type:UPDATE_DRIVER_ERROR,
+        payload:error
+    }
+}
+
+// update driver data
+
+export function updateDriver(driver:DriverState){
+
+    return (dispatch:Dispatch)=>{
+
+        console.log("updateDriver dispetched");
+        
+        dispatch(updateDriverLoading())
+        //axios call 
+        axios.post(`https://localhost:6001/api/v1/Driver/${driver.id}/update`,driver)
+        .then((res)=>{
+            console.log(res);
+            const driver=res.data 
+            dispatch(updateDriverSuccess(driver))
+        }).catch((err)=>{
+            console.log(err);
+            dispatch(updateDriverError(err))
+        })
+    }
+}
+
+
+
+//  citizenship change of  driver success
+export function changeCitizenshipSuccess(driver:DriverState):DriverActions{
+    return {
+        type:CHANGE_DRIVER_CITIZENSHIP_SUCCESS,
+        payload:driver
+    }
+
+}
+
+// citizenship change of driver failure
+export function changeCitizenshipError(error:string):DriverActions{
+    return {
+        type:CHANGE_DRIVER_CITIZENSHIP_ERROR,
+        payload:error
+    }
+}
+
+export function changeCitizenshipLoading():DriverActions{
+    return{
+        type:CHANGE_DRIVER_CITIZENSHIP_LOADING
+    }
+}
+
+// citizenship change of  driver data
+
+export function changeCitizenship(driver:DriverState){
+
+    return (dispatch:Dispatch)=>{
+
+        console.log("changeCitizenship dispetched");
+        
+        dispatch(changeCitizenshipLoading())
+        //axios call 
+        axios.get(`https://localhost:6001/api/v1/Driver/${driver.id}/citizenship/${driver.countryId}`)
+        .then((res)=>{
+            console.log(res);
+            const driver=res.data 
+            dispatch(changeCitizenshipSuccess(driver))
+        }).catch((err)=>{
+            console.log(err);
+            dispatch(changeCitizenshipError(err))
+        })
+    }
+}
 
 
 

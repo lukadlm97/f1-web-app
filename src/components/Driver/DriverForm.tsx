@@ -19,6 +19,7 @@ import { CountryState } from '../../types/CountryTypes';
 import { DriverState } from '../../types/DriverTypes';
 
 import {addNewDriver} from '../../redux/actions/DriverAction';
+import {updateDriver} from '../../redux/actions/DriverAction';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -39,45 +40,41 @@ interface IDriverForm{
 export default function DriverForm(props:IDriverForm) {
 
     const countries= useSelector((state:AppState)=>state.countryReducer.countries)
-    const isLoading= useSelector((state:AppState)=>state.driverReducer.isLoading)
+    const driver= useSelector((state:AppState)=>state.driverReducer.selectedDriver)
     const isLoadingAddNewDriver= useSelector((state:AppState)=>state.driverReducer.isLoadingAddNewDriver)
+    const isLoadingUpdateDriver= useSelector((state:AppState)=>state.driverReducer.isLoadingUpdateDriver)
     const isCreated= useSelector((state:AppState)=>state.driverReducer.isCreated)
+    const isUpdated= useSelector((state:AppState)=>state.driverReducer.isUpdated)
     const isErrorOccured= useSelector((state:AppState)=>state.driverReducer.isErrorOccuredOnCreation)
     const [submitFired,setSubmitFired] = React.useState<boolean>(false);
     //initialize dispatch
     const dispatch=useDispatch()
     
 
-    const [codeValue, setCodeValue] = React.useState<string>('');
-
+    const [codeValue, setCodeValue] = React.useState<string>(driver!=null?driver.code:'');
     const onCodeChange = (e: any) => setCodeValue(e.target.value);
     const handleCodeSubmit = () => console.log(codeValue);
     const handleCodeReset = () => setCodeValue("");
 
-    const [numberValue, setNumberValue] = React.useState<number>(0);
-
+    const [numberValue, setNumberValue] = React.useState<number>(driver!=null?driver.number:0);
     const onNumberChange = (e: any) => {
         setNumberValue(parseInt(e.target.value))
     }
     const handleNumberSubmit = () => console.log(numberValue);
     const handleNumberReset = () => setNumberValue(0);
 
-    const [forenameValue, setForenameValue] = React.useState<string>('');
-
+    const [forenameValue, setForenameValue] = React.useState<string>(driver!=null?driver.forename:'');
     const onForenameChange = (e: any) => setForenameValue(e.target.value);
     const handleForenameSubmit = () => console.log(forenameValue);
     const handleForenameReset = () => setForenameValue("");
 
-    const [surnameValue, setSurnameValue] = React.useState<string>('');
-
+    const [surnameValue, setSurnameValue] = React.useState<string>(driver!=null?driver.surname:'');
     const onSurnameChange = (e: any) => setSurnameValue(e.target.value);
     const handleSurnameSubmit = () => console.log(surnameValue);
     const handleSurnameReset = () => setSurnameValue("");
 
-    const [dateOfBirth, setDateOfBirth] = React.useState<Date>(
-        new Date('2000-01-01'),
+    const [dateOfBirth, setDateOfBirth] = React.useState<Date>(driver!=null?driver.dateOfBirth:new Date('2000-01-01')
       );
-    
       const handleDateOfBirthChange = (newValue: Date|null) => {
           if(newValue==null){
                 setDateOfBirth(new Date('2000-01-01'))
@@ -88,25 +85,46 @@ export default function DriverForm(props:IDriverForm) {
       const handleDateOfBirthSubmit = () => console.log(dateOfBirth);
       const handleDateOfBirthReset = () => setDateOfBirth(new Date('2000-01-01'));
 
-    const [countryValue, setCountryValue] = React.useState<CountryState>();
-
-    const handleCountrySubmit = () => console.log(countryValue);
-    const handleCountryReset = () => setCountryValue(countries[0]);
-
+      
+      const [countryValue, setCountryValue] = 
+      React.useState<CountryState>(driver!=null?countries.find(x=>x.id==driver.countryId)||countries[0]:countries[0]);
+      const handleCountrySubmit = () => console.log(countryValue);
+      const handleCountryReset = () => setCountryValue(countries[0]);
+      
+      
 
     const onSubmitDriver=()=>{
-        const newDriver:DriverState =  
-        {
-            id:0,
-            code:codeValue,
-            forename:forenameValue,
-            surname:surnameValue,
-            dateOfBirth:dateOfBirth,
-            isRetired:false,
-            number:numberValue,
-            countryId:countryValue==null?3:countryValue.id
-        };
+        if(driver==null){
+            const newDriver:DriverState =  
+            {
+                id:0,
+                code:codeValue,
+                forename:forenameValue,
+                surname:surnameValue,
+                dateOfBirth:dateOfBirth,
+                isRetired:false,
+                number:numberValue,
+                countryId:countryValue==null?3:countryValue.id
+            };
+            dispatch(addNewDriver(newDriver))
+            
+        }else{
+            var driverId = driver.id;
+            const updatedDriver:DriverState =  
+            {
+                id:driverId,
+                code:codeValue,
+                forename:forenameValue,
+                surname:surnameValue,
+                dateOfBirth:dateOfBirth,
+                isRetired:false,
+                number:numberValue,
+                countryId:countryValue==null?3:countryValue.id
+            };
 
+            dispatch(updateDriver(updatedDriver))
+        }
+        setSubmitFired(true)
         handleCodeSubmit()
         handleNumberSubmit()
         handleForenameSubmit()
@@ -114,8 +132,6 @@ export default function DriverForm(props:IDriverForm) {
         handleDateOfBirthSubmit()
         handleCountrySubmit()
 
-        dispatch(addNewDriver(newDriver))
-        setSubmitFired(true)
     }
 
 
@@ -129,12 +145,7 @@ export default function DriverForm(props:IDriverForm) {
     }
 
     const onCloseForm=()=>{
-        handleCodeReset()
-        handleNumberReset()
-        handleForenameReset()
-        handleSurnameReset()
-        handleDateOfBirthReset()
-        handleCountryReset()
+        onResetDriver()
         props.closeForm()
     }
 
@@ -256,14 +267,14 @@ export default function DriverForm(props:IDriverForm) {
                     Close Form
                 </Button>
 
-                <Button variant="outlined" style={{ display: 'inline-flex',color:'red', background:'#545454',padding:2, width: 150, height: 50,fontSize:14,marginLeft:20 }} onClick={()=>onResetDriver()} >
-                    <RestartAltIcon fontSize='large' style={{marginRight:10}}/>
+                <Button disabled={driver!=null} variant="outlined" style={{ display: 'inline-flex',color:'red', background:'#545454',padding:2, width: 150, height: 50,fontSize:14,marginLeft:20 }} onClick={()=>onResetDriver()} >
+                    <RestartAltIcon fontSize='large' style={{marginRight:10}} />
                     Reset Form
                 </Button>
 
                 <Button variant="contained" style={{ display: 'inline-flex',color:'white', background:'green', width: 150,padding:2, height: 50,fontSize:14,marginLeft:20}} onClick={()=>onSubmitDriver()}>
                    <HowToRegIcon fontSize='large' style={{marginRight:10}} />
-                    Register Driver
+                    Save Driver
                 </Button>
 
             </Grid>
@@ -271,7 +282,7 @@ export default function DriverForm(props:IDriverForm) {
         </Box>
            :
              <Box sx={style}>
-                 {isLoadingAddNewDriver &&
+                 {isLoadingAddNewDriver || isLoadingUpdateDriver &&
                 <Grid >
                     Loading
                 </Grid>
@@ -279,6 +290,15 @@ export default function DriverForm(props:IDriverForm) {
                   {isCreated &&
                  <Grid style={{fontSize:14}}>
                     Driver created
+                    <Button variant="outlined" style={{display: 'inline-flex',float: 'right' ,color:'#545454', background:'red', padding:2, width: 200, height: 25,fontSize:14,marginLeft:20}} onClick={()=>onCloseForm()} >
+                        <CancelIcon fontSize='large' style={{marginRight:10}}/>
+                        Close Form
+                    </Button>
+                </Grid>
+                 }
+                   {isUpdated &&
+                 <Grid style={{fontSize:14}}>
+                    Driver updated
                     <Button variant="outlined" style={{display: 'inline-flex',float: 'right' ,color:'#545454', background:'red', padding:2, width: 200, height: 25,fontSize:14,marginLeft:20}} onClick={()=>onCloseForm()} >
                         <CancelIcon fontSize='large' style={{marginRight:10}}/>
                         Close Form
