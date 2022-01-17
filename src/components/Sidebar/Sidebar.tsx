@@ -9,7 +9,7 @@ import PagesIcon from '@mui/icons-material/Pages';
 import BuildIcon from '@mui/icons-material/Build';
 import RouteIcon from '@mui/icons-material/Route';
 import FlagIcon from '@mui/icons-material/Flag';
-
+import ConstructionIcon from '@mui/icons-material/Construction';
 
 
 import './sidebar.scss'
@@ -67,6 +67,10 @@ const Sidebar=(props:SidebarProps) =>{
                             <li className="cursor-pointer" onClick={()=>onMenuItemClick('/drivers')}>
                                     <span ><GroupsIcon/></span>
                                     <h2>Drivers</h2>
+                            </li>
+                            <li className="cursor-pointer" onClick={()=>onMenuItemClick('/constructors')}>
+                                <span><ConstructionIcon/></span>
+                                <h2>Constructors</h2>
                             </li>
                             <li className="cursor-pointer" onClick={()=>onMenuItemClick('/countries')}>
                                     <span ><FlagIcon/></span>

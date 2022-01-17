@@ -215,27 +215,27 @@ const DriverTable = () => {
                   <TableCell align="center" className='body-font'>{handleCountyConversion(row.countryId)}</TableCell>
                   <TableCell align="center" className='body-font'>
                     <Tooltip title="Change bio information" style={{fontSize:'12'}}>
-                      <Button style={{fontSize:8,background:'gray',color:'blue',marginLeft:10,marginTop:5}} onClick={()=>handleEditDriver(row.id)}>
+                      <Button style={{fontSize:8,background:'#f2ddc1',color:'blue',marginLeft:10,marginTop:5}} onClick={()=>handleEditDriver(row.id)}>
                           <EditIcon fontSize='large'/>
                       </Button>
                     </Tooltip>
                     <Tooltip title="Change citizenship">
-                      <Button style={{fontSize:8,background:'gray',color:'yellow',marginLeft:10,marginTop:5}} onClick={()=>handleChangeCitizenship(row.id)}>
+                      <Button style={{fontSize:8,background:'#f2ddc1',color:'yellow',marginLeft:10,marginTop:5}} onClick={()=>handleChangeCitizenship(row.id)}>
                           <FlagIcon fontSize='large'/>
                       </Button>
                     </Tooltip>
                     <Tooltip title="Remove from active drivers">
-                    <Button style={{fontSize:8,background:'gray',color:'red',marginLeft:10,marginTop:5}} onClick={()=>handleRemoveDriver(row.id,true)}>
+                    <Button style={{fontSize:8,background:'#f2ddc1',color:'red',marginLeft:10,marginTop:5}} onClick={()=>handleRemoveDriver(row.id,true)}>
                           <GroupRemoveIcon fontSize='large'/>
                       </Button>
                     </Tooltip>
                     <Tooltip title="Retire drivers">
-                    <Button style={{fontSize:8,background:'gray',color:'blue',marginLeft:10,marginTop:5}} disabled={row.isRetired} onClick={()=>handleRemoveDriver(row.id,false)}>
+                    <Button style={{fontSize:8,background:'#f2ddc1',color:'blue',marginLeft:10,marginTop:5}} disabled={row.isRetired} onClick={()=>handleRemoveDriver(row.id,false)}>
                           <FaceRetouchingOffIcon fontSize='large'/>
                       </Button>
                     </Tooltip>
                     <Tooltip title="Make driver comeback">
-                    <Button style={{fontSize:8,background:'gray',color:'green',marginLeft:10,marginTop:5}} disabled={!row.isRetired} onClick={()=>handleComebackDriver(row.id)}>
+                    <Button style={{fontSize:8,background:'#f2ddc1',color:'green',marginLeft:10,marginTop:5}} disabled={!row.isRetired} onClick={()=>handleComebackDriver(row.id)}>
                           <AutorenewIcon fontSize='large'/>
                       </Button>
                     </Tooltip>
@@ -294,7 +294,6 @@ const DriverTable = () => {
       </Modal>
 
 
-      <CreateDriver />
     
     </div>
   )

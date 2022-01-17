@@ -1,5 +1,6 @@
 import React from 'react'
 import DriverTable from '../../components/DriverTable/DriverTable'
+import CreateDriver from '../../components/Driver/CreateDriver'
 
 import {useDispatch, useSelector } from 'react-redux'
 import {fetchAllDrivers} from '../../redux/actions/DriverAction'
@@ -16,6 +17,7 @@ const Driver=()=> {
             {/* Inner contents country list/result */}
            <h1>Drivers page </h1>
           <DriverTable />
+          <CreateDriver />
          </div>
     )
 }
