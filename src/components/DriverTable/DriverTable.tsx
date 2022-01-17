@@ -16,6 +16,7 @@ import GroupRemoveIcon from '@mui/icons-material/GroupRemove';
 import FaceRetouchingOffIcon from '@mui/icons-material/FaceRetouchingOff';
 import Tooltip from '@mui/material/Tooltip';
 import Modal from '@mui/material/Modal';
+import AutorenewIcon from '@mui/icons-material/Autorenew';
 
 import TablePaginationActions from './TablePaginationActions';
 import DriverForm from '../Driver/DriverForm';
@@ -24,6 +25,7 @@ import DriverConfirmForm from '../DriverConfirmation/DriverConfirmForm';
 import { fetchAllDrivers } from '../../redux/actions/DriverAction'
 import { selectForRemove } from '../../redux/actions/DriverAction'
 import { selectDriver } from '../../redux/actions/DriverAction'
+import { comebackDriver } from '../../redux/actions/DriverAction'
 import { AppState } from '../../types/AppState'
 import CreateDriver from '../Driver/CreateDriver';
 
@@ -97,6 +99,25 @@ const DriverTable = () => {
     handleOpenConfirmation();
 
   };
+
+  const handleComebackDriver = (driverId:number) => 
+  {
+    const driver = drivers.find(x=>x.id==driverId)
+
+    if(driver == null){
+      //must pick
+      console.log("Must pick driver");
+      
+      return
+    }
+
+   console.log(driverId +" make comeback");
+
+   
+    dispatch(comebackDriver(driver));
+
+  };
+
 
   const handleEditDriver = (driverId:number) => 
   {
@@ -211,6 +232,11 @@ const DriverTable = () => {
                     <Tooltip title="Retire drivers">
                     <Button style={{fontSize:8,background:'gray',color:'blue',marginLeft:10,marginTop:5}} disabled={row.isRetired} onClick={()=>handleRemoveDriver(row.id,false)}>
                           <FaceRetouchingOffIcon fontSize='large'/>
+                      </Button>
+                    </Tooltip>
+                    <Tooltip title="Make driver comeback">
+                    <Button style={{fontSize:8,background:'gray',color:'green',marginLeft:10,marginTop:5}} disabled={!row.isRetired} onClick={()=>handleComebackDriver(row.id)}>
+                          <AutorenewIcon fontSize='large'/>
                       </Button>
                     </Tooltip>
                   </TableCell>

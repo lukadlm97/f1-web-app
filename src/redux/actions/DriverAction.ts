@@ -3,7 +3,7 @@ import axios from 'axios'
 
 import {FETCH_DRIVERS_LOADING, DriverActions, FETCH_DRIVERS_FAILURE, FETCH_DRIVERS_SUCCESS,
     ADD_DRIVER_SUCCESS,ADD_DRIVER_LOADING,ADD_DRIVER_ERROR, DriverState, REMOVE_DRIVER_SUCCESS, SELECT_DRIVER_SUCCESS,
-    UPDATE_DRIVER_LOADING, UPDATE_DRIVER_SUCCESS,UPDATE_DRIVER_ERROR, CHANGE_DRIVER_CITIZENSHIP_SUCCESS, CHANGE_DRIVER_CITIZENSHIP_ERROR, CHANGE_DRIVER_CITIZENSHIP_LOADING, SELECT_REMOVE_DRIVER_CONFIRMATION_OPTION, SELECT_RETAIRMENT_DRIVER_CONFIRMATION_OPTION, RETIREMENT_DRIVER_SUCCESS, RETIREMENT_DRIVER_LOADING, RETIREMENT_DRIVER_ERROR} from '../../types/DriverTypes'
+    UPDATE_DRIVER_LOADING, UPDATE_DRIVER_SUCCESS,UPDATE_DRIVER_ERROR, CHANGE_DRIVER_CITIZENSHIP_SUCCESS, CHANGE_DRIVER_CITIZENSHIP_ERROR, CHANGE_DRIVER_CITIZENSHIP_LOADING, SELECT_REMOVE_DRIVER_CONFIRMATION_OPTION, SELECT_RETAIRMENT_DRIVER_CONFIRMATION_OPTION, RETIREMENT_DRIVER_SUCCESS, RETIREMENT_DRIVER_LOADING, RETIREMENT_DRIVER_ERROR, COMEBACK_DRIVER_SUCCESS, COMEBACK_DRIVER_LOADING, COMEBACK_DRIVER_ERROR} from '../../types/DriverTypes'
 
 
 //fetch all countries
@@ -311,4 +311,48 @@ export function changeCitizenship(driver:DriverState){
 
 
 
+export function comebackDriverLoading():DriverActions{
+    return{
+        type:COMEBACK_DRIVER_LOADING
+    }
+}
+
+//  update  driver success
+export function comebackDriverSuccess(driver:DriverState):DriverActions{
+    return {
+        type:COMEBACK_DRIVER_SUCCESS,
+        payload:driver
+    }
+
+}
+
+// update driver failure
+export function comebackDriverError(error:string):DriverActions{
+    return {
+        type:COMEBACK_DRIVER_ERROR,
+        payload:error
+    }
+}
+
+// update driver data
+
+export function comebackDriver(driver:DriverState){
+
+    return (dispatch:Dispatch)=>{
+
+        console.log("comebackDriver dispetched");
+        
+        dispatch(comebackDriverLoading())
+        //axios call 
+        axios.get(`https://localhost:6001/api/v1/Driver/${driver.id}/comeback`)
+        .then((res)=>{
+            console.log(res);
+            const driver=res.data 
+            dispatch(comebackDriverSuccess(driver))
+        }).catch((err)=>{
+            console.log(err);
+            dispatch(comebackDriverError(err))
+        })
+    }
+}
 

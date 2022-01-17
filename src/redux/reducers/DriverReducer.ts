@@ -5,7 +5,7 @@ REMOVE_DRIVER_ERROR,REMOVE_DRIVER_LOADING,REMOVE_DRIVER_SUCCESS, DriverState, SE
 UPDATE_DRIVER_LOADING, UPDATE_DRIVER_SUCCESS,UPDATE_DRIVER_ERROR, 
 CHANGE_DRIVER_CITIZENSHIP_LOADING, CHANGE_DRIVER_CITIZENSHIP_ERROR, CHANGE_DRIVER_CITIZENSHIP_SUCCESS,
 RETIREMENT_DRIVER_LOADING, RETIREMENT_DRIVER_SUCCESS,RETIREMENT_DRIVER_ERROR,
-SELECT_RETAIRMENT_DRIVER_CONFIRMATION_OPTION,SELECT_REMOVE_DRIVER_CONFIRMATION_OPTION
+SELECT_RETAIRMENT_DRIVER_CONFIRMATION_OPTION,SELECT_REMOVE_DRIVER_CONFIRMATION_OPTION, COMEBACK_DRIVER_LOADING, COMEBACK_DRIVER_ERROR, COMEBACK_DRIVER_SUCCESS
 } from '../../types/DriverTypes'
 
 const initiState:DriverReducerState={
@@ -26,7 +26,10 @@ const initiState:DriverReducerState={
     isLoadingDriverRetirment:false,
     isDriverRetirment:false,
     isErrorOccuredOnDriverDriver:false,
-    isRemoveConfirmation:false
+    isRemoveConfirmation:false,
+    isLoadingDriverComeback:false,
+    isSuccessDriverComeback:false,
+    isErrorDriverComeback:false
 }
 
 export default function countryReducer(state:DriverReducerState=initiState, action:any){
@@ -109,93 +112,118 @@ export default function countryReducer(state:DriverReducerState=initiState, acti
                 selectedDriver:action.payload
             }
 
-            case UPDATE_DRIVER_LOADING:
-                return {
-                    ...state,
-                    isLoadingUpdateDriver:true,
-                    isCreated:false
-                }
-    
-            case UPDATE_DRIVER_ERROR:
-                return {
-                    ...state,
-                    isLoadingUpdateDriver:false,
-                    error:action.payload,
-                    isErrorOccuredOnUpdate:true
-                }
-    
+        case UPDATE_DRIVER_LOADING:
+            return {
+                ...state,
+                isLoadingUpdateDriver:true,
+                isCreated:false
+            }
+
+        case UPDATE_DRIVER_ERROR:
+            return {
+                ...state,
+                isLoadingUpdateDriver:false,
+                error:action.payload,
+                isErrorOccuredOnUpdate:true
+            }
+
+        
+        case UPDATE_DRIVER_SUCCESS:
+            return {
+                ...state,
+                isLoadingUpdateDriver:false,
+                error:'',
+                isUpdated:true,
+                drivers:[...state.drivers.filter(x=>x.id!==action.payload.id),action.payload]
+            }    
+
+        case CHANGE_DRIVER_CITIZENSHIP_LOADING:
+            return {
+                ...state,
+                isLoadingChangeCitizenshipDriver:true
+            }
+
+        case CHANGE_DRIVER_CITIZENSHIP_ERROR:
+            return {
+                ...state,
+                isLoadingChangeCitizenshipDriver:false,
+                error:action.payload,
+                isErrorOccuredOnChangeCitizenship:true
+            }
+
+        
+        case CHANGE_DRIVER_CITIZENSHIP_SUCCESS:
+            return {
+                ...state,
+                isLoadingChangeCitizenshipDriver:false,
+                isCitizenshipChanged:true,
+                error:'',
+                drivers:[...state.drivers.filter(x=>x.id!==action.payload.id),action.payload]
+            } 
             
-            case UPDATE_DRIVER_SUCCESS:
-                return {
-                    ...state,
-                    isLoadingUpdateDriver:false,
-                    error:'',
-                    isUpdated:true,
-                    drivers:[...state.drivers.filter(x=>x.id!==action.payload.id),action.payload]
-                }    
+            
+        case RETIREMENT_DRIVER_LOADING:
+            return {
+                ...state,
+                isLoadingDriverRetirment:true
+            }
 
-                case CHANGE_DRIVER_CITIZENSHIP_LOADING:
-                    return {
-                        ...state,
-                        isLoadingChangeCitizenshipDriver:true
-                    }
-        
-                case CHANGE_DRIVER_CITIZENSHIP_ERROR:
-                    return {
-                        ...state,
-                        isLoadingChangeCitizenshipDriver:false,
-                        error:action.payload,
-                        isErrorOccuredOnChangeCitizenship:true
-                    }
-        
-                
-                case CHANGE_DRIVER_CITIZENSHIP_SUCCESS:
-                    return {
-                        ...state,
-                        isLoadingChangeCitizenshipDriver:false,
-                        isCitizenshipChanged:true,
-                        error:'',
-                        drivers:[...state.drivers.filter(x=>x.id!==action.payload.id),action.payload]
-                    } 
-                    
-                    
-                case RETIREMENT_DRIVER_LOADING:
-                    return {
-                        ...state,
-                        isLoadingDriverRetirment:true
-                    }
-        
-                case RETIREMENT_DRIVER_ERROR:
-                    return {
-                        ...state,
-                        isLoadingDriverRetirment:false,
-                        error:action.payload,
-                        isErrorOccuredOnDriverDriver:true
-                    }
-        
-                
-                case RETIREMENT_DRIVER_SUCCESS:
-                    return {
-                        ...state,
-                        isLoadingDriverRetirment:false,
-                        isDriverRetirment:true,
-                        error:'',
-                        drivers:[...state.drivers.filter(x=>x.id!==action.payload.id),action.payload]
-                    }  
+        case RETIREMENT_DRIVER_ERROR:
+            return {
+                ...state,
+                isLoadingDriverRetirment:false,
+                error:action.payload,
+                isErrorOccuredOnDriverDriver:true
+            }
 
-                case SELECT_REMOVE_DRIVER_CONFIRMATION_OPTION:
-                    return {
-                        ...state,
-                        isRemoveConfirmation:true,
-                        error:''
-                    }  
-                    
-                case SELECT_RETAIRMENT_DRIVER_CONFIRMATION_OPTION:
-                    return {
-                        ...state,
-                        isRemoveConfirmation:false,
-                        error:'',
-                    }  
+        
+        case RETIREMENT_DRIVER_SUCCESS:
+            return {
+                ...state,
+                isLoadingDriverRetirment:false,
+                isDriverRetirment:true,
+                error:'',
+                drivers:[...state.drivers.filter(x=>x.id!==action.payload.id),action.payload]
+            }  
+
+        case SELECT_REMOVE_DRIVER_CONFIRMATION_OPTION:
+            return {
+                ...state,
+                isRemoveConfirmation:true,
+                error:''
+            }  
+
+        case SELECT_RETAIRMENT_DRIVER_CONFIRMATION_OPTION:
+            return {
+                ...state,
+                isRemoveConfirmation:false,
+                error:'',
+            }  
+
+        case COMEBACK_DRIVER_LOADING:
+            return {
+                ...state,
+                isLoadingDriverComeback:true
+            }
+
+        case COMEBACK_DRIVER_ERROR:
+            return {
+                ...state,
+                isLoadingDriverComeback:false,
+                error:action.payload,
+                isErrorDriverComeback:true
+            }
+
+        
+        case COMEBACK_DRIVER_SUCCESS:
+            return {
+                ...state,
+                isLoadingDriverComeback:false,
+                isSuccessDriverComeback:true,
+                error:'',
+                drivers:[...state.drivers.filter(x=>x.id!==action.payload.id),action.payload]
+            }  
+    
 
         default:
             return state

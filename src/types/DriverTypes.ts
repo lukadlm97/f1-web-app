@@ -20,6 +20,10 @@ export const CHANGE_DRIVER_CITIZENSHIP_ERROR="CHANGE_DRIVER_CITIZENSHIP_ERROR"
 export const RETIREMENT_DRIVER_LOADING="RETIREMENT_DRIVER_LOADING"
 export const RETIREMENT_DRIVER_SUCCESS="RETIREMENT_DRIVER_SUCCESS"
 export const RETIREMENT_DRIVER_ERROR="RETIREMENT_DRIVER_ERROR"
+export const COMEBACK_DRIVER_LOADING="COMEBACK_DRIVER_LOADING"
+export const COMEBACK_DRIVER_SUCCESS="COMEBACK_DRIVER_SUCCESS"
+export const COMEBACK_DRIVER_ERROR="COMEBACK_DRIVER_ERROR"
+
 
 
 //types 
@@ -42,6 +46,9 @@ export type DriverReducerState={
     isDriverRetirment:boolean
     isErrorOccuredOnDriverDriver:boolean
     isRemoveConfirmation:boolean
+    isLoadingDriverComeback:boolean
+    isSuccessDriverComeback:boolean
+    isErrorDriverComeback:boolean
 }
 
 export type DriverState={
@@ -160,6 +167,20 @@ export type RetirmentConfirmationSelectionOptionAction={
     payload:boolean
 }
 
+export type DriverComebackLoadingAction={
+    type:typeof COMEBACK_DRIVER_LOADING
+    payload?:string
+}
+
+export type DriverComebackSuccessAction={
+    type:typeof COMEBACK_DRIVER_SUCCESS
+    payload:DriverState
+}
+
+export type DriverComebackErrorAction={
+    type:typeof COMEBACK_DRIVER_ERROR
+    payload:string
+}
 
 export type DriverActions= FetchAllDriversLoadingAction | FetchAllDriversSuccessAction | FetchAllDriversFailureAction
 | AddNewDriverLoadingAction | AddNewDriverSuccessAction | AddNewDriverErrorAction
@@ -168,3 +189,4 @@ export type DriverActions= FetchAllDriversLoadingAction | FetchAllDriversSuccess
 |UpdateDriverLoadingAction|UpdateDriverSuccessAction|UpdateDriverErrorAction
 |ChangeDriverCitizenshipLoadingAction|ChangeDriverCitizenshipSuccessAction|ChangeDriverCitizenshipErrorAction
 |DriverRetirmentLoadingAction|DriverRetirmentSuccessAction|DriverRetirmentErrorAction
+|DriverComebackLoadingAction|DriverComebackSuccessAction|DriverComebackErrorAction
