@@ -9,12 +9,18 @@ export const REMOVE_DRIVER_LOADING="REMOVE_DRIVER_LOADING"
 export const REMOVE_DRIVER_SUCCESS="REMOVE_DRIVER_SUCCESS"
 export const REMOVE_DRIVER_ERROR="REMOVE_DRIVER_ERROR"
 export const SELECT_DRIVER_SUCCESS="SELECT_DRIVER_SUCCESS"
+export const SELECT_REMOVE_DRIVER_CONFIRMATION_OPTION="SELECT_REMOVE_DRIVER_CONFIRMATION_OPTION"
+export const SELECT_RETAIRMENT_DRIVER_CONFIRMATION_OPTION="SELECT_RETAIRMENT_DRIVER_CONFIRMATION_OPTION"
 export const UPDATE_DRIVER_LOADING="UPDATE_DRIVER_LOADING"
 export const UPDATE_DRIVER_SUCCESS="UPDATE_DRIVER_SUCCESS"
 export const UPDATE_DRIVER_ERROR="UPDATE_DRIVER_ERROR"
 export const CHANGE_DRIVER_CITIZENSHIP_LOADING="CHANGE_DRIVER_CITIZENSHIP_LOADING"
 export const CHANGE_DRIVER_CITIZENSHIP_SUCCESS="CHANGE_DRIVER_CITIZENSHIP_SUCCESS"
 export const CHANGE_DRIVER_CITIZENSHIP_ERROR="CHANGE_DRIVER_CITIZENSHIP_ERROR"
+export const RETIREMENT_DRIVER_LOADING="RETIREMENT_DRIVER_LOADING"
+export const RETIREMENT_DRIVER_SUCCESS="RETIREMENT_DRIVER_SUCCESS"
+export const RETIREMENT_DRIVER_ERROR="RETIREMENT_DRIVER_ERROR"
+
 
 //types 
 export type DriverReducerState={
@@ -32,6 +38,10 @@ export type DriverReducerState={
     isLoadingChangeCitizenshipDriver:boolean
     isCitizenshipChanged:boolean
     isErrorOccuredOnChangeCitizenship:boolean
+    isLoadingDriverRetirment:boolean
+    isDriverRetirment:boolean
+    isErrorOccuredOnDriverDriver:boolean
+    isRemoveConfirmation:boolean
 }
 
 export type DriverState={
@@ -126,10 +136,35 @@ export type ChangeDriverCitizenshipErrorAction={
     payload:string
 }
 
+export type DriverRetirmentLoadingAction={
+    type:typeof RETIREMENT_DRIVER_LOADING
+    payload?:string
+}
+
+export type DriverRetirmentSuccessAction={
+    type:typeof RETIREMENT_DRIVER_SUCCESS
+    payload:DriverState
+}
+
+export type DriverRetirmentErrorAction={
+    type:typeof RETIREMENT_DRIVER_ERROR
+    payload:string
+}
+
+export type RemoveConfirmationSelectionOptionAction={
+    type:typeof SELECT_REMOVE_DRIVER_CONFIRMATION_OPTION
+    payload:boolean
+}
+export type RetirmentConfirmationSelectionOptionAction={
+    type:typeof SELECT_RETAIRMENT_DRIVER_CONFIRMATION_OPTION
+    payload:boolean
+}
+
 
 export type DriverActions= FetchAllDriversLoadingAction | FetchAllDriversSuccessAction | FetchAllDriversFailureAction
 | AddNewDriverLoadingAction | AddNewDriverSuccessAction | AddNewDriverErrorAction
 |RemoveDriverLoadingAction|RemoveDriverErrorAction|RemoveDriverSuccessAction
-|SelectDriverSuccessAction
+|SelectDriverSuccessAction|RemoveConfirmationSelectionOptionAction|RetirmentConfirmationSelectionOptionAction
 |UpdateDriverLoadingAction|UpdateDriverSuccessAction|UpdateDriverErrorAction
 |ChangeDriverCitizenshipLoadingAction|ChangeDriverCitizenshipSuccessAction|ChangeDriverCitizenshipErrorAction
+|DriverRetirmentLoadingAction|DriverRetirmentSuccessAction|DriverRetirmentErrorAction

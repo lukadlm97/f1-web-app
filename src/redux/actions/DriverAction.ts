@@ -3,7 +3,7 @@ import axios from 'axios'
 
 import {FETCH_DRIVERS_LOADING, DriverActions, FETCH_DRIVERS_FAILURE, FETCH_DRIVERS_SUCCESS,
     ADD_DRIVER_SUCCESS,ADD_DRIVER_LOADING,ADD_DRIVER_ERROR, DriverState, REMOVE_DRIVER_SUCCESS, SELECT_DRIVER_SUCCESS,
-    UPDATE_DRIVER_LOADING, UPDATE_DRIVER_SUCCESS,UPDATE_DRIVER_ERROR, CHANGE_DRIVER_CITIZENSHIP_SUCCESS, CHANGE_DRIVER_CITIZENSHIP_ERROR, CHANGE_DRIVER_CITIZENSHIP_LOADING} from '../../types/DriverTypes'
+    UPDATE_DRIVER_LOADING, UPDATE_DRIVER_SUCCESS,UPDATE_DRIVER_ERROR, CHANGE_DRIVER_CITIZENSHIP_SUCCESS, CHANGE_DRIVER_CITIZENSHIP_ERROR, CHANGE_DRIVER_CITIZENSHIP_LOADING, SELECT_REMOVE_DRIVER_CONFIRMATION_OPTION, SELECT_RETAIRMENT_DRIVER_CONFIRMATION_OPTION, RETIREMENT_DRIVER_SUCCESS, RETIREMENT_DRIVER_LOADING, RETIREMENT_DRIVER_ERROR} from '../../types/DriverTypes'
 
 
 //fetch all countries
@@ -98,6 +98,50 @@ export function addNewDriver(driver:DriverState){
 }
 
 
+export function retairDriverLoading():DriverActions{
+    return{
+        type:RETIREMENT_DRIVER_LOADING
+    }
+}
+
+//  add new  driver success
+export function retairDriverSuccess(driver:DriverState):DriverActions{
+    return {
+        type:RETIREMENT_DRIVER_SUCCESS,
+        payload:driver
+    }
+
+}
+
+// add new driver failure
+export function retairDriverError(error:string):DriverActions{
+    return {
+        type:RETIREMENT_DRIVER_ERROR,
+        payload:error
+    }
+}
+
+// add driver data
+
+export function retairDriver(driverId:number){
+
+    return (dispatch:Dispatch)=>{
+
+        console.log("retairDriver dispetched");
+        
+        dispatch(retairDriverLoading())
+        //axios call 
+        axios.get(`https://localhost:6001/api/v1/Driver/${driverId}/retirement`)
+        .then((res)=>{
+            console.log(res);
+            const driver=res.data 
+            dispatch(retairDriverSuccess(driver))
+        }).catch((err)=>{
+            console.log(err);
+            dispatch(retairDriverError(err))
+        })
+    }
+}
 
 
 //  add new  driver success
@@ -136,6 +180,19 @@ export function removeDriver(driverId:number){
             console.log(err);
             dispatch(removeDriverError(err))
         })
+    }
+}
+
+export function selectForRemove(remove:boolean):DriverActions{
+    if(remove){
+        return{
+            type:SELECT_REMOVE_DRIVER_CONFIRMATION_OPTION,
+        payload:true
+        }
+    }
+    return{
+        type:SELECT_RETAIRMENT_DRIVER_CONFIRMATION_OPTION,
+    payload:false
     }
 }
 
@@ -227,6 +284,8 @@ export function changeCitizenshipLoading():DriverActions{
         type:CHANGE_DRIVER_CITIZENSHIP_LOADING
     }
 }
+
+
 
 // citizenship change of  driver data
 

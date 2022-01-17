@@ -20,8 +20,9 @@ import Modal from '@mui/material/Modal';
 import TablePaginationActions from './TablePaginationActions';
 import DriverForm from '../Driver/DriverForm';
 import CitizenshipForm from '../Citizenship/ChangeCitizenshipForm';
+import DriverConfirmForm from '../DriverConfirmation/DriverConfirmForm';
 import { fetchAllDrivers } from '../../redux/actions/DriverAction'
-import { removeDriver } from '../../redux/actions/DriverAction'
+import { selectForRemove } from '../../redux/actions/DriverAction'
 import { selectDriver } from '../../redux/actions/DriverAction'
 import { AppState } from '../../types/AppState'
 import CreateDriver from '../Driver/CreateDriver';
@@ -45,6 +46,10 @@ const DriverTable = () => {
   const [openCitizenship, setOpenCitizenship] = React.useState(false);
   const handleOpenCitizenship = () => setOpenCitizenship(true);
   const handleCloseCitizenship = () => setOpenCitizenship(false);
+
+  const [openConfirmation, setOpenConfirmation] = React.useState(false);
+  const handleOpenConfirmation = () => setOpenConfirmation(true);
+  const handleCloseConfirmation= () => setOpenConfirmation(false);
   //initialize dispatch
   const dispatch = useDispatch()
 
@@ -75,9 +80,22 @@ const DriverTable = () => {
   };
 
 
-  const handleRemoveDriver = (driverId:number) => 
+  const handleRemoveDriver = (driverId:number,isRemove:boolean) => 
   {
-      dispatch(removeDriver(driverId))
+    const driver = drivers.find(x=>x.id==driverId)
+
+    if(driver == null){
+      //must pick
+      console.log("Must pick driver");
+      
+      return
+    }
+
+    dispatch(selectDriver(driver));
+    dispatch(selectForRemove(isRemove))  
+
+    handleOpenConfirmation();
+
   };
 
   const handleEditDriver = (driverId:number) => 
@@ -186,12 +204,12 @@ const DriverTable = () => {
                       </Button>
                     </Tooltip>
                     <Tooltip title="Remove from active drivers">
-                    <Button style={{fontSize:8,background:'gray',color:'red',marginLeft:10,marginTop:5}} onClick={()=>handleRemoveDriver(row.id)}>
+                    <Button style={{fontSize:8,background:'gray',color:'red',marginLeft:10,marginTop:5}} onClick={()=>handleRemoveDriver(row.id,true)}>
                           <GroupRemoveIcon fontSize='large'/>
                       </Button>
                     </Tooltip>
                     <Tooltip title="Retire drivers">
-                    <Button style={{fontSize:8,background:'gray',color:'blue',marginLeft:10,marginTop:5}} onClick={()=>handleRemoveDriver(row.id)}>
+                    <Button style={{fontSize:8,background:'gray',color:'blue',marginLeft:10,marginTop:5}} disabled={row.isRetired} onClick={()=>handleRemoveDriver(row.id,false)}>
                           <FaceRetouchingOffIcon fontSize='large'/>
                       </Button>
                     </Tooltip>
@@ -239,6 +257,16 @@ const DriverTable = () => {
       >
         <CitizenshipForm closeForm={handleCloseCitizenship}/>
       </Modal>
+
+      <Modal
+        open={openConfirmation}
+        onClose={handleCloseConfirmation}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <DriverConfirmForm closeForm={handleCloseConfirmation}/>
+      </Modal>
+
 
       <CreateDriver />
     

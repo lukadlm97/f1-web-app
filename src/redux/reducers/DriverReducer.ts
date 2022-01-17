@@ -1,8 +1,12 @@
 import { DriveEtaSharp } from '@mui/icons-material'
-import {DriverReducerState, FETCH_DRIVERS_LOADING, FETCH_DRIVERS_FAILURE, FETCH_DRIVERS_SUCCESS
-,ADD_DRIVER_LOADING,ADD_DRIVER_ERROR,ADD_DRIVER_SUCCESS
-,REMOVE_DRIVER_ERROR,REMOVE_DRIVER_LOADING,REMOVE_DRIVER_SUCCESS, DriverState, SELECT_DRIVER_SUCCESS, 
-UPDATE_DRIVER_LOADING, UPDATE_DRIVER_SUCCESS,UPDATE_DRIVER_ERROR, CHANGE_DRIVER_CITIZENSHIP_LOADING, CHANGE_DRIVER_CITIZENSHIP_ERROR, CHANGE_DRIVER_CITIZENSHIP_SUCCESS} from '../../types/DriverTypes'
+import {DriverReducerState, FETCH_DRIVERS_LOADING, FETCH_DRIVERS_FAILURE, FETCH_DRIVERS_SUCCESS,
+ADD_DRIVER_LOADING,ADD_DRIVER_ERROR,ADD_DRIVER_SUCCESS,
+REMOVE_DRIVER_ERROR,REMOVE_DRIVER_LOADING,REMOVE_DRIVER_SUCCESS, DriverState, SELECT_DRIVER_SUCCESS, 
+UPDATE_DRIVER_LOADING, UPDATE_DRIVER_SUCCESS,UPDATE_DRIVER_ERROR, 
+CHANGE_DRIVER_CITIZENSHIP_LOADING, CHANGE_DRIVER_CITIZENSHIP_ERROR, CHANGE_DRIVER_CITIZENSHIP_SUCCESS,
+RETIREMENT_DRIVER_LOADING, RETIREMENT_DRIVER_SUCCESS,RETIREMENT_DRIVER_ERROR,
+SELECT_RETAIRMENT_DRIVER_CONFIRMATION_OPTION,SELECT_REMOVE_DRIVER_CONFIRMATION_OPTION
+} from '../../types/DriverTypes'
 
 const initiState:DriverReducerState={
     drivers:[],
@@ -18,7 +22,11 @@ const initiState:DriverReducerState={
     isErrorOccuredOnUpdate:false,
     isLoadingChangeCitizenshipDriver:false,
     isCitizenshipChanged:false,
-    isErrorOccuredOnChangeCitizenship:false
+    isErrorOccuredOnChangeCitizenship:false,
+    isLoadingDriverRetirment:false,
+    isDriverRetirment:false,
+    isErrorOccuredOnDriverDriver:false,
+    isRemoveConfirmation:false
 }
 
 export default function countryReducer(state:DriverReducerState=initiState, action:any){
@@ -148,8 +156,46 @@ export default function countryReducer(state:DriverReducerState=initiState, acti
                         isCitizenshipChanged:true,
                         error:'',
                         drivers:[...state.drivers.filter(x=>x.id!==action.payload.id),action.payload]
+                    } 
+                    
+                    
+                case RETIREMENT_DRIVER_LOADING:
+                    return {
+                        ...state,
+                        isLoadingDriverRetirment:true
+                    }
+        
+                case RETIREMENT_DRIVER_ERROR:
+                    return {
+                        ...state,
+                        isLoadingDriverRetirment:false,
+                        error:action.payload,
+                        isErrorOccuredOnDriverDriver:true
+                    }
+        
+                
+                case RETIREMENT_DRIVER_SUCCESS:
+                    return {
+                        ...state,
+                        isLoadingDriverRetirment:false,
+                        isDriverRetirment:true,
+                        error:'',
+                        drivers:[...state.drivers.filter(x=>x.id!==action.payload.id),action.payload]
                     }  
 
+                case SELECT_REMOVE_DRIVER_CONFIRMATION_OPTION:
+                    return {
+                        ...state,
+                        isRemoveConfirmation:true,
+                        error:''
+                    }  
+                    
+                case SELECT_RETAIRMENT_DRIVER_CONFIRMATION_OPTION:
+                    return {
+                        ...state,
+                        isRemoveConfirmation:false,
+                        error:'',
+                    }  
 
         default:
             return state
