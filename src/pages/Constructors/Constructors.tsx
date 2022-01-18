@@ -1,6 +1,8 @@
 import React from 'react'
 import {useDispatch, useSelector } from 'react-redux'
 
+import GoToStuff from '../../components/Constructor/FindStuff'
+
 import './constructors.scss'
 
 import {fetchAllConstuctors} from '../../redux/actions/ConstructorAction'
@@ -33,6 +35,7 @@ const Constructor=()=> {
             ))
             }
 
+<GoToStuff />
          </div>
     )
 }
