@@ -27,7 +27,6 @@ import { selectForRemove } from '../../redux/actions/DriverAction'
 import { selectDriver } from '../../redux/actions/DriverAction'
 import { comebackDriver } from '../../redux/actions/DriverAction'
 import { AppState } from '../../types/AppState'
-import CreateDriver from '../Driver/CreateDriver';
 
 import './driverTable.scss'
 

@@ -1,0 +1,25 @@
+@import '../../base';
+
+.staffTable{
+    margin-top: 20px;
+
+    .header-font{
+        font-size: 15px;
+        font-weight: bold;
+    }
+    .header-color{
+        background-color: #d3e4cd;
+    }
+    .body-font{
+        font-size: 12px;
+    }
+    .selectDropdown{ 
+        color: "#fff"; 
+        background-color: "#1b1f38"; 
+    }
+    .menuItem{
+        &:hover{
+          background-color: "#3b3f58"
+        }
+    }
+}

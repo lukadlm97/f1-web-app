@@ -1,0 +1,59 @@
+//reducer case constants
+export const FETCH_TECHNICAL_STAFF_LOADING="FETCH_TECHNICAL_STAFF_LOADING"
+export const FETCH_TECHNICAL_STAFF_SUCCESS="FETCH_TECHNICAL_STAFF_SUCCESS"
+export const FETCH_TECHNICAL_STAFF_FAILURE="FETCH_TECHNICAL_STAFF_FAILURE"
+export const CREATE_TECHNICAL_STAFF_LOADING="CREATE_TECHNICAL_STAFF_LOADING"
+export const CREATE_TECHNICAL_STAFF_SUCCESS="CREATE_TECHNICAL_STAFF_SUCCESS"
+export const CREATE_TECHNICAL_STAFF_FAILURE="CREATE_TECHNICAL_STAFF_FAILURE"
+
+//types 
+export type TechnicalStaffReducerState={
+    technicalStaffs:TechnicalStaffState[],
+    isLoading:boolean, 
+    error:string,
+    isLoadingCreation:boolean,
+    isSuccessfullyDoneCreation:boolean,
+    isErrorOccured:boolean
+}
+
+export type TechnicalStaffState={
+    id:number
+    forename:string 
+    surname:string 
+    dateOfBirth:Date
+    title:string
+    educationDetails:string
+    countryId:number
+}
+
+//action types
+export type FetchAllTechnicalStaffLoadingAction={
+    type: typeof FETCH_TECHNICAL_STAFF_LOADING
+    payload?: string
+}
+export type FetchAllTechnicalStaffSuccessAction={
+    type: typeof FETCH_TECHNICAL_STAFF_SUCCESS
+    payload: []
+}
+export type FetchAllTechnicalStaffFailureAction={
+    type: typeof FETCH_TECHNICAL_STAFF_FAILURE
+    payload: string
+}
+export type AddNewTechnicalStaffLoadingAction={
+    type: typeof CREATE_TECHNICAL_STAFF_LOADING
+    payload?: string
+}
+export type AddNewTechnicalStaffSuccessAction={
+    type: typeof CREATE_TECHNICAL_STAFF_SUCCESS
+    payload: TechnicalStaffState
+}
+export type AddNewTechnicalStaffFailureAction={
+    type: typeof CREATE_TECHNICAL_STAFF_FAILURE
+    payload: string
+}
+
+
+
+export type TechnicalStaffActions= 
+FetchAllTechnicalStaffLoadingAction | FetchAllTechnicalStaffSuccessAction | FetchAllTechnicalStaffFailureAction|
+AddNewTechnicalStaffLoadingAction|AddNewTechnicalStaffSuccessAction|AddNewTechnicalStaffFailureAction
