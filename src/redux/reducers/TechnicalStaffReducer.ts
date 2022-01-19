@@ -1,6 +1,8 @@
 import {TechnicalStaffReducerState,
     FETCH_TECHNICAL_STAFF_LOADING, FETCH_TECHNICAL_STAFF_SUCCESS, FETCH_TECHNICAL_STAFF_FAILURE,
-    CREATE_TECHNICAL_STAFF_LOADING,CREATE_TECHNICAL_STAFF_SUCCESS,CREATE_TECHNICAL_STAFF_FAILURE
+    CREATE_TECHNICAL_STAFF_LOADING,CREATE_TECHNICAL_STAFF_SUCCESS,CREATE_TECHNICAL_STAFF_FAILURE,
+    DELETE_TECHNICAL_STAFF_LOADING,DELETE_TECHNICAL_STAFF_SUCCESS,DELETE_TECHNICAL_STAFF_FAILURE,
+    SELECT_TECHNICAL_STAFF_SUCCESS
 } from '../../types/TechnicalStuffTypes'
 
 const initiState:TechnicalStaffReducerState={
@@ -9,7 +11,11 @@ const initiState:TechnicalStaffReducerState={
     error:'',
     isLoadingCreation:false,
     isSuccessfullyDoneCreation:false,
-    isErrorOccured:false
+    isErrorOccured:false,
+    isLoadingDelete:false,
+    isSuccessfullyDoneDelete:false,
+    isErrorOccuredOnDelete:false,
+    selectedStaff:null
 }
 
 export default function technicalStaffReducer(state:TechnicalStaffReducerState=initiState, action:any){
@@ -61,6 +67,36 @@ export default function technicalStaffReducer(state:TechnicalStaffReducerState=i
                 isSuccessfullyDoneCreation:true,
                 technicalStaffs:[...state.technicalStaffs,action.payload]
             }    
+
+            case DELETE_TECHNICAL_STAFF_LOADING:
+                return {
+                    ...state,
+                    isLoadingDelete:true,
+                }
+    
+            case DELETE_TECHNICAL_STAFF_FAILURE:
+                return {
+                    ...state,
+                    isLoadingDelete:false,
+                    error:action.payload,
+                    isErrorOccuredOnDelete:true
+                }
+    
+            
+            case DELETE_TECHNICAL_STAFF_SUCCESS:
+                return {
+                    ...state,
+                    isLoadingDelete:false,
+                    error:'',
+                    isSuccessfullyDoneDelete:true,
+                    isErrorOccuredOnDelete:false,
+                    technicalStaffs:[...state.technicalStaffs.filter(x=>x.id!==action.payload)]
+                }   
+                case SELECT_TECHNICAL_STAFF_SUCCESS:
+                    return{
+                        ...state,
+                        selectedStaff:action.payload
+                    }
 
         default:
             return state

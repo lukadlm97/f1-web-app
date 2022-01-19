@@ -55,6 +55,7 @@ const dispatch=useDispatch()
 
   React.useEffect(()=>{
     dispatch(fetchAllCountries())
+
 },[])
 
   const [drawerState, setDrawerState] = React.useState(false)

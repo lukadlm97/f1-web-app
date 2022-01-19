@@ -9,6 +9,10 @@ import TableRow from '@mui/material/TableRow';
 import TableFooter from '@mui/material/TableFooter';
 import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
+import Modal from '@mui/material/Modal';
+import GroupRemoveIcon from '@mui/icons-material/GroupRemove';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
 
 import './staffTable.scss'
 
@@ -16,7 +20,8 @@ import TablePaginationActions from '../DriverTable/TablePaginationActions';
 
 import { AppState } from '../../types/AppState'
 
-import {fetchAllTechnicalStaff} from '../../redux/actions/TechnicalStaffAction'
+import {fetchAllTechnicalStaff, selectTechnicalStaff} from '../../redux/actions/TechnicalStaffAction'
+import StaffConfirmation from '../StaffConfirmation/StaffConfirmation'
 
 const StaffTable = () => {
 
@@ -25,6 +30,7 @@ const StaffTable = () => {
     const isLoading = useSelector((state: AppState) => state.technicalStaffReducer.isLoading)
     const isErrorOccured = useSelector((state: AppState) => state.technicalStaffReducer.isErrorOccured)
     const error = useSelector((state: AppState) => state.technicalStaffReducer.error)
+
 
     const countires = useSelector((state: AppState) => state.countryReducer.countries)
     //initialize dispatch
@@ -71,6 +77,25 @@ const StaffTable = () => {
         return yearsDiff;
       }
 
+      const handleStaffRemove = (staffId:number) => 
+      {
+        const staff = technicalStaffs.find(x=>x.id==staffId)
+    
+        if(staff == null){
+          //must pick
+          console.log("Must pick driver");
+          
+          return
+        }
+    
+        dispatch(selectTechnicalStaff(staff));
+        handleOpenRemoveConfirmation();
+      };
+
+
+      const [openRemoveConfirmation, setOpenRemoveConfirmation] = React.useState(false);
+    const handleOpenRemoveConfirmation = () => setOpenRemoveConfirmation(true);
+    const handleCloseRemoveConfirmation= () => setOpenRemoveConfirmation(false);
     return (
             <div className='staffTable'>
 
@@ -84,6 +109,7 @@ const StaffTable = () => {
                     <TableCell align="center" className='header-font'>Title</TableCell>
                     <TableCell align="center" className='header-font'>EducationDetails</TableCell>
                     <TableCell align="center" className='header-font'>Country</TableCell>
+                    <TableCell align="center" className='header-font'>Remove</TableCell>
                 </TableRow>
                 </TableHead>
                 <TableBody >
@@ -103,6 +129,13 @@ const StaffTable = () => {
                         <TableCell align="center" className='body-font'>{row.title}</TableCell>
                         <TableCell align="center" className='body-font'>{row.educationDetails}</TableCell>
                         <TableCell align="center" className='body-font'>{handleCountyConversion(row.countryId)}</TableCell>
+                        <TableCell align="center" className='body-font'>
+                            <Tooltip title="Remove from staff">
+                        <Button style={{fontSize:8,background:'#f2ddc1',color:'red',marginLeft:10,marginTop:5}} onClick={()=>handleStaffRemove(row.id)}>
+                            <GroupRemoveIcon fontSize='large'/>
+                        </Button>
+                        </Tooltip>
+                        </TableCell>
                       
                     </TableRow>
                     ))}
@@ -131,6 +164,15 @@ const StaffTable = () => {
                 </TableFooter>
             </Table>
             </TableContainer>
+
+            <Modal
+            open={openRemoveConfirmation}
+            onClose={handleCloseRemoveConfirmation}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+            >
+                <StaffConfirmation closeForm={handleCloseRemoveConfirmation}/>
+            </Modal>
         </div>
     )
 }

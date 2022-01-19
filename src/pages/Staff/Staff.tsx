@@ -1,5 +1,6 @@
 import React from 'react'
 import StaffTable from '../../components/StaffTable/StaffTable'
+import CreateStaff from '../../components/StaffForm/CreateStaff'
 
 import {useDispatch, useSelector } from 'react-redux'
 import {fetchAllDrivers} from '../../redux/actions/DriverAction'
@@ -16,6 +17,7 @@ const Driver=()=> {
             {/* Inner contents country list/result */}
            <h1>Staff page </h1>
           <StaffTable />
+          <CreateStaff />
          </div>
     )
 }
