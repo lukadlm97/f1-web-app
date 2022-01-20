@@ -1,7 +1,10 @@
 import React from 'react'
 import {useDispatch, useSelector } from 'react-redux'
+import Box from '@mui/material/Box'
 
 import GoToStuff from '../../components/Constructor/FindStuff'
+import ConstuctorCard from '../../components/Constructor/ConstuctorCard'
+import  CreateConstructor from '../../components/Constructor/CreateConstructor'
 
 import './constructors.scss'
 
@@ -21,21 +24,44 @@ const Constructor=()=> {
  
     return (
         <div className='constructors'>
-           
             {/* Inner contents country list/result */}
            <h2>Constructors page </h2>
            {isLoading && <h2>Loading...</h2>}
+           <Box   sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            '& > :not(style)': {
+            m: 1,
+            width: 300,
+            height: 300,
+        },
+      }}>
+
 
            {!isLoading && constructors && 
-            constructors.map((constructor)=>(                    
-                <li>
-                    {constructor.id} 
-                    {constructor.shortName}
-                </li>
-            ))
+            constructors.map((constructor)=>(     
+                <ConstuctorCard constructorId={constructor.id} 
+                                base={constructor.base}
+                                firstEntry={constructor.firstEntry}
+                                lastEntry={constructor.lastEntry}
+                                countryId={constructor.countryId}
+                                shortName={constructor.shortName}
+                                fullName={constructor.fullName}
+                                />
+
+               
+                ))
             }
 
-<GoToStuff />
+            </Box>
+            <Box>
+            <CreateConstructor />
+            
+            </Box>
+            <Box>
+
+            <GoToStuff />
+            </Box>
          </div>
     )
 }
