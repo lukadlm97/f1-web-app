@@ -1,8 +1,9 @@
 import React from 'react'
 import {useDispatch, useSelector } from 'react-redux'
 import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
 
-import GoToStuff from '../../components/Constructor/FindStuff'
+import GoToStaff from '../../components/Constructor/FindStaff'
 import ConstuctorCard from '../../components/Constructor/ConstuctorCard'
 import  CreateConstructor from '../../components/Constructor/CreateConstructor'
 
@@ -31,8 +32,8 @@ const Constructor=()=> {
             display: 'flex',
             flexWrap: 'wrap',
             '& > :not(style)': {
-            m: 1,
-            width: 300,
+                m: 1,
+            width: 330,
             height: 300,
         },
       }}>
@@ -54,14 +55,14 @@ const Constructor=()=> {
             }
 
             </Box>
-            <Box>
-            <CreateConstructor />
-            
-            </Box>
-            <Box>
-
-            <GoToStuff />
-            </Box>
+            <Grid sx={{display:'flex'}} spacing={2}>
+                <Grid xs={9}>
+                <CreateConstructor />
+                    </Grid>
+                <Grid xs={1}>
+                    <GoToStaff />
+                </Grid>
+            </Grid>
          </div>
     )
 }

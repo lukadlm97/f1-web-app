@@ -5,6 +5,7 @@ import Home from './pages/Home/Home';
 import Driver from './pages/Drivers/Driver';
 import Countries from './pages/Countries/Countries';
 import Constructors from './pages/Constructors/Constructors';
+import Constructor from './pages/Constructors/Constructor';
 import Staff from './pages/Staff/Staff';
 import NotFound  from './pages/NotFound/NotFound';
 
@@ -16,6 +17,7 @@ const Navigator =()=>(
                 <Route  path="/countries/" component={Countries}/>
                 <Route  path="/constructors/" component={Constructors}/>
                 <Route  path="/technicalStuff/" component={Staff}/>
+                <Route path="/constructor/:shortName" component={Constructor}/>
                 <Route exact component={NotFound} />
             </Switch >
 

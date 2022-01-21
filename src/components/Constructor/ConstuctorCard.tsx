@@ -9,33 +9,47 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Modal from '@mui/material/Modal';
 
+
+import CancelIcon from '@mui/icons-material/Cancel';
+import EditIcon from '@mui/icons-material/Edit';
+import InfoIcon from '@mui/icons-material/Info';
+import {useParams, useHistory } from 'react-router-dom'
+
+
 import ConstructorForm from './ConstructorForm'
+import ConstructorConfirmation from '../ConstructorConfirmation/ConstructorConfirmation'
 
 import {selectConstructor} from '../../redux/actions/ConstructorAction'
 import {AppState} from '../../types/AppState'
 
 interface IConstructorCard{
-    constructorId:number,
-    countryId:number,
-    shortName:string,
-    fullName:string,
-    firstEntry:string,
-    lastEntry:string,
-    base:string
+  constructorId:number,
+  countryId:number,
+  shortName:string,
+  fullName:string,
+  firstEntry:string,
+  lastEntry:string,
+  base:string
 }
 
 
 export default function ConstuctorCard(props:IConstructorCard) {
 
-    const countires = useSelector((state: AppState) => state.countryReducer.countries)
-    const constructors = useSelector((state: AppState) => state.constructorReducer.constructors)
-    const isLoadingCountries = useSelector((state: AppState) => state.countryReducer.isLoading)
+  const countires = useSelector((state: AppState) => state.countryReducer.countries)
+  const constructors = useSelector((state: AppState) => state.constructorReducer.constructors)
+  const isLoadingCountries = useSelector((state: AppState) => state.countryReducer.isLoading)
+  
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-    const dispatch = useDispatch();
+  const [openConfirmation, setOpenConfirmation] = React.useState(false);
+  const handleConfirmationOpen = () => setOpenConfirmation(true);
+  const handleConfirmationClose = () => setOpenConfirmation(false);
 
+  const dispatch = useDispatch();
+  const history=useHistory()
+  
     const handleCountyConversion = (countryId: number) => {
 
         if (countryId == undefined)
@@ -63,7 +77,40 @@ export default function ConstuctorCard(props:IConstructorCard) {
         dispatch(selectConstructor(constructor));
         handleOpen();
       };
+
+      const handleRemoveConstructor = (constructorId:number) => 
+      {
+          
+        const constructor = constructors.find(x=>x.id==constructorId)
     
+        if(constructor == null){
+          //must pick
+          console.log("Must pick driver");
+          
+          return
+        }
+    
+        dispatch(selectConstructor(constructor));
+        handleConfirmationOpen();
+      };
+
+      const handleDetailsConstructor = (constructorId:number) => 
+      {
+          
+        const constructor = constructors.find(x=>x.id==constructorId)
+    
+        if(constructor == null){
+          //must pick
+          console.log("Must pick driver");
+          
+          return
+        }
+    
+        dispatch(selectConstructor(constructor));
+       
+        history.push(`/constructor/${constructor.shortName}`)
+
+      };
 
 
 
@@ -74,7 +121,7 @@ export default function ConstuctorCard(props:IConstructorCard) {
       <CardMedia
         component="img"
         height="140"
-        src={process.env.PUBLIC_URL+'/images/app-resources/constructors/scuderia-ferrari.png'}
+        src={process.env.PUBLIC_URL+'/images/app-resources/constructors/ferrari.png'}
         alt="green iguana"
       />
       <CardContent style={{fontSize:12}}>
@@ -107,9 +154,21 @@ export default function ConstuctorCard(props:IConstructorCard) {
         </Grid>
       </CardContent>
       <CardActions style={{fontSize:14}}>
-        <Button size="medium" style={{background:'red',fontSize:12,color:'black'}}>Share</Button>
-        <Button size="medium"  style={{background:'yellow',fontSize:12,color:'black'}} onClick={()=>handleEditConstructor(props.constructorId)} >Edit</Button>
-        <Button size="medium"  style={{background:'green',fontSize:12,color:'black'}}>Learn More</Button>
+        <Button size="medium" style={{background:'#EEC4C4',fontSize:12,color:'black',display: 'inline-flex'}} 
+        onClick={()=>handleRemoveConstructor(props.constructorId)} >
+        <CancelIcon fontSize='large' style={{marginRight:10}}/>
+          Remove
+          </Button>
+        <Button size="medium"  style={{background:'#D1D9D9',fontSize:12,color:'black'}} 
+                onClick={()=>handleEditConstructor(props.constructorId)} >
+                   <EditIcon fontSize='large' style={{marginRight:10}}/>
+                  Edit
+        </Button>
+        <Button size="medium" style={{background:'#94D0CC',fontSize:12,color:'black'}}
+                 onClick={()=>handleDetailsConstructor(props.constructorId)}>
+                    <InfoIcon fontSize='large' style={{marginRight:10}}/>
+                   Learn More
+        </Button>
       </CardActions>
       <Modal
         open={open}
@@ -118,6 +177,15 @@ export default function ConstuctorCard(props:IConstructorCard) {
         aria-describedby="modal-modal-description"
       >
         <ConstructorForm closeForm={handleClose}/>
+      </Modal>
+
+      <Modal
+        open={openConfirmation}
+        onClose={handleConfirmationClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <ConstructorConfirmation closeForm={handleConfirmationClose}/>
       </Modal>
     </Card>
   );
