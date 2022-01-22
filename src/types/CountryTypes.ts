@@ -15,7 +15,7 @@ export type CountryState={
     name:string 
     population:number 
     nominalGDP:number
-    GDPPerCapita:number
+    gdpPerCapita:number
     shareIfWorldGDP:number
     code:string
 }

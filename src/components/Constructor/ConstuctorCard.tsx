@@ -29,7 +29,8 @@ interface IConstructorCard{
   fullName:string,
   firstEntry:string,
   lastEntry:string,
-  base:string
+  base:string,
+  website:string
 }
 
 
@@ -119,10 +120,11 @@ export default function ConstuctorCard(props:IConstructorCard) {
   return (
     <Card sx={{ maxWidth: 345 }} style={{margin:10,background:'#99a799'}}>
       <CardMedia
+      style={{margin:10,background:'white'}}
         component="img"
         height="140"
-        src={process.env.PUBLIC_URL+'/images/app-resources/constructors/ferrari.png'}
-        alt="green iguana"
+        src={process.env.PUBLIC_URL+`/images/app-resources/constructors/${props.website}`}
+        alt={props.website}
       />
       <CardContent style={{fontSize:12}}>
 

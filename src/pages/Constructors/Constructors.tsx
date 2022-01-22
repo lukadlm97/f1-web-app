@@ -34,7 +34,7 @@ const Constructor=()=> {
             '& > :not(style)': {
                 m: 1,
             width: 330,
-            height: 300,
+            height: 320,
         },
       }}>
 
@@ -48,6 +48,7 @@ const Constructor=()=> {
                                 countryId={constructor.countryId}
                                 shortName={constructor.shortName}
                                 fullName={constructor.fullName}
+                                website={constructor.website}
                                 />
 
                
