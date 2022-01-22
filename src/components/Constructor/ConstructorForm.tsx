@@ -17,7 +17,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import { useDispatch, useSelector } from 'react-redux'
 import {AppState} from '../../types/AppState'
 import {CountryState} from '../../types/CountryTypes'
-import {ConstructorState} from '../../types/ConstructorType'
+import {ConstructorState} from '../../types/ConstructorTypes'
 import {createConstuctor,updateConstuctor} from '../../redux/actions/ConstructorAction'
 
 interface IConstructorForm{

@@ -1,9 +1,9 @@
 import React from 'react'
 import {useDispatch, useSelector } from 'react-redux'
 
+import Card from '@mui/material/Card'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography';
-import  CountryDetails from '../CountryDetails/CountryDetails'
 
 import {AppState} from '../../types/AppState'
 
@@ -24,7 +24,7 @@ countryId:number,
     
 
 return(
-        <Grid style={{marginLeft:20,marginBottom:20,background:"#D3E4CD",padding:10}}>
+        <Card  style={{marginLeft:20,marginBottom:20,background:"#D3E4CD",padding:10}}>
             <Typography variant="body2" color="black" style={{fontSize:16,marginBottom:10}}>
                     Core details
             </Typography>
@@ -55,7 +55,7 @@ return(
                     Last entry:{props.lastEntry}
                 </Typography>
             </Grid>
-        </Grid>
+        </Card>
 )
 
 

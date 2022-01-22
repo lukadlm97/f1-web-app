@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Grid from '@mui/material/Grid'
+import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography';
 
 import {AppState} from '../../types/AppState'
@@ -22,7 +23,7 @@ interface ICountryDetails{
 
 
 return(
-        <Grid style={{marginLeft:20,marginBottom:20,background:"#D3E4CD",padding:10}}>
+        <Card style={{marginLeft:20,marginBottom:20,background:"#D3E4CD",padding:10}}>
                 <Typography variant="body2" color="black" style={{fontSize:16,marginBottom:10}}>
                          Country details
                 </Typography>
@@ -52,7 +53,7 @@ return(
                        GDP per capita:{props.GDPPerCapita}
                     </Typography>
                 </Grid>
-    </Grid>
+    </Card>
 )
 
 

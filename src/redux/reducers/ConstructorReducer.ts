@@ -3,7 +3,7 @@ import {ConstructorReducerState,FETCH_COUNSTRUCTORS_LOADING, FETCH_COUNSTRUCTORS
     UPDATE_COUNSTRUCTOR_SUCCESS,  UPDATE_COUNSTRUCTOR_LOADING,  UPDATE_COUNSTRUCTOR_FAILURE,
     REMOVE_COUNSTRUCTOR_SUCCESS, REMOVE_COUNSTRUCTOR_LOADING, REMOVE_COUNSTRUCTOR_FAILURE,
     SELECT_COUNSTRUCTOR_SUCCESS
-} from '../../types/ConstructorType'
+} from '../../types/ConstructorTypes'
 
 const initiState:ConstructorReducerState={
     constructors:[],
@@ -21,7 +21,7 @@ const initiState:ConstructorReducerState={
     isErrorOccuredOnRemove:false
 }
 
-export default function countryReducer(state:ConstructorReducerState=initiState, action:any){
+export default function constructorReducer(state:ConstructorReducerState=initiState, action:any){
 
     switch(action.type){
 

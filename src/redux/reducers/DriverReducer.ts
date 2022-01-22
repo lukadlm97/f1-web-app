@@ -32,7 +32,7 @@ const initiState:DriverReducerState={
     isErrorDriverComeback:false
 }
 
-export default function countryReducer(state:DriverReducerState=initiState, action:any){
+export default function driverReducer(state:DriverReducerState=initiState, action:any){
 
     switch(action.type){
 

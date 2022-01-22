@@ -20,6 +20,7 @@ import ConstructorForm from './ConstructorForm'
 import ConstructorConfirmation from '../ConstructorConfirmation/ConstructorConfirmation'
 
 import {selectConstructor} from '../../redux/actions/ConstructorAction'
+import {fetchConstructorRacingRecords} from '../../redux/actions/ConstructorRacingRecordAction'
 import {AppState} from '../../types/AppState'
 
 interface IConstructorCard{
@@ -107,6 +108,7 @@ export default function ConstuctorCard(props:IConstructorCard) {
           return
         }
     
+        dispatch(fetchConstructorRacingRecords(constructorId))
         dispatch(selectConstructor(constructor));
        
         history.push(`/constructor/${constructor.shortName}`)

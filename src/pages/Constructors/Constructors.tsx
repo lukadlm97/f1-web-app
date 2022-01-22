@@ -10,6 +10,7 @@ import  CreateConstructor from '../../components/Constructor/CreateConstructor'
 import './constructors.scss'
 
 import {fetchAllConstuctors} from '../../redux/actions/ConstructorAction'
+import {setConstructorRacingRecords} from '../../redux/actions/ConstructorRacingRecordAction'
 import {AppState} from '../../types/AppState'
 
 const Constructor=()=> {
@@ -21,6 +22,7 @@ const Constructor=()=> {
 
     React.useEffect(()=>{
     dispatch(fetchAllConstuctors())
+    dispatch(setConstructorRacingRecords(null))
     },[])
  
     return (
