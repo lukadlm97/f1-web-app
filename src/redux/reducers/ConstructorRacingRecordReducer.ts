@@ -2,7 +2,7 @@ import {ConstructorsRacingRecordReducerState,FETCH_COUNSTRUCTORS_RACING_RECORD_L
     FETCH_COUNSTRUCTORS_RACING_RECORD_SUCCESS, 
     CREATE_COUNSTRUCTOR_RACING_RECORD_LOADING, CREATE_COUNSTRUCTOR_RACING_RECORD_SUCCESS, CREATE_COUNSTRUCTOR_RACING_RECORD_FAILURE,
     UPDATE_COUNSTRUCTOR_RACING_RECORD_LOADING,  UPDATE_COUNSTRUCTOR_RACING_RECORD_SUCCESS,  UPDATE_COUNSTRUCTOR_RACING_RECORD_FAILURE,
-    FETCH_COUNSTRUCTOR_RACING_RECORD_LOADING, FETCH_COUNSTRUCTOR_RACING_RECORD_SUCCESS,FETCH_COUNSTRUCTOR_RACING_RECORD_FAILURE, SET_TO_NULL_CONSTUCTOR_RACING_RECORD
+    FETCH_COUNSTRUCTOR_RACING_RECORD_LOADING, FETCH_COUNSTRUCTOR_RACING_RECORD_SUCCESS,FETCH_COUNSTRUCTOR_RACING_RECORD_FAILURE, SET_TO_NULL_CONSTUCTOR_RACING_RECORD, SET_CONSTUCTOR_RACING_RECORD
 } from '../../types/ConstructorRacingRecordTypes'
 
 const initiState:ConstructorsRacingRecordReducerState={
@@ -78,6 +78,7 @@ export default function constructorRacingRecordsReducer(state:ConstructorsRacing
                     ...state, 
                     isLoadingCreation:false,
                     isSuccessfullyDoneCreation:true,
+                    selectedConstructorRacingRecord:action.payload,
                     constructorsRacingRecords:[...state.constructorsRacingRecords,action.payload],
                     isNotCreatedYet:false,
                     error:'',
@@ -112,6 +113,7 @@ export default function constructorRacingRecordsReducer(state:ConstructorsRacing
                         isLoadingUpdate:false,
                         isSuccessfullyDoneUpdate:true,
                         isErrorOccuredOnUpdate:false,
+                        selectedConstructorRacingRecord:action.payload,
                         constructorsRacingRecords:[...state.constructorsRacingRecords.filter(x=>x.id!==action.payload.id),action.payload],
                         error:'',
                     }
@@ -178,7 +180,24 @@ export default function constructorRacingRecordsReducer(state:ConstructorsRacing
                                 isErrorOccuredOnSingleFetch:false,
                                 isNotCreatedYet:false,
                             }
-
+                            case SET_CONSTUCTOR_RACING_RECORD:
+                                return {
+                                    constructorsRacingRecords:[],
+                                    selectedConstructorRacingRecord:action.payload,
+                                    isLoading:false, 
+                                    error:'',
+                                    isLoadingCreation:false,
+                                    isSuccessfullyDoneCreation:false,
+                                    isErrorOccuredOnCreation:false,
+                                    isLoadingUpdate:false,
+                                    isSuccessfullyDoneUpdate:false,
+                                    isErrorOccuredOnUpdate:false,
+                                    isLoadingSingleFetch:false,
+                                    isSuccessfullySingleFetch:false,
+                                    isErrorOccuredOnSingleFetch:false,
+                                    isNotCreatedYet:false,
+                                }
+    
 
 
         default:

@@ -12,6 +12,7 @@ export const FETCH_COUNSTRUCTOR_RACING_RECORD_LOADING="FETCH_COUNSTRUCTOR_RACING
 export const FETCH_COUNSTRUCTOR_RACING_RECORD_SUCCESS="FETCH_COUNSTRUCTOR_RACING_RECORD_SUCCESS"
 export const FETCH_COUNSTRUCTOR_RACING_RECORD_FAILURE="FETCH_COUNSTRUCTOR_RACING_RECORD_FAILURE"
 export const SET_TO_NULL_CONSTUCTOR_RACING_RECORD="SET_TO_NULL_CONSTUCTOR_RACING_RECORD"
+export const SET_CONSTUCTOR_RACING_RECORD="SET_CONSTUCTOR_RACING_RECORD"
 
 //types 
 export type ConstructorsRacingRecordReducerState={
@@ -97,11 +98,15 @@ export type FetchConstructorRacingRecordsFailureAction={
     isNotCreatedYet:boolean
 }
 
-export type SetConstructorRacingRecordsAction={
+export type SetNullConstructorRacingRecordsAction={
     type: typeof SET_TO_NULL_CONSTUCTOR_RACING_RECORD
     payload: ConstructorsRacingRecordState|null
 }
 
+export type SetConstructorRacingRecordsAction={
+    type: typeof SET_CONSTUCTOR_RACING_RECORD
+    payload: ConstructorsRacingRecordState
+}
 
 
 export type ConstructorsRacingRecordsActions= FetchAllConstructorsRacingRecordsLoadingAction|
@@ -116,4 +121,5 @@ UpdateConstructorsRacingRecordsFailureAction|
 FetchConstructorRacingRecordsLoadingAction|
 FetchConstructorRacingRecordsSuccessAction|
 FetchConstructorRacingRecordsFailureAction|
+SetNullConstructorRacingRecordsAction|
 SetConstructorRacingRecordsAction

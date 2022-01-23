@@ -79,7 +79,7 @@ export default function ConstructorForm(props:IRacingDetailsForm){
     const handleRaceVictoriesReset = () => setRaceVictoriesValue(0);
 
     const [podiumsValue, setPodiumsValue] = 
-    React.useState<number>(selectedConstructorRacingDetails!=null?selectedConstructorRacingDetails.raceVictories:0);
+    React.useState<number>(selectedConstructorRacingDetails!=null?selectedConstructorRacingDetails.podiums:0);
     const onPodiumsChange = (e: any) => {
         setPodiumsValue(parseInt(e.target.value))
     }
@@ -87,7 +87,7 @@ export default function ConstructorForm(props:IRacingDetailsForm){
     const handlePodiumsReset = () => setPodiumsValue(0);
 
     const [polPositionsValue, setPolPositionsValue] = 
-    React.useState<number>(selectedConstructorRacingDetails!=null?selectedConstructorRacingDetails.raceVictories:0);
+    React.useState<number>(selectedConstructorRacingDetails!=null?selectedConstructorRacingDetails.polPositions:0);
     const onPolPositionsChange = (e: any) => {
         setPolPositionsValue(parseInt(e.target.value))
     }
@@ -95,16 +95,12 @@ export default function ConstructorForm(props:IRacingDetailsForm){
     const handlePolPositionsReset = () => setPolPositionsValue(0);
 
     const [fastesLapsValue, setFastesLapsValue] = 
-    React.useState<number>(selectedConstructorRacingDetails!=null?selectedConstructorRacingDetails.raceVictories:0);
+    React.useState<number>(selectedConstructorRacingDetails!=null?selectedConstructorRacingDetails.fastesLaps:0);
     const onFastesLapsChange = (e: any) => {
         setFastesLapsValue(parseInt(e.target.value))
     }
     const handleFastesLapsSubmit = () => console.log(fastesLapsValue);
     const handleFastesLapsReset = () => setFastesLapsValue(0);
-
-
- 
- 
 
       const [competitionValue, setCompetitionValue] = React.useState<CompetitionState>(selectedConstructorRacingDetails!=null?
         competitions.find(x=>x.id==selectedConstructorRacingDetails.competitionId)||competitions[0]:competitions[0]);
@@ -114,7 +110,7 @@ export default function ConstructorForm(props:IRacingDetailsForm){
 
       const onSubmitConstructorRacingDetails=()=>{
 
-        if(selectedConstructorRacingDetails == null){
+        if(selectedConstructorRacingDetails===null){
             console.log(selectedConstructor);
             
             const newConstructorRacingDetails:ConstructorsRacingRecordState=
@@ -133,10 +129,12 @@ export default function ConstructorForm(props:IRacingDetailsForm){
             dispatch(createConstructorsRacingRecords(newConstructorRacingDetails,false))
             
         }else{
-
+            console.log(selectedConstructor);
+            console.log(selectedConstructorRacingDetails);
+            var selectedConstructorRacingDetailsId = selectedConstructorRacingDetails.id;
             const updateConstructorRacingDetails:ConstructorsRacingRecordState=
             {
-                id:selectedConstructorRacingDetails==null?1:selectedConstructorRacingDetails.id,
+                id:selectedConstructorRacingDetailsId,
                 constructorChampionships:constructorChampionshipsValue,
                 driverChampionships:driverChampionshipsValue,
                 fastesLaps:fastesLapsValue,
@@ -146,6 +144,9 @@ export default function ConstructorForm(props:IRacingDetailsForm){
                 competitionId:competitionValue==null?4:competitionValue.id,
                 constructorId:selectedConstructor==null?17:selectedConstructor.id
             };
+
+            
+            dispatch(updateConstructorsRacingRecords(updateConstructorRacingDetails))
         }
 
         setSubmitFired(true)
@@ -315,7 +316,7 @@ export default function ConstructorForm(props:IRacingDetailsForm){
  
                  <Button variant="contained" style={{ display: 'inline-flex',color:'white', background:'green', width: 150,padding:2, height: 50,fontSize:14,marginLeft:20}} onClick={()=>onSubmitConstructorRacingDetails()}>
                     <HowToRegIcon fontSize='large' style={{marginRight:10}} />
-                     Save Constructor
+                     Save Racing Records
                  </Button>
  
              </Grid>

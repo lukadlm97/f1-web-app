@@ -7,7 +7,8 @@ import {FETCH_COUNSTRUCTORS_RACING_RECORD_LOADING,  FETCH_COUNSTRUCTORS_RACING_R
     UPDATE_COUNSTRUCTOR_RACING_RECORD_LOADING,  UPDATE_COUNSTRUCTOR_RACING_RECORD_SUCCESS,  UPDATE_COUNSTRUCTOR_RACING_RECORD_FAILURE,
     FETCH_COUNSTRUCTOR_RACING_RECORD_LOADING, FETCH_COUNSTRUCTOR_RACING_RECORD_SUCCESS,FETCH_COUNSTRUCTOR_RACING_RECORD_FAILURE,
     SET_TO_NULL_CONSTUCTOR_RACING_RECORD,
-     ConstructorsRacingRecordState
+     ConstructorsRacingRecordState,
+     SET_CONSTUCTOR_RACING_RECORD
 } from '../../types/ConstructorRacingRecordTypes'
 
 
@@ -210,11 +211,12 @@ export function updateConstructorsRacingRecordsFailure(error:string):Constructor
 export function updateConstructorsRacingRecords(constructor:ConstructorsRacingRecordState){
 
     return (dispatch:Dispatch)=>{
-        console.log(constructor);
+        console.log("updateConstructorsRacingRecords: "+constructor);
         
         dispatch(updateConstructorsRacingRecordsLoading())
+        
         //axios call `https://localhost:6001/api/v1/Constructor/${driverId}/delete`
-        axios.post(`https://localhost:6001/api/v1/ConstructorRacingDetails/update/${constructor.constructorId}`,constructor)
+        axios.put(`https://localhost:6001/api/v1/ConstructorRacingDetails/update/${constructor.constructorId}`,constructor)
         .then((res)=>{
             const constructorUpdated=res.data 
             console.log(constructorUpdated);
@@ -230,12 +232,19 @@ export function updateConstructorsRacingRecords(constructor:ConstructorsRacingRe
 
 export function setConstructorRacingRecordsSuccess(constructor:ConstructorsRacingRecordState|null):ConstructorsRacingRecordsActions{
 
+    if(constructor===null){
+        return {
+            type:SET_TO_NULL_CONSTUCTOR_RACING_RECORD,
+            payload:constructor
+        }
+    }
     return {
-        type:SET_TO_NULL_CONSTUCTOR_RACING_RECORD,
+        type:SET_CONSTUCTOR_RACING_RECORD,
         payload:constructor
     }
 
 }
+
 
 export function setConstructorRacingRecords(constructor:ConstructorsRacingRecordState|null){
 
