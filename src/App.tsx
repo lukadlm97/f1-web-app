@@ -16,6 +16,7 @@ import Navigator from './Navigator';
 import {useDispatch, useSelector } from 'react-redux'
 
 import {fetchAllCountries} from './redux/actions/CountryAction'
+import {fetchAllCompetitions} from './redux/actions/CompetitionAction'
 import {AppState} from './types/AppState';
 
 
@@ -55,7 +56,7 @@ const dispatch=useDispatch()
 
   React.useEffect(()=>{
     dispatch(fetchAllCountries())
-
+    dispatch(fetchAllCompetitions())
 },[])
 
   const [drawerState, setDrawerState] = React.useState(false)

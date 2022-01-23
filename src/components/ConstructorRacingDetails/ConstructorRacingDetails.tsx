@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {useDispatch, useSelector } from 'react-redux'
 
 import Grid from '@mui/material/Grid'
@@ -6,13 +6,28 @@ import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography';
 
 import {AppState} from '../../types/AppState'
+import CreateRacingDetails from '../RacingRecordCreation/CreateRacingDetails'
 
+
+import {fetchConstructorRacingRecords} from '../../redux/actions/ConstructorRacingRecordAction'
 
   export default function ConstructorRacingDetails() {
-    const selectedConstructorRacingRecords= useSelector((state:AppState)=>state.constructorRacingRecordsReducer.selectedConstructorRacingRecord)
+    const selectedConstructorRacingRecords= 
+                    useSelector((state:AppState)=>state.constructorRacingRecordsReducer.selectedConstructorRacingRecord)
+    const selectedConstructor= 
+                    useSelector((state:AppState)=>state.constructorReducer.selectedConstructor)
     const isLoading = useSelector((state:AppState)=>state.constructorRacingRecordsReducer.isLoadingSingleFetch)
+    const isNotCreatedYet = useSelector((state:AppState)=>state.constructorRacingRecordsReducer.isNotCreatedYet)
    
-   
+    const dispatch = useDispatch();
+
+    React.useEffect(()=>{
+
+        if(!isNotCreatedYet){
+            dispatch(fetchConstructorRacingRecords(selectedConstructor!=null?selectedConstructor.id:17))
+        }
+    },[isNotCreatedYet])
+
 
     return(
         
@@ -23,9 +38,9 @@ import {AppState} from '../../types/AppState'
         </div>
         :
         <div>
-        {selectedConstructorRacingRecords==null?
+        {isNotCreatedYet?
                 <div>
-                    Error
+                    <CreateRacingDetails />
                 </div>
                 :
         <Grid style={{display:'flex'}}>

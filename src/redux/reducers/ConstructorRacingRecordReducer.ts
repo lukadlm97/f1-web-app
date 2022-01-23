@@ -69,15 +69,17 @@ export default function constructorRacingRecordsReducer(state:ConstructorsRacing
                     isErrorOccuredOnUpdate:false,
                     isLoadingSingleFetch:false,
                     isSuccessfullySingleFetch:false,
-                    isErrorOccuredOnSingleFetch:false
+                    isErrorOccuredOnSingleFetch:false,
+                    isNotCreatedYet:false
                 }
             //if fetching is successful 
             case CREATE_COUNSTRUCTOR_RACING_RECORD_SUCCESS:
                 return {
                     ...state, 
-                    isLoadingCreation:true,
-                    isSuccessfullyDoneCreation:false,
+                    isLoadingCreation:false,
+                    isSuccessfullyDoneCreation:true,
                     constructorsRacingRecords:[...state.constructorsRacingRecords,action.payload],
+                    isNotCreatedYet:false,
                     error:'',
                 }
             //if fetching has any errors

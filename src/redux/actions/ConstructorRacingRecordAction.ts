@@ -105,7 +105,7 @@ export function createConstructorsRacingRecords(constructor:ConstructorsRacingRe
     
             })
         }else{
-            axios.post(`https://localhost:6001/api/v1/ConstructorRacingDetails/create/${constructor.constructorId}`,constructor)
+            axios.post(`https://localhost:6001/api/v1/ConstructorRacingDetails/create/`,constructor)
             .then((res)=>{
                 const constructor=res.data 
                 console.log(res.data );
@@ -168,7 +168,7 @@ export function fetchConstructorRacingRecords(constructorId:number){
         }).catch((err)=>{
             if(err.response.status==404){
                 dispatch(fetchConstructorRacingRecordsFailure(err,true))
-                setConstructorRacingRecords(null)
+               // setConstructorRacingRecords(null)
             }
 
         })

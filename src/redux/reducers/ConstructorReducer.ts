@@ -49,7 +49,9 @@ export default function constructorReducer(state:ConstructorReducerState=initiSt
             case CREATE_COUNSTRUCTOR_LOADING:
                 return {
                     ...state, 
-                    isLoadingCreation:true,
+                    isLoadingCreation:true, 
+                    isLoadingUpdate:false,
+                    isLoadingRemove:false,
                     isSuccessfullyDoneCreation:false,
                     isErrorOccuredOnCreation:false,
                     isSuccessfullyDoneUpdate:false,
@@ -62,6 +64,7 @@ export default function constructorReducer(state:ConstructorReducerState=initiSt
                 return {
                     ...state, 
                     isLoadingCreation:false,
+                    
                     isSuccessfullyDoneCreation:true,
                     constructors:[...state.constructors,action.payload],
                     error:'',
@@ -79,6 +82,8 @@ export default function constructorReducer(state:ConstructorReducerState=initiSt
                     return {
                         ...state, 
                         isLoadingUpdate:true,
+                        isLoadingCreation:false, 
+                        isLoadingRemove:false,
                         isSuccessfullyDoneCreation:false,
                         isErrorOccuredOnCreation:false,
                         isSuccessfullyDoneUpdate:false,
@@ -107,6 +112,8 @@ export default function constructorReducer(state:ConstructorReducerState=initiSt
                     case REMOVE_COUNSTRUCTOR_LOADING:
                         return {
                             ...state, 
+                            isLoadingCreation:false,
+                            isLoadingUpdate:false,
                             isLoadingRemove:true,
                             isSuccessfullyDoneCreation:false,
                             isErrorOccuredOnCreation:false,
