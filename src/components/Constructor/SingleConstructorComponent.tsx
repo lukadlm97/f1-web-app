@@ -7,14 +7,17 @@ import Typography from '@mui/material/Typography';
 import ConstructorDetails from '../ConstructorDetails/ConstructorDetails'
 import  CountryDetails from '../CountryDetails/CountryDetails'
 import ConstructorRacingDetails from '../ConstructorRacingDetails/ConstructorRacingDetails'
+import ConstructorsTechnicalStaffDetails from '../ConstructorsTechnicalStaff/ConstructorsTechnicalStaffDetails'
+
 
 import {AppState} from '../../types/AppState'
 import {CountryState} from '../../types/CountryTypes'
 
 
 export default function SingleConstructor(){
-    const selectedConstructor = useSelector((state:AppState)=>state.constructorReducer.selectedConstructor)
+   const selectedConstructor = useSelector((state:AppState)=>state.constructorReducer.selectedConstructor)
    const countires = useSelector((state: AppState) => state.countryReducer.countries)
+   const staffRoles =  useSelector((state: AppState) => state.staffRoleReducer.staffRoles)
       
     const [countryValue, setCountryValue] = 
     React.useState<CountryState>(selectedConstructor!=null?
@@ -24,7 +27,7 @@ export default function SingleConstructor(){
         <Grid>
             <Grid container spacing={6} sx={{display:'flex',marginTop:2,marginBottom:4,marginLeft:0.1}}>
 
-                    <Grid item xs={6}  style={{background:"#99a799",padding:20}}>
+                    <Grid item xs={5}  style={{background:"#99a799",padding:20}}>
                         <Typography variant="body2" color="black" style={{fontSize:16,paddingLeft:20,paddingBottom:10}}>
                             Constructor main details
                         </Typography>
@@ -49,16 +52,13 @@ export default function SingleConstructor(){
                             </Grid>
                         </Grid>
                 </Grid>
-                <Grid  item xs={5}  style={{background:"#99a799",padding:20,marginLeft:50}} >
+                <Grid  item xs={6}  style={{background:"#99a799",padding:20,marginLeft:50}} >
                     <Typography variant="body2" color="black" style={{fontSize:16,paddingLeft:20,paddingBottom:10}}>
                         Racing detiails
                     </Typography>
-                    <Grid style={{display:'flex'}}>
-                       
                         <Grid xs={12}>
                             <ConstructorRacingDetails />
                         </Grid>
-                    </Grid>
                 </Grid>
             </Grid>
             <Grid container spacing={4} sx={{display:'flex',marginTop:4,marginLeft:1}}>
@@ -70,14 +70,8 @@ export default function SingleConstructor(){
                     Driver 2
                 </Grid>
             </Grid>
-            <Grid container spacing={4} sx={{display:'flex',marginTop:4,marginLeft:1,marginBottom:4}} >
-                Staffs
-                <Grid item xs={4}>
-                    Staff 1
-                </Grid>
-                <Grid item xs={4}>
-                    Staff 2
-                </Grid>
+            <Grid>
+                    <ConstructorsTechnicalStaffDetails/>
             </Grid>
         </Grid>
     )

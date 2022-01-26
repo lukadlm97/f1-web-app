@@ -6,6 +6,9 @@ import constructorReducer from './ConstructorReducer'
 import technicalStaffReducer from './TechnicalStaffReducer'
 import constructorRacingRecordsReducer from './ConstructorRacingRecordReducer'
 import competitionReducer from './CompetitionReducer'
+import staffRoleReducer from './StaffRoleReducer'
+import constructorsTechnicalStaffReducer from './ConstructorsTechincalStaffReducer'
+import powerUnitSupplierReducer from './PowerUnitSupplierReducer'
 
 
 const rootReducer = () =>
@@ -15,7 +18,10 @@ const rootReducer = () =>
     constructorReducer,
     technicalStaffReducer,
     constructorRacingRecordsReducer,
-    competitionReducer
+    competitionReducer,
+    staffRoleReducer,
+    constructorsTechnicalStaffReducer,
+    powerUnitSupplierReducer
   })
 
 export default rootReducer

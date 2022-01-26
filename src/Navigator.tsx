@@ -8,6 +8,7 @@ import Constructors from './pages/Constructors/Constructors';
 import Constructor from './pages/Constructors/Constructor';
 import Staff from './pages/Staff/Staff';
 import NotFound  from './pages/NotFound/NotFound';
+import PowerUnitSuppliers from './pages/PowerUnitSuppliers/PowerUnitSuppliers'
 
 const Navigator =()=>(
             <Switch >
@@ -18,6 +19,7 @@ const Navigator =()=>(
                 <Route  path="/constructors/" component={Constructors}/>
                 <Route  path="/technicalStuff/" component={Staff}/>
                 <Route path="/constructor/:shortName" component={Constructor}/>
+                <Route path="/powerUnitSuppliers" component={PowerUnitSuppliers}/>
                 <Route exact component={NotFound} />
             </Switch >
 

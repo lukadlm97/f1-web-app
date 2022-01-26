@@ -8,7 +8,12 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 
 import CancelIcon from '@mui/icons-material/Cancel';
-
+import ConstructionIcon from '@mui/icons-material/Construction';
+import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import LooksOneIcon from '@mui/icons-material/LooksOne';
+import CategoryIcon from '@mui/icons-material/Category';
+import StartIcon from '@mui/icons-material/Start';
 
 import {AppState} from '../../types/AppState'
 import CreateRacingDetails from '../RacingRecordCreation/CreateRacingDetails'
@@ -70,46 +75,89 @@ import {fetchConstructorRacingRecords,setConstructorRacingRecords} from '../../r
                 <Grid>
 
                 <Grid style={{display:'flex'}}>
-                        <Grid xs={6}>
+                        <Grid xs={6} style={{background:"#F0E68C",margin:15,padding:15}}>
+                            <h3>Championship statistics</h3>
                             <Grid style={{display:'flex'}}>
-                                <Typography variant="body2" color="black" style={{fontSize:14}}>
-                                Constructor championships:
-                                {selectedConstructorRacingRecords!=null?selectedConstructorRacingRecords.constructorChampionships:"not supplied"}
+                                <Grid>
+                                    <Typography variant="body2" color="black" style={{fontSize:16,background: 'unset',marginLeft:100,marginTop:20}} >
+                                            {selectedConstructorRacingRecords!=null?selectedConstructorRacingRecords.constructorChampionships:"not supplied"}
+                                    </Typography>
+                                    <Typography style={{fontFamily: 'Source Sans,Arial,sans-serif',fontWeight: 700,
+                                                       fontSize: '.8125em', display: 'block'}}       >
+                                    <ConstructionIcon/> constructor championships
+
                                     </Typography>
                                 </Grid>
+                            </Grid>
                                 <Grid style={{display:'flex'}}>
-                                <Typography variant="body2" color="black" style={{fontSize:14}}>
-                                    Driver championships:{selectedConstructorRacingRecords!=null?selectedConstructorRacingRecords.driverChampionships:"not supplied"}
-                                    </Typography>
+                                    <Grid>
+                                        <Typography variant="body2" color="black" style={{fontSize:16,background: 'unset',justifyContent:'center',
+                                        marginLeft:100,marginTop:20}} >
+                                        {selectedConstructorRacingRecords!=null?selectedConstructorRacingRecords.driverChampionships:"not supplied"}
+                                        </Typography>
+                                        <Typography style={{fontFamily: 'Source Sans,Arial,sans-serif',fontWeight: 700,
+                                                        fontSize: '.8125em', display: 'block'}}       >
+                                        <MilitaryTechIcon/> driver championships
+
+                                        </Typography>
+                                    </Grid>
                                 </Grid>
                             
                         </Grid>
-                        <Grid xs={6}>
+                        <Grid xs={6} style={{background:"#F0E68C",margin:15,padding:15}}>
+                        <h3>Race statistics</h3>
                             <Grid style={{display:'flex'}}>
-                            <Typography variant="body2" color="black" style={{fontSize:14}}>
-                                Fastes laps: {selectedConstructorRacingRecords!=null?selectedConstructorRacingRecords.fastesLaps:"not supplied"}
-                                </Typography>
+                                <Grid xs={6}>
+                                            <Typography variant="body2" color="black" style={{fontSize:16,background: 'unset',
+                                            justifyContent:'center',marginLeft:50,marginTop:20}} >
+                                            {   selectedConstructorRacingRecords!=null?selectedConstructorRacingRecords.fastesLaps:"not supplied"}
+                                            </Typography>
+                                            <Typography style={{fontFamily: 'Source Sans,Arial,sans-serif',fontWeight: 700,
+                                                            fontSize: '.8125em', display: 'block'}}       >
+                                            <AccessTimeIcon/>  fastes laps
+
+                                            </Typography>
+                                </Grid>
+                                <Grid xs={6}>
+                                            <Typography variant="body2" color="black" style={{fontSize:16,background: 'unset',justifyContent:'center'
+                                            ,marginLeft:50,marginTop:20}} >
+                                            {   selectedConstructorRacingRecords!=null?selectedConstructorRacingRecords.raceVictories:"not supplied"}
+                                            </Typography>
+                                            <Typography style={{fontFamily: 'Source Sans,Arial,sans-serif',fontWeight: 700,
+                                                            fontSize: '.8125em', display: 'block'}}       >
+                                            <LooksOneIcon/>  race wins
+
+                                            </Typography>
+                                </Grid>
                             </Grid>
                             <Grid style={{display:'flex'}}>
-                            <Typography variant="body2" color="black" style={{fontSize:14}}>
-                                Race victories:{selectedConstructorRacingRecords!=null?selectedConstructorRacingRecords.raceVictories:"not supplied"}
-                                </Typography>
-                            </Grid>
-                            <Grid style={{display:'flex'}}>
-                                <Typography variant="body2" color="black" style={{fontSize:14}}>
-                                    Total podiums:{selectedConstructorRacingRecords!=null?selectedConstructorRacingRecords.podiums:"not supplied"}
-                                </Typography>
-                            </Grid>
-                            <Grid style={{display:'flex'}}>
-                                <Typography variant="body2" color="black" style={{fontSize:14}}>
-                                    Pol positions:{selectedConstructorRacingRecords!=null?selectedConstructorRacingRecords.polPositions:"not supplied"}
-                                </Typography>
+                                <Grid xs={6}>
+                                            <Typography variant="body2" color="black" style={{fontSize:16,background: 'unset',justifyContent:'center',
+                                            marginLeft:50,marginTop:20}} >
+                                            {   selectedConstructorRacingRecords!=null?selectedConstructorRacingRecords.podiums:"not supplied"}
+                                            </Typography>
+                                            <Typography style={{fontFamily: 'Source Sans,Arial,sans-serif',fontWeight: 700,
+                                                            fontSize: '.8125em', display: 'block'}}       >
+                                            <CategoryIcon/>   total podiums
+                                            </Typography>
+                                </Grid>
+                           
+                                <Grid  xs={6}>
+                                            <Typography variant="body2" color="black" style={{fontSize:16,background: 'unset',justifyContent:'center',
+                                            marginLeft:50,marginTop:20}} >
+                                            {   selectedConstructorRacingRecords!=null?selectedConstructorRacingRecords.polPositions:"not supplied"}
+                                            </Typography>
+                                            <Typography style={{fontFamily: 'Source Sans,Arial,sans-serif',fontWeight: 700,
+                                                            fontSize: '.8125em', display: 'block'}}       >
+                                            <StartIcon/>   pol positions
+                                            </Typography>
+                                </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid style={{display:'flex',marginTop:20,marginLeft:20}} >
+                    <Grid style={{display:'flex',marginTop:20,marginLeft:200}} >
                         <Button variant="outlined"
-                             style={{ display: 'inline-flex', color:'black', background:'#D1D9D9', width: 150,padding:2, height: 50,fontSize:14}} 
+                             style={{ display: 'inline-flex', color:'black', background:'#D1D9D9', width: 180,padding:2, height: 40,fontSize:14}} 
                              onClick={()=>handleUpdateConstructorRacingDetails()} >
                             <CancelIcon fontSize='large' style={{marginRight:10}}/>
                             Update Form
