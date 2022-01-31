@@ -17,7 +17,7 @@ const Navigator =()=>(
                 <Route  path="/drivers/" component={Driver}/>
                 <Route  path="/countries/" component={Countries}/>
                 <Route  path="/constructors/" component={Constructors}/>
-                <Route  path="/technicalStuff/" component={Staff}/>
+                <Route  path="/technicalStaff/" component={Staff}/>
                 <Route path="/constructor/:shortName" component={Constructor}/>
                 <Route path="/powerUnitSuppliers" component={PowerUnitSuppliers}/>
                 <Route exact component={NotFound} />

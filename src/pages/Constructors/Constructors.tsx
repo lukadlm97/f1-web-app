@@ -6,12 +6,14 @@ import Grid from '@mui/material/Grid'
 import GoToStaff from '../../components/Constructor/FindStaff'
 import ConstuctorCard from '../../components/Constructor/ConstuctorCard'
 import  CreateConstructor from '../../components/Constructor/CreateConstructor'
+import GoToPage from '../../components/Constructor/TakeALookPage'
 
 import './constructors.scss'
 
 import {fetchAllConstuctors} from '../../redux/actions/ConstructorAction'
 import {setConstructorRacingRecords} from '../../redux/actions/ConstructorRacingRecordAction'
 import {AppState} from '../../types/AppState'
+import {PageType} from '../../types/PageType';
 
 const Constructor=()=> {
     //get all constructor from redux state
@@ -59,11 +61,14 @@ const Constructor=()=> {
 
             </Box>
             <Grid sx={{display:'flex'}} spacing={2}>
-                <Grid xs={9}>
-                <CreateConstructor />
-                    </Grid>
-                <Grid xs={1}>
-                    <GoToStaff />
+                <Grid xs={4}>
+                    <CreateConstructor />
+                </Grid>
+                <Grid xs={5}>
+                    <GoToPage pageName={"Manufacturer"} route={"/powerUnitSuppliers/"} pageType={PageType.PowerUnitSuppliers} buttonColor='#D885A3'/>
+                </Grid>
+                <Grid xs={4}>
+                    <GoToPage pageName={"Staff"} route={"/technicalStaff/"} pageType={PageType.Staff} buttonColor='#7B6079'/>
                 </Grid>
             </Grid>
          </div>

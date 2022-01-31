@@ -40,7 +40,7 @@ export default function powerUnitSupplierReducer(state:PowerUnitSupplierReducerS
         case FETCH_POWER_UNIT_SUPPLIERS_FAILURE:
             return {
                 ...state,
-                isLoading:false, 
+                isLoading:false,
                 error:action.payload
             }
 

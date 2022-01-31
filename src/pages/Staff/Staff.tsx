@@ -8,7 +8,7 @@ import {AppState} from '../../types/AppState'
 import './staff.scss'
 
 
-const Driver=()=> {
+const Staff=()=> {
  
     
     return (
@@ -22,4 +22,4 @@ const Driver=()=> {
     )
 }
 
-export default Driver
+export default Staff
