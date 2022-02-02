@@ -10,9 +10,9 @@ import TableFooter from '@mui/material/TableFooter';
 import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
 import Modal from '@mui/material/Modal';
-import GroupRemoveIcon from '@mui/icons-material/GroupRemove';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
+import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove';
 
 
 import './powerUnitSupplier.scss'
@@ -22,7 +22,7 @@ import TablePaginationActions from '../DriverTable/TablePaginationActions';
 import { AppState } from '../../types/AppState'
 
 import {fetchAllPowerUnitSuppliers, selectPowerUnitSuppliers} from '../../redux/actions/PowerUnitSupplierAction'
-import StaffConfirmation from '../StaffConfirmation/StaffConfirmation'
+import PowerUnitSupplierConfirmationForm from './PowerUnitSupplierConfirmation'
 
 const PowerUnitSupplierTable = () => {
 
@@ -71,23 +71,23 @@ const PowerUnitSupplierTable = () => {
         return "Not supplied";
       };
 
-      const handleStaffRemove = (staffId:number) => 
+      const handleStaffRemove = (supplierId:number) => 
       {
-        const staff = suppliers.find(x=>x.id==staffId)
+        const supplier = suppliers.find(x=>x.id==supplierId)
     
-        if(staff == null){
+        if(supplier == null){
           //must pick
           console.log("Must pick driver");
           
           return
         }
-    
-        //dispatch(selectTechnicalStaff(staff));
+        
+        dispatch(selectPowerUnitSuppliers(supplier));
         handleOpenRemoveConfirmation();
       };
 
 
-      const [openRemoveConfirmation, setOpenRemoveConfirmation] = React.useState(false);
+    const [openRemoveConfirmation, setOpenRemoveConfirmation] = React.useState(false);
     const handleOpenRemoveConfirmation = () => setOpenRemoveConfirmation(true);
     const handleCloseRemoveConfirmation= () => setOpenRemoveConfirmation(false);
     return (
@@ -116,9 +116,10 @@ const PowerUnitSupplierTable = () => {
                         </TableCell>
                         <TableCell align="center" className='body-font'>{handleCountyConversion(row.countryId)}</TableCell>
                         <TableCell align="center" className='body-font'>
-                            <Tooltip title="Remove from staff">
-                        <Button style={{fontSize:8,background:'#f2ddc1',color:'red',marginLeft:10,marginTop:5}} onClick={()=>handleStaffRemove(row.id)}>
-                            <GroupRemoveIcon fontSize='large'/>
+                            <Tooltip title="Remove from suppliers">
+                        <Button style={{fontSize:8,background:'#f2ddc1',color:'red',marginLeft:10,marginTop:5}} 
+                            onClick={()=>handleStaffRemove(row.id)}>
+                            <PlaylistRemoveIcon fontSize='large'/>
                         </Button>
                         </Tooltip>
                         </TableCell>
@@ -157,7 +158,7 @@ const PowerUnitSupplierTable = () => {
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
             >
-                <StaffConfirmation closeForm={handleCloseRemoveConfirmation}/>
+                <PowerUnitSupplierConfirmationForm closeForm={handleCloseRemoveConfirmation}/>
             </Modal>
         </div>
     )

@@ -8,7 +8,7 @@ import ConstructorDetails from '../ConstructorDetails/ConstructorDetails'
 import  CountryDetails from '../CountryDetails/CountryDetails'
 import ConstructorRacingDetails from '../ConstructorRacingDetails/ConstructorRacingDetails'
 import ConstructorsTechnicalStaffDetails from '../ConstructorsTechnicalStaff/ConstructorsTechnicalStaffDetails'
-
+import ConstructorPowerUnit from '../ConstructorsPowerUnit/ConstructorPowerUnit'
 
 import {AppState} from '../../types/AppState'
 import {CountryState} from '../../types/CountryTypes'
@@ -59,6 +59,15 @@ export default function SingleConstructor(){
                         <Grid xs={12}>
                             <ConstructorRacingDetails />
                         </Grid>
+                </Grid>
+            </Grid>
+            <Grid container spacing={4} sx={{display:'flex',marginTop:4,marginLeft:1}}>
+                Power unit suppliers details
+                <Grid item xs={4}>
+                    <ConstructorPowerUnit />
+                </Grid>
+                <Grid item xs={4}>
+                   HISTORY
                 </Grid>
             </Grid>
             <Grid container spacing={4} sx={{display:'flex',marginTop:4,marginLeft:1}}>

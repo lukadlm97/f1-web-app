@@ -146,7 +146,7 @@ export default function PowerSupplierForm(props:IStaffForm){
  
                  <Button variant="contained" style={{ display: 'inline-flex',color:'white', background:'green', width: 150,padding:2, height: 50,fontSize:14,marginLeft:20}} onClick={()=>onSubmitSupplier()}>
                     <HowToRegIcon fontSize='large' style={{marginRight:10}} />
-                     Save Staff
+                     Save Supplier
                  </Button>
  
              </Grid>
