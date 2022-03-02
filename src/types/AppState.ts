@@ -7,6 +7,7 @@ import {CompetitionReducerState} from './CompetitionTypes'
 import {StaffRoleReducerState} from './StaffRoleTypes'
 import {ConstructorsTechnicalStaffReducerState} from './ConstructorsTechnicalStaffTypes'
 import {PowerUnitSupplierReducerState} from './PowerUnitSupplierTypes'
+import {ConstructorPowerUnitSupplierReducerState} from './ConstructorPowerUnitSupplier'
 export * from './CountryTypes'
 export * from './DriverTypes'
 export * from './ConstructorTypes'
@@ -29,4 +30,5 @@ export type AppState={
     staffRoleReducer:StaffRoleReducerState
     constructorsTechnicalStaffReducer:ConstructorsTechnicalStaffReducerState
     powerUnitSupplierReducer:PowerUnitSupplierReducerState
+    constructorPowerUnitSupplierReducer:ConstructorPowerUnitSupplierReducerState
 }

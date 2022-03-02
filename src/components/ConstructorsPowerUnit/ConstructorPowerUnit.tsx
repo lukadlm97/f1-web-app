@@ -21,26 +21,54 @@ import RacingDetailsForm from '../RacingRecordCreation/RacingDetailsForm'
 
 
 
-import {fetchConstructorRacingRecords,setConstructorRacingRecords} from '../../redux/actions/ConstructorRacingRecordAction'
+import {fetchConstructorsPowerUnitSupplierStaff,selectConstractConstructorPowerUnit} 
+from '../../redux/actions/ConstructorsPowerUnitSupplierAction'
 
 
 export default function ConstructorPowerUnit(){
-    const selectedConstructorRacingRecords= 
-    useSelector((state:AppState)=>state.constructorRacingRecordsReducer.selectedConstructorRacingRecord)
+    const selectedConstructorPowerUnitSupplier= 
+    useSelector((state:AppState)=>state.constructorPowerUnitSupplierReducer.selectedContract)
+    
+  const countires = useSelector((state: AppState) => state.countryReducer.countries)
+  const powerUnitSuppliers = useSelector((state: AppState) => state.powerUnitSupplierReducer.suppliers)
 const selectedConstructor= 
     useSelector((state:AppState)=>state.constructorReducer.selectedConstructor)
-const isLoading = useSelector((state:AppState)=>state.constructorRacingRecordsReducer.isLoadingSingleFetch)
-const isNotCreatedYet = useSelector((state:AppState)=>state.constructorRacingRecordsReducer.isNotCreatedYet)
+const isLoading = useSelector((state:AppState)=>state.constructorPowerUnitSupplierReducer.isLoading)
+const isNotCreatedYet = useSelector((state:AppState)=>state.constructorPowerUnitSupplierReducer.isNotCreatedYet)
 const [openConfirmation, setOpenConfirmation] = React.useState(false);
 const handleConfirmationOpen = () => setOpenConfirmation(true);
 const handleConfirmationClose = () => setOpenConfirmation(false);
+
+const handleCountyConversion = (countryId: number) => {
+
+    if (countryId == undefined)
+      return "Not supplied";
+
+    const findedCountry = countires.find(x => x.id == countryId);
+    if (findedCountry != null)
+      return findedCountry.name;
+
+    return "Not supplied";
+  };
+
+  const handleSupplierConversion = (supplierId: number|undefined) => {
+
+    if (supplierId == undefined)
+      return "Not supplied";
+
+    const findedSupplier = powerUnitSuppliers.find(x => x.id == supplierId);
+    if (findedSupplier != null)
+      return findedSupplier.supplierName;
+
+    return "Not supplied";
+  };
 
 const dispatch = useDispatch();
 
 React.useEffect(()=>{
 
 if(!isNotCreatedYet){
-dispatch(fetchConstructorRacingRecords(selectedConstructor!=null?selectedConstructor.id:17))
+dispatch(fetchConstructorsPowerUnitSupplierStaff(selectedConstructor!=null?selectedConstructor.id:17))
 }
 },[])
 
@@ -56,13 +84,12 @@ return
 }
 
 
-dispatch(setConstructorRacingRecords(selectedConstructorRacingRecords));
+dispatch(selectConstractConstructorPowerUnit(selectedConstructorPowerUnitSupplier));
 handleConfirmationOpen();
 };
 
 
     return(
-        
         <Card style={{marginBottom:10,background:"#D3E4CD",padding:10}}>
         {isLoading?
         <div>
@@ -76,9 +103,26 @@ handleConfirmationOpen();
                 </div>
                 :
                 <Grid>
-
-                <Grid style={{display:'flex'}}>
-                     
+                    <Grid style={{display:'flex'}}>
+                    <Grid style={{display:'flex'}}>
+                <Typography variant="body2" color="black" style={{fontSize:14}}>
+                    Full name:{handleSupplierConversion(
+                        selectedConstructorPowerUnitSupplier!=null?
+                    selectedConstructorPowerUnitSupplier.powerUnitSupplierId:undefined)}
+                </Typography>
+            </Grid>
+            <Grid style={{display:'flex'}}>
+                <Typography variant="body2" color="black" style={{fontSize:14}}>
+                    Short name:{selectedConstructorPowerUnitSupplier!=null?selectedConstructorPowerUnitSupplier.startDate:"not supplied"}
+                                    
+                </Typography>
+            </Grid>
+            <Grid style={{display:'flex'}}>
+                <Typography variant="body2" color="black" style={{fontSize:14}}>
+                    Short name:{selectedConstructorPowerUnitSupplier!=null?selectedConstructorPowerUnitSupplier.endDate:"not supplied"}
+                                
+                </Typography>
+            </Grid>
                     </Grid>
                     <Grid style={{display:'flex',marginTop:20,marginLeft:200}} >
                         <Button variant="outlined"

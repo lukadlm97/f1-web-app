@@ -9,7 +9,7 @@ import './powerUnitSuppliers.scss'
 
 import {AppState} from '../../types/AppState'
 
-const Countries=()=> {
+const PowerUnitSupplier=()=> {
  
     return (
         <div className="powerUnitSuppliers">
@@ -22,4 +22,4 @@ const Countries=()=> {
     )
 }
 
-export default Countries
+export default PowerUnitSupplier

@@ -19,7 +19,8 @@ const initiState:ConstructorPowerUnitSupplierReducerState={
     isLoadingContractEnd:false,
     isSuccessfullyContractEnded:false,
     isErrorOccuredOnContractEnd:false,
-    selectedContract:null
+    selectedContract:null,
+    isNotCreatedYet:false
 }
 
 export default function constructorsPowerUnitSupplierReducer(state:ConstructorPowerUnitSupplierReducerState=initiState, action:any){
@@ -45,7 +46,8 @@ export default function constructorsPowerUnitSupplierReducer(state:ConstructorPo
             return {
                 ...state,
                 isLoading:false, 
-                error:action.payload
+                error:action.payload,
+                isNotCreatedYet:action.creationStatus
             }
 
             case START_CONTRACT_CONSTUCTORS_POWER_UNIT_SUPPLIER_LOADING:

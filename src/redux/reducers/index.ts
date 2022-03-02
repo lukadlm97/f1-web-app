@@ -9,7 +9,7 @@ import competitionReducer from './CompetitionReducer'
 import staffRoleReducer from './StaffRoleReducer'
 import constructorsTechnicalStaffReducer from './ConstructorsTechincalStaffReducer'
 import powerUnitSupplierReducer from './PowerUnitSupplierReducer'
-
+import constructorPowerUnitSupplierReducer from './ConstructorPowerUnitSupplierReducer'
 
 const rootReducer = () =>
   combineReducers({
@@ -21,7 +21,8 @@ const rootReducer = () =>
     competitionReducer,
     staffRoleReducer,
     constructorsTechnicalStaffReducer,
-    powerUnitSupplierReducer
+    powerUnitSupplierReducer,
+    constructorPowerUnitSupplierReducer
   })
 
 export default rootReducer

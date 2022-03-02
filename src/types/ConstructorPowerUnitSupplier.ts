@@ -1,6 +1,9 @@
 export const FETCH_CONSTUCTORS_POWER_UNIT_SUPPLIER_LOADING="FETCH_CONSTUCTORS_POWER_UNIT_SUPPLIER_LOADING"
 export const FETCH_CONSTUCTORS_POWER_UNIT_SUPPLIER_SUCCESS="FETCH_CONSTUCTORS_POWER_UNIT_SUPPLIER_SUCCESS"
 export const FETCH_CONSTUCTORS_POWER_UNIT_SUPPLIER_FAILURE="FETCH_CONSTUCTORS_POWER_UNIT_SUPPLIER_FAILURE"
+export const FETCH_CONSTUCTORS_POWER_UNIT_HISTORY_SUPPLIER_LOADING="FETCH_CONSTUCTORS_POWER_UNIT_HISTORY_SUPPLIER_LOADING"
+export const FETCH_CONSTUCTORS_POWER_UNIT_HISTORY_SUPPLIER_SUCCESS="FETCH_CONSTUCTORS_POWER_UNIT_HISTORY_SUPPLIER_SUCCESS"
+export const FETCH_CONSTUCTORS_POWER_UNIT_HISTORY_SUPPLIER_FAILURE="FETCH_CONSTUCTORS_POWER_UNIT_HISTORY_SUPPLIER_FAILURE"
 export const START_CONTRACT_CONSTUCTORS_POWER_UNIT_SUPPLIER_LOADING="START_CONTRACT_CONSTUCTORS_POWER_UNIT_SUPPLIER_LOADING"
 export const START_CONTRACT_CONSTUCTORS_POWER_UNIT_SUPPLIER_SUCCESS="START_CONTRACT_CONSTUCTORS_POWER_UNIT_SUPPLIER_SUCCESS"
 export const START_CONTRACT_CONSTUCTORS_POWER_UNIT_SUPPLIER_FAILURE="START_CONTRACT_CONSTUCTORS_POWER_UNIT_SUPPLIER_FAILURE"
@@ -23,7 +26,8 @@ export type ConstructorPowerUnitSupplierReducerState={
     isLoadingContractEnd:boolean,
     isSuccessfullyContractEnded:boolean,
     isErrorOccuredOnContractEnd:boolean,
-    selectedContract:ConstructorPowerUnitSupplierState|null
+    selectedContract:ConstructorPowerUnitSupplierState|null,
+    isNotCreatedYet:boolean
 }
 
 export type ConstructorPowerUnitSupplierState={
@@ -55,6 +59,7 @@ export type FetchConstructorsPowerUnitSupplierSuccessAction={
 export type FetchConstructorsPowerUnitSupplierFailureAction={
     type: typeof FETCH_CONSTUCTORS_POWER_UNIT_SUPPLIER_FAILURE
     payload: string
+    isNotCreatedYet:boolean
 }
 export type StartNewContractConstructorsPowerUnitSupplierLoadingAction={
     type: typeof START_CONTRACT_CONSTUCTORS_POWER_UNIT_SUPPLIER_LOADING
@@ -98,6 +103,19 @@ export type SelectConstructorsPowerUnitSupplierAction={
     payload: ConstructorPowerUnitSupplierState|null
 }
 
+export type FetchConstructorsPowerUnitSupplierHistoryLoadingAction={
+    type: typeof FETCH_CONSTUCTORS_POWER_UNIT_HISTORY_SUPPLIER_LOADING
+    payload?: string
+}
+export type FetchConstructorsPowerUnitSupplierHistorySuccessAction={
+    type: typeof FETCH_CONSTUCTORS_POWER_UNIT_HISTORY_SUPPLIER_SUCCESS
+    payload: ConstructorPowerUnitSupplierState[]
+}
+export type FetchConstructorsPowerUnitSupplierHistoryFailureAction={
+    type: typeof FETCH_CONSTUCTORS_POWER_UNIT_HISTORY_SUPPLIER_FAILURE
+    payload: string
+}
+
 export type ConstructorsPowerUnitSupplierActions= 
 FetchConstructorsPowerUnitSupplierLoadingAction|
 FetchConstructorsPowerUnitSupplierSuccessAction|
@@ -111,4 +129,7 @@ EndContractConstructorsPowerUnitSupplierFailureAction|
 ChangeConstructorsPowerUnitSupplierFailureAction|
 ChangeConstructorsPowerUnitSupplierLoadingAction|
 ChangeConstructorsPowerUnitSupplierSuccessAction|
-SelectConstructorsPowerUnitSupplierAction
+SelectConstructorsPowerUnitSupplierAction|
+FetchConstructorsPowerUnitSupplierHistoryLoadingAction|
+FetchConstructorsPowerUnitSupplierHistorySuccessAction|
+FetchConstructorsPowerUnitSupplierHistoryFailureAction

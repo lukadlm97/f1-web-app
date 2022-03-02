@@ -23,7 +23,8 @@ export type PowerUnitSupplierReducerState={
     isLoadingDelete:boolean,
     isSuccessfullyDoneDelete:boolean,
     isErrorOccuredOnDelete:boolean,
-    selectedSupplier:PowerUnitSupplierState|null
+    selectedSupplier:PowerUnitSupplierState|null,
+    isNotCreatedYet:boolean,
 }
 
 export type PowerUnitSupplierState={
