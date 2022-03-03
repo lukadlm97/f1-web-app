@@ -10,8 +10,9 @@ import GoToPage from '../../components/Constructor/TakeALookPage'
 
 import './constructors.scss'
 
-import {fetchAllConstuctors} from '../../redux/actions/ConstructorAction'
+import {fetchAllConstuctors,selectConstructor} from '../../redux/actions/ConstructorAction'
 import {setConstructorRacingRecords} from '../../redux/actions/ConstructorRacingRecordAction'
+import {selectConstractConstructorPowerUnit} from '../../redux/actions/ConstructorsPowerUnitSupplierAction'
 import {AppState} from '../../types/AppState'
 import {PageType} from '../../types/PageType';
 
@@ -24,7 +25,10 @@ const Constructor=()=> {
 
     React.useEffect(()=>{
     dispatch(fetchAllConstuctors())
+    dispatch(selectConstructor(null));
     dispatch(setConstructorRacingRecords(null))
+
+    dispatch(selectConstractConstructorPowerUnit(null));
     },[])
  
     return (

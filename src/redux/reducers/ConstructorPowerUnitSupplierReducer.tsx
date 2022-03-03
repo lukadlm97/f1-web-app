@@ -31,7 +31,8 @@ export default function constructorsPowerUnitSupplierReducer(state:ConstructorPo
         case FETCH_CONSTUCTORS_POWER_UNIT_SUPPLIER_LOADING:
             return {
                 ...state, 
-                isLoading:true
+                isLoading:true,
+                isNotCreatedYet:false
             }
         //if fetching is successful 
         case FETCH_CONSTUCTORS_POWER_UNIT_SUPPLIER_SUCCESS:

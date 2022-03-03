@@ -26,7 +26,6 @@ export default function SingleConstructor(){
     return(
         <Grid>
             <Grid container spacing={6} sx={{display:'flex',marginTop:2,marginBottom:4,marginLeft:0.1}}>
-
                     <Grid item xs={5}  style={{background:"#99a799",padding:20}}>
                         <Typography variant="body2" color="black" style={{fontSize:16,paddingLeft:20,paddingBottom:10}}>
                             Constructor main details
@@ -61,10 +60,13 @@ export default function SingleConstructor(){
                         </Grid>
                 </Grid>
             </Grid>
-            <Grid container spacing={4} sx={{display:'flex',marginTop:4,marginLeft:1}}>
-                Power unit suppliers details
-                <Grid item xs={4}>
-                    <ConstructorPowerUnit />
+            <Grid container spacing={6} sx={{display:'flex',marginTop:2,marginBottom:4,marginLeft:0.1}}>
+                
+                <Grid item xs={5}  style={{background:"#99a799",padding:20}}>
+                        <Typography variant="body2" color="black" style={{fontSize:16,paddingLeft:20,paddingBottom:10}}>
+                            Power unit suppliers details
+                        </Typography>
+                        <ConstructorPowerUnit />
                 </Grid>
                 <Grid item xs={4}>
                    HISTORY

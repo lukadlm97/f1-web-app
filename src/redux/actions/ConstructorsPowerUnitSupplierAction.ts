@@ -36,24 +36,28 @@ export function fetchConstructorsPowerUnitSupplierFailure(error:string,status:bo
     return {
         type:FETCH_CONSTUCTORS_POWER_UNIT_SUPPLIER_FAILURE,
         payload:error,
-        isNotCreatedYet:status
+        creationStatus:status
     }
 }
 
 // fetch countries data
 
-export function fetchConstructorsPowerUnitSupplierStaff(constructorId:number){
+export function fetchConstructorsPowerUnitSupplier(constructorId:number){
 
     return (dispatch:Dispatch)=>{
         dispatch(fetchConstructorsPowerUnitSupplierLoading())
+        console.log(constructorId);
+        
         //axios call 
         axios.get(`https://localhost:6001/api/v1/ConstructorPowerUnit/${constructorId}`)
         .then((res)=>{
             const powerUnitSupplier=res.data 
+            console.log(powerUnitSupplier);
             dispatch(fetchConstructorsPowerUnitSupplierSuccess(powerUnitSupplier))
         }).catch((err)=>{
-            dispatch(fetchConstructorsPowerUnitSupplierFailure(err,true))
-
+            console.log(err);
+                dispatch(fetchConstructorsPowerUnitSupplierFailure(err,true))
+            
         })
     }
 }
@@ -161,9 +165,8 @@ export function selectConstractTechnicalStaffSuccess(powerUnitSupplierContract:C
 
 export function selectConstractConstructorPowerUnit(powerUnitSupplier:ConstructorPowerUnitSupplierState|null){
     return (dispatch:Dispatch)=>{
-
+        console.log(powerUnitSupplier);
         dispatch(selectConstractTechnicalStaffSuccess(powerUnitSupplier))
-      
     }
 }
 

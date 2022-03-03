@@ -16,18 +16,18 @@ import CategoryIcon from '@mui/icons-material/Category';
 import StartIcon from '@mui/icons-material/Start';
 
 import {AppState} from '../../types/AppState'
-import CreateRacingDetails from '../RacingRecordCreation/CreateRacingDetails'
+import CreateContract from '../ConstructorPowerUnitSupplierForm/CreatePowerUnitSupplierContract'
 import RacingDetailsForm from '../RacingRecordCreation/RacingDetailsForm'
 
 
 
-import {fetchConstructorsPowerUnitSupplierStaff,selectConstractConstructorPowerUnit} 
+import {fetchConstructorsPowerUnitSupplier,selectConstractConstructorPowerUnit} 
 from '../../redux/actions/ConstructorsPowerUnitSupplierAction'
 
 
 export default function ConstructorPowerUnit(){
     const selectedConstructorPowerUnitSupplier= 
-    useSelector((state:AppState)=>state.constructorPowerUnitSupplierReducer.selectedContract)
+    useSelector((state:AppState)=>state.constructorPowerUnitSupplierReducer.constructorsPowerUnit)
     
   const countires = useSelector((state: AppState) => state.countryReducer.countries)
   const powerUnitSuppliers = useSelector((state: AppState) => state.powerUnitSupplierReducer.suppliers)
@@ -67,9 +67,8 @@ const dispatch = useDispatch();
 
 React.useEffect(()=>{
 
-if(!isNotCreatedYet){
-dispatch(fetchConstructorsPowerUnitSupplierStaff(selectedConstructor!=null?selectedConstructor.id:17))
-}
+dispatch(fetchConstructorsPowerUnitSupplier(selectedConstructor!=null?selectedConstructor.id:-1))
+
 },[])
 
 
@@ -99,27 +98,27 @@ handleConfirmationOpen();
         <div>
         {isNotCreatedYet?
                 <div>
-                    <CreateRacingDetails />
+                    <CreateContract />
                 </div>
                 :
                 <Grid>
-                    <Grid style={{display:'flex'}}>
-                    <Grid style={{display:'flex'}}>
+        <Grid >
+            <Grid style={{display:'flex'}}>
                 <Typography variant="body2" color="black" style={{fontSize:14}}>
-                    Full name:{handleSupplierConversion(
+                    Supplier name:{handleSupplierConversion(
                         selectedConstructorPowerUnitSupplier!=null?
                     selectedConstructorPowerUnitSupplier.powerUnitSupplierId:undefined)}
                 </Typography>
             </Grid>
             <Grid style={{display:'flex'}}>
                 <Typography variant="body2" color="black" style={{fontSize:14}}>
-                    Short name:{selectedConstructorPowerUnitSupplier!=null?selectedConstructorPowerUnitSupplier.startDate:"not supplied"}
+                    Contrract started:{selectedConstructorPowerUnitSupplier!=null?selectedConstructorPowerUnitSupplier.startDate:"not supplied"}
                                     
                 </Typography>
             </Grid>
             <Grid style={{display:'flex'}}>
                 <Typography variant="body2" color="black" style={{fontSize:14}}>
-                    Short name:{selectedConstructorPowerUnitSupplier!=null?selectedConstructorPowerUnitSupplier.endDate:"not supplied"}
+                    Years estaminated:{selectedConstructorPowerUnitSupplier!=null?selectedConstructorPowerUnitSupplier.yearEstaminate:"not supplied"}
                                 
                 </Typography>
             </Grid>
