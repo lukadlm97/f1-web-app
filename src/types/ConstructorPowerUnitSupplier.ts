@@ -44,7 +44,7 @@ export type ConstructorPowerUnitSupplierStateInsertState={
     constructorId:number
     powerUnitSupplierId:number
     yearEstaminate:number
-    IsFabricConnection:boolean
+    isFabricConnection:boolean
 }
 
 //action types

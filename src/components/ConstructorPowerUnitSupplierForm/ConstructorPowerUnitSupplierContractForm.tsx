@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid'
+import Checkbox from '@mui/material/Checkbox';
 
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
@@ -13,10 +14,9 @@ import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import CancelIcon from '@mui/icons-material/Cancel';
 
-
 import { useDispatch, useSelector } from 'react-redux'
 import {AppState} from '../../types/AppState'
-import {ConstructorPowerUnitSupplierState} from '../../types/ConstructorPowerUnitSupplier'
+import {ConstructorPowerUnitSupplierStateInsertState} from '../../types/ConstructorPowerUnitSupplier'
 import {PowerUnitSupplierState} from '../../types/PowerUnitSupplierTypes'
 import {ConstructorState} from '../../types/ConstructorTypes'
 import {startContractForPowerUnitSupplierLConstructor} from '../../redux/actions/ConstructorsPowerUnitSupplierAction'
@@ -55,11 +55,15 @@ export default function ConstructorPowerUnitSupplierContractForm(props:IStaffFor
 
 
     const [isFabricTeamValue, setIsFabricTeamValue] = React.useState<boolean>(false);
-    const onIsFabricTeamChange = (e: any) => setIsFabricTeamValue(e.target.value);
+    const onIsFabricTeamChange = (e: any) => {
+        var newValue = !isFabricTeamValue
+        setIsFabricTeamValue(newValue);
+    }
+
     const handleIsFabricTeamSubmit = () => console.log(isFabricTeamValue);
     const handleIsFabricTeamReset = () => setIsFabricTeamValue(false);
 
-      const [constructorValue, setConstructorValue] = React.useState<ConstructorState>(selectedConstructor);
+      const [constructorValue, setConstructorValue] = React.useState<ConstructorState>(selectedConstructor!=null?selectedConstructor:constructors[0]);
       const handleConstructorSubmit = () => console.log(constructorValue);
       const handleConstructorReset = () => setConstructorValue(constructors[0]);
 
@@ -75,15 +79,12 @@ export default function ConstructorPowerUnitSupplierContractForm(props:IStaffFor
       const handleYearEstaminateReset = () => setYearEstaminateValue(0);
 
       const onSubmitSupplier=()=>{
-            const newPowerUnit:ConstructorPowerUnitSupplierState =  
+            const newPowerUnit:ConstructorPowerUnitSupplierStateInsertState =  
             {
-                id:0,
                constructorId:  constructorValue==null?6:constructorValue.id,
                yearEstaminate:yearEstaminateValue,
                isFabricConnection:isFabricTeamValue,
                powerUnitSupplierId:powerUnitSupplierValue==null?2:powerUnitSupplierValue.id,
-               endDate:new Date(),
-               startDate:new Date()
             };
         dispatch(startContractForPowerUnitSupplierLConstructor(newPowerUnit))         
         setSubmitFired(true)
@@ -136,7 +137,6 @@ export default function ConstructorPowerUnitSupplierContractForm(props:IStaffFor
                      />
              </Grid>
              <Grid  >
-
                 <Typography id="modal-modal-title" variant="h6" component="h2" style={{ display: 'inline-block', width: 270, height: 70 }} fontSize={15}>
                     Enter years estaminate:
                 </Typography>
@@ -149,6 +149,15 @@ export default function ConstructorPowerUnitSupplierContractForm(props:IStaffFor
                     size='small'
                     value={yearEstaminateValue}
                     onChange={onYearEstaminateValueChange}
+                    />
+            </Grid>
+            <Grid  >
+                <Typography id="modal-modal-title" variant="h6" component="h2" style={{ display: 'inline-block', width: 270, height: 70 }} fontSize={15}>
+                    Is fabric team:
+                </Typography>
+                <Checkbox
+                    checked={isFabricTeamValue}
+                    onChange={onIsFabricTeamChange}
                     />
             </Grid>
              <Grid >
@@ -179,7 +188,7 @@ export default function ConstructorPowerUnitSupplierContractForm(props:IStaffFor
                   }
                    {isCreated &&
                   <Grid style={{fontSize:14}}>
-                     Technical staff created
+                     Contract started
                      <Button variant="outlined" style={{display: 'inline-flex',float: 'right' ,color:'#545454', background:'red', padding:2, width: 200, height: 25,fontSize:14,marginLeft:20}} onClick={()=>onCloseForm()} >
                          <CancelIcon fontSize='large' style={{marginRight:10}}/>
                          Close Form
@@ -189,7 +198,7 @@ export default function ConstructorPowerUnitSupplierContractForm(props:IStaffFor
                  
                    {isErrorOccuredOnCreation &&
                  <Grid style={{fontSize:14}}>
-                     Technical staff not created.
+                      Contract not started
                      <Button variant="outlined" style={{float: 'right',display: 'inline-flex',color:'#545454', background:'red', padding:2, width: 200, height: 25,fontSize:14,marginLeft:20}} onClick={()=>onCloseForm()} >
                          <CancelIcon fontSize='large' style={{marginRight:10}}/>
                          Close Form

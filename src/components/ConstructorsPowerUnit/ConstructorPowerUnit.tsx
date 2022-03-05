@@ -21,7 +21,7 @@ import RacingDetailsForm from '../RacingRecordCreation/RacingDetailsForm'
 
 
 
-import {fetchConstructorsPowerUnitSupplier,selectConstractConstructorPowerUnit} 
+import {fetchConstructorsPowerUnitSupplier,removeConstructorPowerUnitSupplier} 
 from '../../redux/actions/ConstructorsPowerUnitSupplierAction'
 
 
@@ -29,7 +29,6 @@ export default function ConstructorPowerUnit(){
     const selectedConstructorPowerUnitSupplier= 
     useSelector((state:AppState)=>state.constructorPowerUnitSupplierReducer.constructorsPowerUnit)
     
-  const countires = useSelector((state: AppState) => state.countryReducer.countries)
   const powerUnitSuppliers = useSelector((state: AppState) => state.powerUnitSupplierReducer.suppliers)
 const selectedConstructor= 
     useSelector((state:AppState)=>state.constructorReducer.selectedConstructor)
@@ -39,17 +38,6 @@ const [openConfirmation, setOpenConfirmation] = React.useState(false);
 const handleConfirmationOpen = () => setOpenConfirmation(true);
 const handleConfirmationClose = () => setOpenConfirmation(false);
 
-const handleCountyConversion = (countryId: number) => {
-
-    if (countryId == undefined)
-      return "Not supplied";
-
-    const findedCountry = countires.find(x => x.id == countryId);
-    if (findedCountry != null)
-      return findedCountry.name;
-
-    return "Not supplied";
-  };
 
   const handleSupplierConversion = (supplierId: number|undefined) => {
 
@@ -72,19 +60,16 @@ dispatch(fetchConstructorsPowerUnitSupplier(selectedConstructor!=null?selectedCo
 },[])
 
 
-const handleUpdateConstructorRacingDetails = () => 
+const handleEndContractConstructorPowerUnitSupplier = () => 
 {
-
-if(selectedConstructor == null){
-//must pick
-console.log("Must pick constructor");
-
-return
-}
-
-
-dispatch(selectConstractConstructorPowerUnit(selectedConstructorPowerUnitSupplier));
-handleConfirmationOpen();
+    if(selectedConstructor == null || selectedConstructorPowerUnitSupplier==null){
+    //must pick
+    console.log("Must pick constructor");
+    
+    return
+    }
+    console.log(selectedConstructorPowerUnitSupplier.id)
+    dispatch(removeConstructorPowerUnitSupplier(selectedConstructorPowerUnitSupplier.id));
 };
 
 
@@ -126,18 +111,12 @@ handleConfirmationOpen();
                     <Grid style={{display:'flex',marginTop:20,marginLeft:200}} >
                         <Button variant="outlined"
                              style={{ display: 'inline-flex', color:'black', background:'#D1D9D9', width: 180,padding:2, height: 40,fontSize:14}} 
-                             onClick={()=>handleUpdateConstructorRacingDetails()} >
+                             onClick={()=>handleEndContractConstructorPowerUnitSupplier()} >
                             <CancelIcon fontSize='large' style={{marginRight:10}}/>
-                            Update Form
+                            End contract
                         </Button>
                     </Grid>
-                <Modal
-                    open={openConfirmation}
-                    onClose={handleConfirmationClose}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description">
-                    <RacingDetailsForm closeForm={handleConfirmationClose}/>
-                </Modal>
+            
         </Grid>
         }
         </div>

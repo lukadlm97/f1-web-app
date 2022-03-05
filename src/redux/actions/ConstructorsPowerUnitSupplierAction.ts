@@ -9,7 +9,8 @@ import {ConstructorPowerUnitSupplierState,
     END_CONTRACT_CONSTUCTORS_POWER_UNIT_SUPPLIER_LOADING,END_CONTRACT_CONSTUCTORS_POWER_UNIT_SUPPLIER_SUCCESS,
     CHANGE_CONSTUCTORS_POWER_UNIT_SUPPLIER_FAILURE,CHANGE_CONSTUCTORS_POWER_UNIT_SUPPLIER_LOADING,
     CHANGE_CONSTUCTORS_POWER_UNIT_SUPPLIER_SUCCESS,FETCH_CONSTUCTORS_POWER_UNIT_HISTORY_SUPPLIER_FAILURE,FETCH_CONSTUCTORS_POWER_UNIT_HISTORY_SUPPLIER_LOADING,
-    FETCH_CONSTUCTORS_POWER_UNIT_HISTORY_SUPPLIER_SUCCESS,ConstructorsPowerUnitSupplierActions, SELECT_CONTRACT_FOR_POWER_UNIT_SUPPLIER_SUCCESS
+    FETCH_CONSTUCTORS_POWER_UNIT_HISTORY_SUPPLIER_SUCCESS,ConstructorsPowerUnitSupplierActions,
+     SELECT_CONTRACT_FOR_POWER_UNIT_SUPPLIER_SUCCESS,ConstructorPowerUnitSupplierStateInsertState
 } from '../../types/ConstructorPowerUnitSupplier'
 
 
@@ -56,8 +57,7 @@ export function fetchConstructorsPowerUnitSupplier(constructorId:number){
             dispatch(fetchConstructorsPowerUnitSupplierSuccess(powerUnitSupplier))
         }).catch((err)=>{
             console.log(err);
-                dispatch(fetchConstructorsPowerUnitSupplierFailure(err,true))
-            
+            dispatch(fetchConstructorsPowerUnitSupplierFailure(err,true))
         })
     }
 }
@@ -89,14 +89,14 @@ export function startContractForConstructorPowerUnitSupplierLError(error:string)
 
 // add driver data
 
-export function startContractForPowerUnitSupplierLConstructor(powerUnitSupplierContract:ConstructorPowerUnitSupplierState){
+export function startContractForPowerUnitSupplierLConstructor(powerUnitSupplierContract:ConstructorPowerUnitSupplierStateInsertState){
 
     return (dispatch:Dispatch)=>{
 
         dispatch(startContractForConstructorPowerUnitSupplierLoading())
         //axios call 
         console.log(powerUnitSupplierContract);
-        axios.post('https://localhost:6001/api/v1/ConstructorPowerUnit/start',powerUnitSupplierContract)
+        axios.post('https://localhost:6001/api/v1/ConstructorPowerUnit/startContract',powerUnitSupplierContract)
         .then((res)=>{
             const createdTechnicalStaff=res.data 
             dispatch(startContractForConstructorPowerUnitSupplierLSuccess(createdTechnicalStaff))
@@ -123,7 +123,8 @@ export function endContractConstructorPowerUnitSupplierLoading():ConstructorsPow
 export function endContractConstructorPowerUnitSupplierSuccess(technicalStaffId:number):ConstructorsPowerUnitSupplierActions{
     return {
         type:END_CONTRACT_CONSTUCTORS_POWER_UNIT_SUPPLIER_SUCCESS,
-        payload:technicalStaffId
+        payload:technicalStaffId,
+        creationStatus:true
     }
 }
 

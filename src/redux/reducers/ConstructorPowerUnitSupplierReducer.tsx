@@ -57,6 +57,7 @@ export default function constructorsPowerUnitSupplierReducer(state:ConstructorPo
                 isLoadingContractStart:true,
                 isSuccessfullyContractStart:false,
                 isErrorOccuredContractStart:false,
+                isNotCreatedYet:false
             }
 
         case START_CONTRACT_CONSTUCTORS_POWER_UNIT_SUPPLIER_FAILURE:
@@ -126,7 +127,8 @@ export default function constructorsPowerUnitSupplierReducer(state:ConstructorPo
                     isLoadingContractEnd:false,
                     error:'',
                     isSuccessfullyContractEnd:true,
-                    constructorsPowerUnit:null
+                    constructorsPowerUnit:null,
+                    isNotCreatedYet:action.creationStatus
                 }
                 
                 
