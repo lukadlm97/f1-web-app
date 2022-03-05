@@ -1,6 +1,8 @@
 import {ConstructorPowerUnitSupplierReducerState,
     FETCH_CONSTUCTORS_POWER_UNIT_SUPPLIER_LOADING, FETCH_CONSTUCTORS_POWER_UNIT_SUPPLIER_SUCCESS, 
     FETCH_CONSTUCTORS_POWER_UNIT_SUPPLIER_FAILURE,
+    FETCH_CONSTUCTORS_POWER_UNIT_HISTORY_SUPPLIER_FAILURE,FETCH_CONSTUCTORS_POWER_UNIT_HISTORY_SUPPLIER_LOADING,
+    FETCH_CONSTUCTORS_POWER_UNIT_HISTORY_SUPPLIER_SUCCESS,
     START_CONTRACT_CONSTUCTORS_POWER_UNIT_SUPPLIER_LOADING,START_CONTRACT_CONSTUCTORS_POWER_UNIT_SUPPLIER_FAILURE,
     START_CONTRACT_CONSTUCTORS_POWER_UNIT_SUPPLIER_SUCCESS, END_CONTRACT_CONSTUCTORS_POWER_UNIT_SUPPLIER_LOADING,
     END_CONTRACT_CONSTUCTORS_POWER_UNIT_SUPPLIER_FAILURE,END_CONTRACT_CONSTUCTORS_POWER_UNIT_SUPPLIER_SUCCESS,
@@ -20,7 +22,10 @@ const initiState:ConstructorPowerUnitSupplierReducerState={
     isSuccessfullyContractEnded:false,
     isErrorOccuredOnContractEnd:false,
     selectedContract:null,
-    isNotCreatedYet:false
+    isNotCreatedYet:false,
+    isLoadingHistory:false,
+    suppliersHistory:null,
+    notProvidedHistory:false
 }
 
 export default function constructorsPowerUnitSupplierReducer(state:ConstructorPowerUnitSupplierReducerState=initiState, action:any){
@@ -138,6 +143,27 @@ export default function constructorsPowerUnitSupplierReducer(state:ConstructorPo
                         selectedStaff:action.payload
                     }
 
+                case FETCH_CONSTUCTORS_POWER_UNIT_HISTORY_SUPPLIER_FAILURE:
+                    return{
+                        isLoadingHistory:false,
+                        suppliersHistory:action.payload,
+                        notProvidedHistory:true
+                }
+
+                case FETCH_CONSTUCTORS_POWER_UNIT_HISTORY_SUPPLIER_LOADING:
+                    return{
+                        ...state,
+                        isLoadingHistory:true
+                }
+
+
+                case FETCH_CONSTUCTORS_POWER_UNIT_HISTORY_SUPPLIER_SUCCESS:
+                    return{
+                        ...state,
+                        isLoadingHistory:false,
+                        suppliersHistory:action.payload,
+                        notProvidedHistory:false
+                }
         default:
             return state
 

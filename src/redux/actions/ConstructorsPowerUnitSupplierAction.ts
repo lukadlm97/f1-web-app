@@ -41,6 +41,54 @@ export function fetchConstructorsPowerUnitSupplierFailure(error:string,status:bo
     }
 }
 
+
+
+//fetch all countries
+export function fetchConstructorsPowerUnitSupplierHistoryLoading():ConstructorsPowerUnitSupplierActions{
+
+    return {
+        type:FETCH_CONSTUCTORS_POWER_UNIT_HISTORY_SUPPLIER_LOADING
+    }
+
+}
+
+// fetch all countries success
+export function fetchConstructorsPowerUnitSupplierHistorySuccess(powerUnitSuppliers:ConstructorPowerUnitSupplierState[]):ConstructorsPowerUnitSupplierActions{
+    return {
+        type:FETCH_CONSTUCTORS_POWER_UNIT_HISTORY_SUPPLIER_SUCCESS,
+        payload:powerUnitSuppliers
+    }
+
+}
+
+// fetch all countries failure
+export function fetchConstructorsPowerUnitSupplierHistoryFailure(error:string,status:boolean):ConstructorsPowerUnitSupplierActions{
+    return {
+        type:FETCH_CONSTUCTORS_POWER_UNIT_HISTORY_SUPPLIER_FAILURE,
+        payload:error
+    }
+}
+
+export function fetchConstructorsPowerUnitSupplierHistory(constructorId:number){
+
+    return (dispatch:Dispatch)=>{
+        dispatch(fetchConstructorsPowerUnitSupplierHistoryLoading())
+        console.log(constructorId);
+        
+        //axios call 
+        axios.get(`https://localhost:6001/api/v1/ConstructorPowerUnit/${constructorId}/history`)
+        .then((res)=>{
+            const powerUnitSuppliers=res.data 
+            console.log(powerUnitSuppliers);
+            dispatch(fetchConstructorsPowerUnitSupplierHistorySuccess(powerUnitSuppliers))
+        }).catch((err)=>{
+            console.log(err);
+            dispatch(fetchConstructorsPowerUnitSupplierHistoryFailure(err,true))
+        })
+    }
+}
+
+
 // fetch countries data
 
 export function fetchConstructorsPowerUnitSupplier(constructorId:number){
@@ -173,47 +221,3 @@ export function selectConstractConstructorPowerUnit(powerUnitSupplier:Constructo
 
 
 
-//fetch all countries
-export function fetchConstructorsPowerUnitSupplierHistoryLoading():ConstructorsPowerUnitSupplierActions{
-
-    return {
-        type:FETCH_CONSTUCTORS_POWER_UNIT_HISTORY_SUPPLIER_LOADING
-    }
-
-}
-
-// fetch all countries success
-export function fetchConstructorsPowerUnitSupplierHistorySuccess(powerUnitSuppliers:ConstructorPowerUnitSupplierState[]):ConstructorsPowerUnitSupplierActions{
-    return {
-        type:FETCH_CONSTUCTORS_POWER_UNIT_HISTORY_SUPPLIER_SUCCESS,
-        payload:powerUnitSuppliers
-    }
-
-}
-
-// fetch all countries failure
-export function fetchConstructorsPowerUnitSupplierHistoryFailure(error:string):ConstructorsPowerUnitSupplierActions{
-    return {
-        type:FETCH_CONSTUCTORS_POWER_UNIT_HISTORY_SUPPLIER_FAILURE,
-        payload:error
-        
-    }
-}
-
-// fetch countries data
-
-export function fetchConstructorsPowerUnitSupplierHistory(constructorId:number){
-
-    return (dispatch:Dispatch)=>{
-        dispatch(fetchConstructorsPowerUnitSupplierHistoryLoading())
-        //axios call 
-        axios.get(`https://localhost:6001/api/v1/ConstructorPowerUnit/${constructorId}`)
-        .then((res)=>{
-            const powerUnitSupplier=res.data 
-            dispatch(fetchConstructorsPowerUnitSupplierHistorySuccess(powerUnitSupplier))
-        }).catch((err)=>{
-            dispatch(fetchConstructorsPowerUnitSupplierHistoryFailure(err))
-
-        })
-    }
-}

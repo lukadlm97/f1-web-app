@@ -21,8 +21,9 @@ import RacingDetailsForm from '../RacingRecordCreation/RacingDetailsForm'
 
 
 
-import {fetchConstructorsPowerUnitSupplier,removeConstructorPowerUnitSupplier} 
+import {fetchConstructorsPowerUnitSupplier,removeConstructorPowerUnitSupplier,fetchConstructorsPowerUnitSupplierHistory} 
 from '../../redux/actions/ConstructorsPowerUnitSupplierAction'
+import { wait } from '@testing-library/user-event/dist/utils';
 
 
 export default function ConstructorPowerUnit(){
@@ -60,7 +61,7 @@ dispatch(fetchConstructorsPowerUnitSupplier(selectedConstructor!=null?selectedCo
 },[])
 
 
-const handleEndContractConstructorPowerUnitSupplier = () => 
+const handleEndContractConstructorPowerUnitSupplier=async()=> 
 {
     if(selectedConstructor == null || selectedConstructorPowerUnitSupplier==null){
     //must pick
@@ -70,6 +71,8 @@ const handleEndContractConstructorPowerUnitSupplier = () =>
     }
     console.log(selectedConstructorPowerUnitSupplier.id)
     dispatch(removeConstructorPowerUnitSupplier(selectedConstructorPowerUnitSupplier.id));
+    await wait(3000)
+    dispatch(fetchConstructorsPowerUnitSupplierHistory(selectedConstructor.id));
 };
 
 
@@ -97,13 +100,19 @@ const handleEndContractConstructorPowerUnitSupplier = () =>
             </Grid>
             <Grid style={{display:'flex'}}>
                 <Typography variant="body2" color="black" style={{fontSize:14}}>
-                    Contrract started:{selectedConstructorPowerUnitSupplier!=null?selectedConstructorPowerUnitSupplier.startDate:"not supplied"}
+                    Contract started:{selectedConstructorPowerUnitSupplier!=null?selectedConstructorPowerUnitSupplier.startDate:"not supplied"}
                                     
                 </Typography>
             </Grid>
             <Grid style={{display:'flex'}}>
                 <Typography variant="body2" color="black" style={{fontSize:14}}>
                     Years estaminated:{selectedConstructorPowerUnitSupplier!=null?selectedConstructorPowerUnitSupplier.yearEstaminate:"not supplied"}
+                                
+                </Typography>
+            </Grid>
+            <Grid style={{display:'flex'}}>
+                <Typography variant="body2" color="black" style={{fontSize:14}}>
+                    Is fabric team:{selectedConstructorPowerUnitSupplier!=null&&selectedConstructorPowerUnitSupplier.isFabricConnection?"fabric team":"not fabric team"}
                                 
                 </Typography>
             </Grid>

@@ -27,7 +27,10 @@ export type ConstructorPowerUnitSupplierReducerState={
     isSuccessfullyContractEnded:boolean,
     isErrorOccuredOnContractEnd:boolean,
     selectedContract:ConstructorPowerUnitSupplierState|null,
-    isNotCreatedYet:boolean
+    isNotCreatedYet:boolean,
+    isLoadingHistory:boolean,
+    suppliersHistory:ConstructorPowerUnitSupplierState[]|null,
+    notProvidedHistory:boolean
 }
 
 export type ConstructorPowerUnitSupplierState={
