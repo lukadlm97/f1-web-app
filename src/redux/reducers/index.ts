@@ -10,6 +10,7 @@ import staffRoleReducer from './StaffRoleReducer'
 import constructorsTechnicalStaffReducer from './ConstructorsTechincalStaffReducer'
 import powerUnitSupplierReducer from './PowerUnitSupplierReducer'
 import constructorPowerUnitSupplierReducer from './ConstructorPowerUnitSupplierReducer'
+import contractReducer from './ContractReducer'
 
 const rootReducer = () =>
   combineReducers({
@@ -22,7 +23,8 @@ const rootReducer = () =>
     staffRoleReducer,
     constructorsTechnicalStaffReducer,
     powerUnitSupplierReducer,
-    constructorPowerUnitSupplierReducer
+    constructorPowerUnitSupplierReducer,
+    contractReducer
   })
 
 export default rootReducer
