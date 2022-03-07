@@ -33,5 +33,5 @@ export type AppState={
     constructorsTechnicalStaffReducer:ConstructorsTechnicalStaffReducerState
     powerUnitSupplierReducer:PowerUnitSupplierReducerState
     constructorPowerUnitSupplierReducer:ConstructorPowerUnitSupplierReducerState
-    contractsReducer:ContractReducerState
+    contractReducer:ContractReducerState
 }

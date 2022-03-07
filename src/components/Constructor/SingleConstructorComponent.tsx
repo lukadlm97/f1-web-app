@@ -10,6 +10,7 @@ import ConstructorRacingDetails from '../ConstructorRacingDetails/ConstructorRac
 import ConstructorsTechnicalStaffDetails from '../ConstructorsTechnicalStaff/ConstructorsTechnicalStaffDetails'
 import ConstructorPowerUnit from '../ConstructorsPowerUnit/ConstructorPowerUnit'
 import ConstructorPowerUnitHistory from '../ConstructorsPowerUnit/ConstructorPowerUnitHistory'
+import ConstructorDriversContracts from '../ConstructorDriversContracts/ConstructorDriversContracts'
 
 import {AppState} from '../../types/AppState'
 import {CountryState} from '../../types/CountryTypes'
@@ -76,14 +77,8 @@ export default function SingleConstructor(){
                         <ConstructorPowerUnitHistory />
                 </Grid>
             </Grid>
-            <Grid container spacing={4} sx={{display:'flex',marginTop:4,marginLeft:1}}>
-                Drivers
-                <Grid item xs={4}>
-                    Driver 1
-                </Grid>
-                <Grid item xs={4}>
-                    Driver 2
-                </Grid>
+            <Grid >
+                    <ConstructorDriversContracts />
             </Grid>
             <Grid>
                     <ConstructorsTechnicalStaffDetails/>
