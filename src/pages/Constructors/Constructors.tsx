@@ -11,6 +11,7 @@ import GoToPage from '../../components/Constructor/TakeALookPage'
 import './constructors.scss'
 
 import {fetchAllConstuctors,selectConstructor} from '../../redux/actions/ConstructorAction'
+import {fetchAllDrivers} from '../../redux/actions/DriverAction'
 import {setConstructorRacingRecords} from '../../redux/actions/ConstructorRacingRecordAction'
 import {selectConstractConstructorPowerUnit} from '../../redux/actions/ConstructorsPowerUnitSupplierAction'
 import {AppState} from '../../types/AppState'
@@ -24,11 +25,11 @@ const Constructor=()=> {
     const dispatch=useDispatch()
 
     React.useEffect(()=>{
-    dispatch(fetchAllConstuctors())
-    dispatch(selectConstructor(null));
-    dispatch(setConstructorRacingRecords(null))
-
-    dispatch(selectConstractConstructorPowerUnit(null));
+        dispatch(fetchAllConstuctors())
+        dispatch(fetchAllDrivers())
+        dispatch(selectConstructor(null));
+        dispatch(setConstructorRacingRecords(null))
+        dispatch(selectConstractConstructorPowerUnit(null));
     },[])
  
     return (

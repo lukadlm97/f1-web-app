@@ -20,6 +20,8 @@ import StartIcon from '@mui/icons-material/Start';
 import {AppState} from '../../types/AppState'
 import CreateContract from '../ConstructorPowerUnitSupplierForm/CreatePowerUnitSupplierContract'
 import RacingDetailsForm from '../RacingRecordCreation/RacingDetailsForm'
+import {DriverContractCard} from '../Driver/DriverContractCard'
+import {DriversContractHistory} from '../ConstructorDriversContracts/DriversContractHistory'
 
 import {fetchCurrentConstructorDrivers,fetchHistoryOfConstructorDrivers} 
 from '../../redux/actions/ContactAction'
@@ -29,10 +31,7 @@ export default function ConstructorDriversContracts(){
     const dispatch = useDispatch();
 
     const selectedConstructor= useSelector((state:AppState)=>state.constructorReducer.selectedConstructor)
-
-    const isLoadingContructorsDriversHistory= useSelector((state:AppState)=>state.contractReducer.isLoadingConstructorContractsHistory)
-    const constructorDriversHistory = useSelector((state:AppState)=>state.contractReducer.constructorContractsHistory)
-    const isConstructorHaveDriversHistory = useSelector((state:AppState)=>state.contractReducer.isConstructorHaveContractHistory)
+    const drivers= useSelector((state:AppState)=>state.driverReducer.drivers)
 
     const isLoadingCurrentContructorsDrivers= useSelector((state:AppState)=>state.contractReducer.isLoadingCurrentConstructorContracts)
     const currentConstructorDrivers = useSelector((state:AppState)=>state.contractReducer.currentConstructorContracts)
@@ -44,51 +43,68 @@ export default function ConstructorDriversContracts(){
     },[])
 
 
+    const getForename=(driverId:number)=>{
+        const selectedDriver = drivers.find(x=>x.id==driverId)
+        if(selectedDriver==null || selectedDriver==undefined){
+            return "";
+        }
+
+        return selectedDriver.forename;
+    }
+
+    const getSurname=(driverId:number)=>{
+        const selectedDriver = drivers.find(x=>x.id==driverId)
+        if(selectedDriver==null || selectedDriver==undefined){
+            return "";
+        }
+
+        return selectedDriver.surname;
+    }
+
+    
+    const getCountryId=(driverId:number)=>{
+        const selectedDriver = drivers.find(x=>x.id==driverId)
+        if(selectedDriver==null || selectedDriver==undefined){
+            return -1;
+        }
+
+        return selectedDriver.countryId;
+    }
+
+
     return(
-        
         <Grid style={{display:'flex'}}>
-            <Grid item xs={6}>
-                <h1>
-                    History
-                </h1>
-                {isLoadingContructorsDriversHistory && 
-                    <Grid>
-                        LOADING HISTORY ....
-                    </Grid>
-                }
-                {isConstructorHaveDriversHistory && constructorDriversHistory &&
-                constructorDriversHistory.map(x=>
-                    <div>
-                        {x.id}
-                    </div>)
-                }
-                {!isConstructorHaveDriversHistory && 
-                <div>
-                    Not availiable drivers history for constructor.
-                </div>}
+            <Grid item xs={6} style={{background:'#99a799',padding:20}}>
+                    <h1>
+                        Current drivers
+                    </h1>
+                    {isLoadingCurrentContructorsDrivers && 
+                        <Grid>
+                            LOADING CURRENT DRIVERS ...
+                        </Grid>
+                    }
 
-            </Grid>
-
-            <Grid item xs={6}>
-                <h1>
-                    Current drivers
-                </h1>
-                {isLoadingCurrentContructorsDrivers && 
-                    <Grid>
-                        LOADING HISTORY ....
-                    </Grid>
-                }
-
-                {isConstructorHaveCurrentDriver && currentConstructorDrivers &&
-                    currentConstructorDrivers.map(x=>
-                        <div>
-                            {x.id}
-                        </div>)
+                    {isConstructorHaveCurrentDriver && currentConstructorDrivers &&
+                        currentConstructorDrivers.map(x=>
+                            <DriverContractCard
+                                id={x.id}
+                                forename={getForename(x.driverId)}
+                                surname={getSurname(x.driverId)}
+                                driverRolesId={x.driverRolesId}
+                                estaminateValue={x.estaminateValue}
+                                estaminateYears={x.estaminateYears}
+                                driverCountryId={getCountryId(x.driverId)}
+                            />)
                     }
                     {!isConstructorHaveCurrentDriver && 
                     <div>
                         Not availiable current drivers for constructor.
-                    </div>}
+                    </div>
+                    }
+            </Grid>
+            <Grid item xs={6} style={{background:'#99a799',padding:20,marginLeft:20}}>
+                <DriversContractHistory />
+
             </Grid>
         </Grid>
         
