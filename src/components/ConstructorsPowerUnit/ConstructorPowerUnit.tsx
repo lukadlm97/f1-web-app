@@ -30,7 +30,7 @@ export default function ConstructorPowerUnit(){
     const selectedConstructorPowerUnitSupplier= 
     useSelector((state:AppState)=>state.constructorPowerUnitSupplierReducer.constructorsPowerUnit)
     
-  const powerUnitSuppliers = useSelector((state: AppState) => state.powerUnitSupplierReducer.suppliers)
+const powerUnitSuppliers = useSelector((state: AppState) => state.powerUnitSupplierReducer.suppliers)
 const selectedConstructor= 
     useSelector((state:AppState)=>state.constructorReducer.selectedConstructor)
 const isLoading = useSelector((state:AppState)=>state.constructorPowerUnitSupplierReducer.isLoading)

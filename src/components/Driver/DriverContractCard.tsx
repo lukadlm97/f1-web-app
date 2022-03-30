@@ -7,7 +7,6 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
-import Modal from '@mui/material/Modal';
 
 import HailIcon from '@mui/icons-material/Hail';
 
@@ -24,7 +23,7 @@ interface IDriverContract{
 
 export function DriverContractCard(props:IDriverContract){
     const countires = useSelector((state: AppState) => state.countryReducer.countries)
-    const roles = useSelector((state: AppState) => state.staffRoleReducer.staffRoles)
+    const roles = useSelector((state: AppState) => state.driverRoleReducer.driverRoles)
 
     const handleCountyConversion = (countryId: number) => {
         
@@ -42,7 +41,7 @@ export function DriverContractCard(props:IDriverContract){
     const handleRoleConversion = (roleId: number) => {
 
         if (roleId == undefined)
-        return "Not supplied";
+            return "Not supplied";
 
         const findedRole = roles.find(x => x.id == roleId);
         if (findedRole != null)

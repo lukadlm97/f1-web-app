@@ -38,7 +38,7 @@ export default function DriverConfirmForm(props:IDriverForm){
     const isLoading = useSelector((state:AppState)=>state.constructorsTechnicalStaffReducer.isLoadingContractEnd)
     const isDone = useSelector((state:AppState)=>state.constructorsTechnicalStaffReducer.isSuccessfullyContractEnd)
     const isErrorOccured= useSelector((state:AppState)=>state.constructorsTechnicalStaffReducer.isErrorOccuredOnContractEnd)
-    const error= useSelector((state:AppState)=>state.constructorsTechnicalStaffReducer.error)
+    
 
     const [submitFired,setSubmitFired] = React.useState<boolean>(false);
    //initialize dispatch

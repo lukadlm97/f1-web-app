@@ -9,6 +9,7 @@ import {ConstructorsTechnicalStaffReducerState} from './ConstructorsTechnicalSta
 import {PowerUnitSupplierReducerState} from './PowerUnitSupplierTypes'
 import {ConstructorPowerUnitSupplierReducerState} from './ConstructorPowerUnitSupplier'
 import {ContractReducerState} from './ContractTypes'
+import {DriverRoleReducerState} from './DriverRoleTypes'
 export * from './CountryTypes'
 export * from './DriverTypes'
 export * from './ConstructorTypes'
@@ -19,6 +20,7 @@ export *  from './StaffRoleTypes'
 export *  from './ConstructorsTechnicalStaffTypes'
 export * from './PowerUnitSupplierTypes'
 export * from './ContractTypes'
+export * from './DriverRoleTypes'
 
 //global App state
 
@@ -34,4 +36,5 @@ export type AppState={
     powerUnitSupplierReducer:PowerUnitSupplierReducerState
     constructorPowerUnitSupplierReducer:ConstructorPowerUnitSupplierReducerState
     contractReducer:ContractReducerState
+    driverRoleReducer:DriverRoleReducerState
 }

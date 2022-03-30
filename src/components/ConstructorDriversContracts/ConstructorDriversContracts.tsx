@@ -23,6 +23,8 @@ import RacingDetailsForm from '../RacingRecordCreation/RacingDetailsForm'
 import {DriverContractCard} from '../Driver/DriverContractCard'
 import {DriversContractHistory} from '../ConstructorDriversContracts/DriversContractHistory'
 
+import CreateDriverContract from '../Contract/CreateContract';
+
 import {fetchCurrentConstructorDrivers,fetchHistoryOfConstructorDrivers} 
 from '../../redux/actions/ContactAction'
 
@@ -101,6 +103,7 @@ export default function ConstructorDriversContracts(){
                         Not availiable current drivers for constructor.
                     </div>
                     }
+                <CreateDriverContract />
             </Grid>
             <Grid item xs={6} style={{background:'#99a799',padding:20,marginLeft:20}}>
                 <DriversContractHistory />

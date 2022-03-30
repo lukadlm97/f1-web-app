@@ -11,6 +11,7 @@ import constructorsTechnicalStaffReducer from './ConstructorsTechincalStaffReduc
 import powerUnitSupplierReducer from './PowerUnitSupplierReducer'
 import constructorPowerUnitSupplierReducer from './ConstructorPowerUnitSupplierReducer'
 import contractReducer from './ContractReducer'
+import driverRoleReducer from './DriverRoleReducer'
 
 const rootReducer = () =>
   combineReducers({
@@ -24,7 +25,8 @@ const rootReducer = () =>
     constructorsTechnicalStaffReducer,
     powerUnitSupplierReducer,
     constructorPowerUnitSupplierReducer,
-    contractReducer
+    contractReducer,
+    driverRoleReducer
   })
 
 export default rootReducer

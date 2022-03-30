@@ -18,7 +18,6 @@ import {useDispatch, useSelector } from 'react-redux'
 import {fetchAllCountries} from './redux/actions/CountryAction'
 import {fetchAllCompetitions} from './redux/actions/CompetitionAction'
 import {fetchAllStaffRoles} from './redux/actions/StaffRoleAction'
-
 import {fetchAllPowerUnitSuppliers} from './redux/actions/PowerUnitSupplierAction'
 import {AppState} from './types/AppState';
 
