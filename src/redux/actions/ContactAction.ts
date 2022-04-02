@@ -90,6 +90,99 @@ export function fetchHistoryOfConstructorDrivers(constructorId:number){
 }
 
 
+export function startNewContractLoading():ContractActions{
+
+    return {
+        type:START_CONTRACT_LOADING
+    }
+}
+
+export function startNewContractSuccess(contract:ContractState):ContractActions{
+    return {
+        type:START_CONTRACT_SUCCESS,
+        payload:contract
+    }
+}
+
+export function startNewContractFailure(error:string):ContractActions{
+    return {
+        type:START_CONTRACT_FAILURE,
+        payload:error
+        
+    }
+}
+
+export function startNewContract(contract:ContractState){
+
+    return (dispatch:Dispatch)=>{
+        dispatch(startNewContractLoading())
+        axios.post(`https://localhost:6001/api/v1/DriversContract/startContract`,contract)
+        .then((res)=>{
+            const contract=res.data
+            console.log(contract); 
+            dispatch(startNewContractSuccess(contract))
+        }).catch((err)=>{
+            dispatch(startNewContractFailure(err))
+
+        })
+
+    }
+}
+
+
+export function endContractLoading():ContractActions{
+
+    return {
+        type:END_CONTRACT_LOADING
+    }
+}
+
+export function endContractSuccess(contractId:number):ContractActions{
+    return {
+        type:END_CONTRACT_SUCCESS,
+        payload:contractId
+    }
+}
+
+export function endContractFailure(error:string):ContractActions{
+    return {
+        type:END_CONTRACT_FAILURE,
+        payload:error
+        
+    }
+}
+
+export function endContract(contractId:number){
+
+    return (dispatch:Dispatch)=>{
+        dispatch(endContractLoading())
+        axios.post(`https://localhost:6001/api/v1/DriversContract/endContract/${contractId}`)
+        .then((res)=>{
+            const contract=res.data
+            console.log(contract); 
+            dispatch(endContractSuccess(contractId))
+        }).catch((err)=>{
+            dispatch(endContractFailure(err))
+
+        })
+
+    }
+}
+
+export function selectContractSuccess(contract:ContractState){
+    return {
+        type:SELECT_CONTRACT,
+        payload:contract
+    }
+}
+
+export function selectContract(contract:ContractState){
+
+    return (dispatch:Dispatch)=>{
+        dispatch(selectContractSuccess(contract))
+    }
+}
+
 
 
 

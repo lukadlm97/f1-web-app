@@ -4,6 +4,7 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
+import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
@@ -11,6 +12,9 @@ import Grid from '@mui/material/Grid';
 import HailIcon from '@mui/icons-material/Hail';
 
 import {AppState} from '../../types/AppState'
+import {selectContract} from '../../redux/actions/ContactAction';
+import EndContractForm from '../Contract/EndContractForm';
+
 interface IDriverContract{
     id:number
     forename:string 
@@ -24,6 +28,7 @@ interface IDriverContract{
 export function DriverContractCard(props:IDriverContract){
     const countires = useSelector((state: AppState) => state.countryReducer.countries)
     const roles = useSelector((state: AppState) => state.driverRoleReducer.driverRoles)
+    const contracts = useSelector((state: AppState) => state.contractReducer.currentConstructorContracts)
 
     const handleCountyConversion = (countryId: number) => {
         
@@ -56,12 +61,24 @@ export function DriverContractCard(props:IDriverContract){
 
     const dispatch = useDispatch();
 
-    const handleContractEndWithConstructor = (contractId:number) => 
+    const handleContractEndWithConstructor = (contractId:number|undefined) => 
     {
-      console.log(contractId);
-      
-    };
+        if(contractId==undefined){
+            console.log("ERROR!!!");
+         return;    
+        }
 
+        const findedContract = contracts.find(x => x.id == contractId);
+        if (findedContract != null){
+            dispatch(selectContract(findedContract))
+            handleOpen()
+        }else{
+            
+            console.log("ERROR!!!");
+        }
+
+    };
+  
 
     return(
         <Card sx={{ maxWidth: 345 }} style={{margin:10,background:'#f2ddc1'}}>
@@ -103,7 +120,15 @@ export function DriverContractCard(props:IDriverContract){
             </Button>
         
         </CardActions>
-       
+        <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+    
+      >
+      <EndContractForm closeForm={handleClose}/>
+      </Modal>
 
         </Card>
     )
