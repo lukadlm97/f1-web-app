@@ -85,24 +85,25 @@ export default function ConstructorDriversContracts(){
                             LOADING CURRENT DRIVERS ...
                         </Grid>
                     }
-
-                    {isConstructorHaveCurrentDriver && currentConstructorDrivers &&
-                        currentConstructorDrivers.map(x=>
-                            <DriverContractCard
-                                id={x.id}
-                                forename={getForename(x.driverId)}
-                                surname={getSurname(x.driverId)}
-                                driverRolesId={x.driverRolesId}
-                                estaminateValue={x.estaminateValue}
-                                estaminateYears={x.estaminateYears}
-                                driverCountryId={getCountryId(x.driverId)}
-                            />)
-                    }
-                    {!isConstructorHaveCurrentDriver && 
-                    <div>
-                        Not availiable current drivers for constructor.
-                    </div>
-                    }
+                    <Grid style={{display:'flex'}}>
+                        {isConstructorHaveCurrentDriver && currentConstructorDrivers &&
+                            currentConstructorDrivers.map(x=>
+                                <DriverContractCard
+                                    id={x.id}
+                                    forename={getForename(x.driverId)}
+                                    surname={getSurname(x.driverId)}
+                                    driverRolesId={x.driverRolesId}
+                                    estaminateValue={x.estaminateValue}
+                                    estaminateYears={x.estaminateYears}
+                                    driverCountryId={getCountryId(x.driverId)}
+                                />)
+                        }
+                        {!isConstructorHaveCurrentDriver && 
+                        <div>
+                            Not availiable current drivers for constructor.
+                        </div>
+                        }
+                    </Grid>
                 <CreateDriverContract />
             </Grid>
             <Grid item xs={6} style={{background:'#99a799',padding:20,marginLeft:20}}>
