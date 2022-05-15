@@ -89,7 +89,7 @@ export default function ConstructorDriversContracts(){
                         {isConstructorHaveCurrentDriver && currentConstructorDrivers &&
                             currentConstructorDrivers.map(x=>
                                 <DriverContractCard
-                                    id={x.id}
+                                    id={x.driverId}
                                     forename={getForename(x.driverId)}
                                     surname={getSurname(x.driverId)}
                                     driverRolesId={x.driverRolesId}

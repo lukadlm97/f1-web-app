@@ -87,7 +87,7 @@ export function DriverContractCard(props:IDriverContract){
             style={{margin:10,background:'white'}}
                 component="img"
                 height="140"
-                src={process.env.PUBLIC_URL+`/images/app-resources/staff/1.jpg`}
+                src={process.env.PUBLIC_URL+`/images/app-resources/drivers/${props.id}.jpg`}
                 alt={props.id+" image"}
             />
             <CardContent style={{fontSize:12}}>

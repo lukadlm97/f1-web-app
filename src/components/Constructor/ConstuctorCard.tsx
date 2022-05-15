@@ -125,7 +125,7 @@ export default function ConstuctorCard(props:IConstructorCard) {
       style={{margin:10,background:'white'}}
         component="img"
         height="140"
-        src={process.env.PUBLIC_URL+`/images/app-resources/constructors/${props.website}`}
+        src={process.env.PUBLIC_URL+`/images/app-resources/constructors/${props.shortName.toLocaleLowerCase()}.jpg`}
         alt={props.website}
       />
       <CardContent style={{fontSize:12}}>
