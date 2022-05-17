@@ -82,54 +82,54 @@ export function DriverContractCard(props:IDriverContract){
   
 
     return(
-        <Card sx={{ maxWidth: 345 }} style={{margin:10,background:'#f2ddc1'}}>
-            <CardMedia
-            style={{margin:10,background:'white'}}
-                component="img"
-                height="140"
-                src={process.env.PUBLIC_URL+`/images/app-resources/drivers/${props.id}.jpg`}
-                alt={props.id+" image"}
-            />
-            <CardContent style={{fontSize:12}}>
-                <Grid>
-                        <Typography gutterBottom variant="h5" component="div" style={{fontSize:16}}>
-                            {props.forename+" "+props.surname}
-                        </Typography>
-                        <Typography gutterBottom variant="h5" component="div" style={{fontSize:14}}>
-                            ({handleRoleConversion(props.driverRolesId)})
-                        </Typography>
-                
-                </Grid>
-                <Grid >
-                <Typography variant="body2" color="text.secondary" style={{fontSize:12, flex: 1}}>
-                        Country:{handleCountyConversion(props.driverCountryId)}
-                    </Typography>
+        <Card xs={4} style={{margin:10,background:'#f2ddc1',minWidth:210,maxWidth:210}}>
+                <CardMedia
+                style={{margin:10,background:'white'}}
+                    component="img"
+                    height="140"
+                    src={process.env.PUBLIC_URL+`/images/app-resources/drivers/${props.id}.jpg`}
+                    alt={props.id+" image"}
+                />
+                <CardContent style={{fontSize:12}}>
+                    <Grid>
+                            <Typography gutterBottom variant="h5" component="div" style={{fontSize:16}}>
+                                {props.forename+" "+props.surname}
+                            </Typography>
+                            <Typography gutterBottom variant="h5" component="div" style={{fontSize:14}}>
+                                ({handleRoleConversion(props.driverRolesId)})
+                            </Typography>
+                    
+                    </Grid>
+                    <Grid >
                     <Typography variant="body2" color="text.secondary" style={{fontSize:12, flex: 1}}>
-                        Estaminate years:{props.estaminateYears}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" style={{fontSize:12, flex: 1}}>
-                        Estaminate earnings:{props.estaminateValue}
-                    </Typography>
+                            Country:{handleCountyConversion(props.driverCountryId)}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" style={{fontSize:12, flex: 1}}>
+                            Estaminate years:{props.estaminateYears}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" style={{fontSize:12, flex: 1}}>
+                            Estaminate earnings:{props.estaminateValue}
+                        </Typography>
+                    
+                    </Grid>
+                </CardContent>
+                <CardActions style={{fontSize:14}}>
+                    <Button size="medium" style={{background:'#EEC4C4',fontSize:12,color:'black',display: 'inline-flex'}} 
+                    onClick={()=>handleContractEndWithConstructor(props.id)} >
+                    <HailIcon fontSize='large' style={{marginRight:10}}/>
+                    End Contract
+                    </Button>
                 
-                </Grid>
-            </CardContent>
-            <CardActions style={{fontSize:14}}>
-                <Button size="medium" style={{background:'#EEC4C4',fontSize:12,color:'black',display: 'inline-flex'}} 
-                onClick={()=>handleContractEndWithConstructor(props.id)} >
-                <HailIcon fontSize='large' style={{marginRight:10}}/>
-                End Contract
-                </Button>
+                </CardActions>
+                <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
             
-            </CardActions>
-            <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-        
-        >
-        <EndContractForm closeForm={handleClose}/>
-        </Modal>
+            >
+            <EndContractForm closeForm={handleClose}/>
+            </Modal>
 
         </Card>
     )

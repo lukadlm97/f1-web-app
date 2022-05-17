@@ -98,12 +98,13 @@ export default function StaffCard(props:IStaff){
 
 
     return(
-        <Card sx={{ maxWidth: 345 }} style={{margin:10,background:'#99a799'}}>
+        <Card sx={{ maxWidth: 310,minWidth:310,maxHeight:490,minHeight:490 }} style={{margin:10,background:'#99a799'}}>
             <CardMedia
             style={{margin:10,background:'white'}}
                 component="img"
-                height="140"
-                src={process.env.PUBLIC_URL+`/images/app-resources/staff/1.jpg`}
+                height="260"
+                width="300"
+                src={process.env.PUBLIC_URL+`/images/app-resources/staff/${props.id}.jpg`}
                 alt={props.id+" image"}
             />
             <CardContent style={{fontSize:12}}>
