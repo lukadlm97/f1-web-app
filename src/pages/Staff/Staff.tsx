@@ -2,7 +2,6 @@ import React from 'react'
 import StaffTable from '../../components/StaffTable/StaffTable'
 import CreateStaff from '../../components/StaffForm/CreateStaff'
 import  BackToConstructors from '../../components/Constructor/BackToConstructors'
-import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 
 import {useDispatch, useSelector } from 'react-redux'
@@ -22,7 +21,7 @@ const Staff=()=> {
           <StaffTable />
            
             <Grid display={'flex'}
-  justifyContent="space-between" >
+                justifyContent="space-between" >
                 <CreateStaff />
                 <BackToConstructors />  
             </Grid>

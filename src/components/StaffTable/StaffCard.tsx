@@ -147,15 +147,6 @@ export default function StaffCard(props:IStaff){
             >
                 <LeavingStaffForm closeForm={handleClose}/>
             </Modal>
-{/*
-            <Modal
-                open={openConfirmation}
-                onClose={handleConfirmationClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <ConstructorConfirmation closeForm={handleConfirmationClose}/>
-            </Modal>*/}
             </Card>
     )
 }

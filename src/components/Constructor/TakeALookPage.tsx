@@ -40,7 +40,7 @@ const getComponent=(pageType:PageType)=>{
 
 
     return(
-        <Grid style={{marginTop:20,marginBottom:20,marginLeft:20}} >
+        <Grid style={{marginTop:20,marginBottom:20,marginRight:50}} >
             <Button onClick={()=>history.push(props.route)} 
              style={{display: 'inline-flex',width:300,height:40,fontSize:14,background:props.buttonColor,color:'white'}} size="small" variant="text"> 
              {

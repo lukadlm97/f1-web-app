@@ -67,16 +67,12 @@ const Constructor=()=> {
             }
 
             </Box>
-            <Grid sx={{display:'flex'}} spacing={2}>
-                <Grid xs={4}>
+            <Grid container  style={{marginLeft:10,marginRight:30}} 
+             display={'flex'}
+             justifyContent="space-between" >
                     <CreateConstructor />
-                </Grid>
-                <Grid xs={5}>
                     <GoToPage pageName={"Manufacturer"} route={"/powerUnitSuppliers/"} pageType={PageType.PowerUnitSuppliers} buttonColor='#D885A3'/>
-                </Grid>
-                <Grid xs={4}>
                     <GoToPage pageName={"Staff"} route={"/technicalStaff/"} pageType={PageType.Staff} buttonColor='#7B6079'/>
-                </Grid>
             </Grid>
          </div>
     )
