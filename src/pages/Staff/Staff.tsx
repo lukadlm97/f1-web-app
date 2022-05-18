@@ -16,7 +16,6 @@ const Staff=()=> {
     return (
         <div className="staff">
            
-            {/* Inner contents country list/result */}
            <h1>Staff page </h1>
           <StaffTable />
            
