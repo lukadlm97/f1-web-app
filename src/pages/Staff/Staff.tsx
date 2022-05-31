@@ -12,13 +12,10 @@ import './staff.scss'
 
 const Staff=()=> {
  
-    
     return (
         <div className="staff">
-           
-           <h1>Staff page </h1>
-          <StaffTable />
-           
+            <h1>Staff page </h1>
+            <StaffTable />
             <Grid display={'flex'}
                 justifyContent="space-between" >
                 <CreateStaff />

@@ -3,7 +3,12 @@ import axios from 'axios'
 
 import {FETCH_DRIVERS_LOADING, DriverActions, FETCH_DRIVERS_FAILURE, FETCH_DRIVERS_SUCCESS,
     ADD_DRIVER_SUCCESS,ADD_DRIVER_LOADING,ADD_DRIVER_ERROR, DriverState, REMOVE_DRIVER_SUCCESS, SELECT_DRIVER_SUCCESS,
-    UPDATE_DRIVER_LOADING, UPDATE_DRIVER_SUCCESS,UPDATE_DRIVER_ERROR, CHANGE_DRIVER_CITIZENSHIP_SUCCESS, CHANGE_DRIVER_CITIZENSHIP_ERROR, CHANGE_DRIVER_CITIZENSHIP_LOADING, SELECT_REMOVE_DRIVER_CONFIRMATION_OPTION, SELECT_RETAIRMENT_DRIVER_CONFIRMATION_OPTION, RETIREMENT_DRIVER_SUCCESS, RETIREMENT_DRIVER_LOADING, RETIREMENT_DRIVER_ERROR, COMEBACK_DRIVER_SUCCESS, COMEBACK_DRIVER_LOADING, COMEBACK_DRIVER_ERROR} from '../../types/DriverTypes'
+    UPDATE_DRIVER_LOADING, UPDATE_DRIVER_SUCCESS,UPDATE_DRIVER_ERROR, CHANGE_DRIVER_CITIZENSHIP_SUCCESS, 
+    CHANGE_DRIVER_CITIZENSHIP_ERROR, CHANGE_DRIVER_CITIZENSHIP_LOADING, SELECT_REMOVE_DRIVER_CONFIRMATION_OPTION, 
+    SELECT_RETAIRMENT_DRIVER_CONFIRMATION_OPTION, RETIREMENT_DRIVER_SUCCESS, RETIREMENT_DRIVER_LOADING, 
+    RETIREMENT_DRIVER_ERROR, COMEBACK_DRIVER_SUCCESS, COMEBACK_DRIVER_LOADING, COMEBACK_DRIVER_ERROR,
+    FETCH_DRIVER_SUCCESS,FETCH_DRIVER_LOADING,FETCH_DRIVER_FAILURE}
+     from '../../types/DriverTypes'
 
 
 //fetch all countries
@@ -352,6 +357,54 @@ export function comebackDriver(driver:DriverState){
         }).catch((err)=>{
             console.log(err);
             dispatch(comebackDriverError(err))
+        })
+    }
+}
+
+
+//fetch all countries
+export function fetchDriverLoading():DriverActions{
+
+    return {
+        type:FETCH_DRIVER_LOADING
+    }
+
+}
+
+// fetch all countries success
+export function fetchDriverSuccess(driver:DriverState):DriverActions{
+    return {
+        type:FETCH_DRIVER_SUCCESS,
+        payload:driver
+    }
+
+}
+
+// fetch all countries failure
+export function fetchDriverFailure(error:string):DriverActions{
+    return {
+        type:FETCH_DRIVER_FAILURE,
+        payload:error
+        
+    }
+}
+
+// fetch countries data
+
+export function fetchDriver(driverNo:number){
+
+    return (dispatch:Dispatch)=>{
+        dispatch(fetchDriverLoading())
+        console.log('call fetch')
+        //axios call 
+        axios.get(`https://localhost:6001/api/v1/Driver/${driverNo}`)
+        .then((res)=>{
+            console.log(res);
+            const driver=res.data 
+            dispatch(fetchDriverSuccess(driver))
+        }).catch((err)=>{
+            console.log(err);
+            dispatch(fetchDriverFailure(err))
         })
     }
 }

@@ -13,6 +13,7 @@ import Footer from './components/Footer/Footer'
 import './_base.scss'
 
 import Navigator from './Navigator';
+import { BrowserRouter } from 'react-router-dom';
 import {useDispatch, useSelector } from 'react-redux'
 
 import {fetchAllCountries} from './redux/actions/CountryAction'
@@ -89,6 +90,7 @@ const override = css`
       }
          
       {!isLoading &&
+      <BrowserRouter>
         <ThemeProvider theme={theme}>
           <div className="App">
             {/* appbar component  */}
@@ -100,6 +102,8 @@ const override = css`
             <Footer />
           </div>
         </ThemeProvider>
+        
+      </BrowserRouter>
       }
       </div>
     

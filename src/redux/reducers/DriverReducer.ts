@@ -5,7 +5,8 @@ REMOVE_DRIVER_ERROR,REMOVE_DRIVER_LOADING,REMOVE_DRIVER_SUCCESS, DriverState, SE
 UPDATE_DRIVER_LOADING, UPDATE_DRIVER_SUCCESS,UPDATE_DRIVER_ERROR, 
 CHANGE_DRIVER_CITIZENSHIP_LOADING, CHANGE_DRIVER_CITIZENSHIP_ERROR, CHANGE_DRIVER_CITIZENSHIP_SUCCESS,
 RETIREMENT_DRIVER_LOADING, RETIREMENT_DRIVER_SUCCESS,RETIREMENT_DRIVER_ERROR,
-SELECT_RETAIRMENT_DRIVER_CONFIRMATION_OPTION,SELECT_REMOVE_DRIVER_CONFIRMATION_OPTION, COMEBACK_DRIVER_LOADING, COMEBACK_DRIVER_ERROR, COMEBACK_DRIVER_SUCCESS
+SELECT_RETAIRMENT_DRIVER_CONFIRMATION_OPTION,SELECT_REMOVE_DRIVER_CONFIRMATION_OPTION, COMEBACK_DRIVER_LOADING, 
+COMEBACK_DRIVER_ERROR, COMEBACK_DRIVER_SUCCESS,FETCH_DRIVER_LOADING,FETCH_DRIVER_FAILURE,FETCH_DRIVER_SUCCESS
 } from '../../types/DriverTypes'
 
 const initiState:DriverReducerState={
@@ -29,7 +30,10 @@ const initiState:DriverReducerState={
     isRemoveConfirmation:false,
     isLoadingDriverComeback:false,
     isSuccessDriverComeback:false,
-    isErrorDriverComeback:false
+    isErrorDriverComeback:false,
+    driver:null,
+    isLoadingDriver:false,
+    errorDriver:''
 }
 
 export default function driverReducer(state:DriverReducerState=initiState, action:any){
@@ -224,6 +228,27 @@ export default function driverReducer(state:DriverReducerState=initiState, actio
                 drivers:[...state.drivers.filter(x=>x.id!==action.payload.id),action.payload]
             }  
     
+        case FETCH_DRIVER_LOADING:
+            return {
+                ...state,
+                isLoadingDriver:true,
+                driver:null,
+                error:'' 
+            }
+
+            case FETCH_DRIVER_SUCCESS:
+                return {
+                    ...state,
+                    isLoadingDriver:false,
+                    driver:action.payload,
+                    error:'' 
+                }
+        case FETCH_DRIVER_FAILURE:
+            return {
+                ...state,
+                isLoadingDriver:false,
+                error:'Error on fetching driver' 
+            }
 
         default:
             return state

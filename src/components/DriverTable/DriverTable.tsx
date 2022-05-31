@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux'
+
+
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -17,6 +19,7 @@ import FaceRetouchingOffIcon from '@mui/icons-material/FaceRetouchingOff';
 import Tooltip from '@mui/material/Tooltip';
 import Modal from '@mui/material/Modal';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
+import DetailsIcon from '@mui/icons-material/Details';
 
 import TablePaginationActions from './TablePaginationActions';
 import DriverForm from '../Driver/DriverForm';
@@ -27,6 +30,7 @@ import { selectForRemove } from '../../redux/actions/DriverAction'
 import { selectDriver } from '../../redux/actions/DriverAction'
 import { comebackDriver } from '../../redux/actions/DriverAction'
 import { AppState } from '../../types/AppState'
+import {useParams, useHistory } from 'react-router-dom'
 
 import './driverTable.scss'
 
@@ -53,6 +57,7 @@ const DriverTable = () => {
   const handleCloseConfirmation= () => setOpenConfirmation(false);
   //initialize dispatch
   const dispatch = useDispatch()
+  const history=useHistory()
 
 
   React.useEffect(() => {
@@ -115,6 +120,19 @@ const DriverTable = () => {
    
     dispatch(comebackDriver(driver));
 
+  };
+
+  const handleDriverDetailsDisplay = (driverId:number) => 
+  {
+      const driver = drivers.find(x=>x.id==driverId)
+
+      if(driver == null){
+        //must pick
+        console.log("Must pick driver");
+        return
+      }
+      
+      history.push(`/drivers/details/${driverId}`)
   };
 
 
@@ -236,6 +254,12 @@ const DriverTable = () => {
                     <Tooltip title="Make driver comeback">
                     <Button style={{fontSize:8,background:'#f2ddc1',color:'green',marginLeft:10,marginTop:5}} disabled={!row.isRetired} onClick={()=>handleComebackDriver(row.id)}>
                           <AutorenewIcon fontSize='large'/>
+                      </Button>
+                    </Tooltip>
+                    <Tooltip title="See details">
+                    <Button style={{fontSize:8,background:'#f2ddc1',color:'green',marginLeft:10,marginTop:5}} 
+                    onClick={()=>handleDriverDetailsDisplay(row.id)}>
+                          <DetailsIcon fontSize='large'/>
                       </Button>
                     </Tooltip>
                   </TableCell>
