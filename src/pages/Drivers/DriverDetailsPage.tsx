@@ -7,6 +7,10 @@ import { AppState } from '../../types/AppState'
 
 import Grid from '@mui/material/Grid';
 
+interface ParamTypes {
+    driverNo: string;
+}
+
 const DriverDetailsPage:React.FC=()=>{
     const [driverName,setDriverName] =useState(''); 
     const driver = useSelector((state: AppState) => state.driverReducer.driver);
@@ -16,14 +20,11 @@ const DriverDetailsPage:React.FC=()=>{
     const match = useRouteMatch<{driverNo:string}>(
         'drivers/details/:driverNo',
     );
+    const params = useParams<ParamTypes>();
 
     useEffect(()=>{
-        if(match){
-            console.log('enter driver details page true')
-            dispatch(fetchDriver(parseInt(match.params.driverNo)))
-        }else{
-            console.log('enter driver details page false ')
-        }
+        dispatch(fetchDriver(parseInt(params.driverNo)))
+        console.log(params.driverNo)
     },[]);
 
     useEffect(()=>{
