@@ -12,6 +12,9 @@ export const REMOVE_COUNSTRUCTOR_LOADING="REMOVE_COUNSTRUCTOR_LOADING"
 export const REMOVE_COUNSTRUCTOR_SUCCESS="REMOVE_COUNSTRUCTOR_SUCCESS"
 export const REMOVE_COUNSTRUCTOR_FAILURE="REMOVE_COUNSTRUCTOR_FAILURE"
 export const SELECT_COUNSTRUCTOR_SUCCESS="SELECT_COUNSTRUCTOR_SUCCESS"
+export const FETCH_COUNSTRUCTOR_LOADING="FETCH_COUNSTRUCTOR_LOADING"
+export const FETCH_COUNSTRUCTOR_SUCCESS="FETCH_COUNSTRUCTOR_SUCCESS"
+export const FETCH_COUNSTRUCTOR_FAILURE="FETCH_COUNSTRUCTOR_FAILURE"
 
 //types 
 export type ConstructorReducerState={
@@ -27,7 +30,11 @@ export type ConstructorReducerState={
     isErrorOccuredOnUpdate:boolean,
     isLoadingRemove:boolean,
     isSuccessfullyDoneRemove:boolean,
-    isErrorOccuredOnRemove:boolean
+    isErrorOccuredOnRemove:boolean,
+    constructor:ConstructorState|null,
+    isLoadingConstructor:boolean, 
+    isErrorOccurredOnSingleConstructorFetching:boolean,
+    errorOnSingleConstructorFetching:string,
 }
 
 export type ConstructorState={
@@ -99,10 +106,23 @@ export type SelectConstructorAction={
     payload: ConstructorState
 }
 
+export type FetchConstructorLoadingAction={
+    type: typeof FETCH_COUNSTRUCTOR_LOADING
+    payload?: string
+}
+export type FetchConstructorSuccessAction={
+    type: typeof FETCH_COUNSTRUCTOR_SUCCESS
+    payload: ConstructorState
+}
+export type FetchConstructorFailureAction={
+    type: typeof FETCH_COUNSTRUCTOR_FAILURE
+    payload: string
+}
+
 
 
 export type ConstructorActions= FetchAllConstructorsLoadingAction | FetchAllConstructorsSuccessAction | FetchAllConstructorsFailureAction|
 CreateConstructorLoadingAction|CreateConstructorSuccessAction|CreateConstructorFailureAction|
 DeleteConstructorLoadingAction|DeleteConstructorSuccessAction|DeleteConstructorFailureAction|
 UpdateConstructorSuccessAction|UpdateConstructorLoadingAction|UpdateConstructorFailureAction|
-SelectConstructorAction
+SelectConstructorAction|FetchConstructorLoadingAction|FetchConstructorSuccessAction|FetchConstructorFailureAction

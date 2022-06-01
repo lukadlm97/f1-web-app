@@ -98,20 +98,14 @@ export default function ConstuctorCard(props:IConstructorCard) {
 
       const handleDetailsConstructor = (constructorId:number) => 
       {
-          
         const constructor = constructors.find(x=>x.id==constructorId)
     
         if(constructor == null){
-          //must pick
           console.log("Must pick driver");
-          
           return
         }
     
-        dispatch(fetchConstructorRacingRecords(constructorId))
-        dispatch(selectConstructor(constructor));
-       
-        history.push(`/constructor/${constructor.shortName}`)
+        history.push(`/constructor/${constructorId}`)
 
       };
 

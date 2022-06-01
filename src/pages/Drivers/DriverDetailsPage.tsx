@@ -1,6 +1,6 @@
 import React, { FC, FormEvent, ReactElement, useEffect, useState } from "react";
 
-import { Route, useHistory, useParams,useRouteMatch } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {fetchDriver} from '../../redux/actions/DriverAction'
 import { AppState } from '../../types/AppState'
@@ -15,11 +15,7 @@ const DriverDetailsPage:React.FC=()=>{
     const [driverName,setDriverName] =useState(''); 
     const driver = useSelector((state: AppState) => state.driverReducer.driver);
     const isLoading = useSelector((state: AppState) => state.driverReducer.isLoadingDriver);
-    const error = useSelector((state: AppState) => state.driverReducer.errorDriver);
     const dispatch = useDispatch();
-    const match = useRouteMatch<{driverNo:string}>(
-        'drivers/details/:driverNo',
-    );
     const params = useParams<ParamTypes>();
 
     useEffect(()=>{

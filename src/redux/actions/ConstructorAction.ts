@@ -5,7 +5,8 @@ import {FETCH_COUNSTRUCTORS_LOADING, ConstructorActions, FETCH_COUNSTRUCTORS_FAI
     CREATE_COUNSTRUCTOR_SUCCESS, CREATE_COUNSTRUCTOR_LOADING, CREATE_COUNSTRUCTOR_FAILURE,
     UPDATE_COUNSTRUCTOR_SUCCESS,  UPDATE_COUNSTRUCTOR_LOADING,  UPDATE_COUNSTRUCTOR_FAILURE,
     REMOVE_COUNSTRUCTOR_SUCCESS, REMOVE_COUNSTRUCTOR_LOADING, REMOVE_COUNSTRUCTOR_FAILURE, 
-    ConstructorState, SELECT_COUNSTRUCTOR_SUCCESS,} from '../../types/ConstructorTypes'
+    ConstructorState, SELECT_COUNSTRUCTOR_SUCCESS,
+    FETCH_COUNSTRUCTOR_LOADING,FETCH_COUNSTRUCTOR_FAILURE,FETCH_COUNSTRUCTOR_SUCCESS} from '../../types/ConstructorTypes'
 
 
 
@@ -221,3 +222,48 @@ export function selectConstructor(constructor:ConstructorState|null){
     }
 }
 
+
+//fetch all countries
+export function fetchConstructorLoading():ConstructorActions{
+
+    return {
+        type:FETCH_COUNSTRUCTOR_LOADING
+    }
+
+}
+
+// fetch all countries success
+export function fetchConstructorSuccess(constructor:ConstructorState):ConstructorActions{
+    return {
+        type:FETCH_COUNSTRUCTOR_SUCCESS,
+        payload:constructor
+    }
+
+}
+
+// fetch all countries failure
+export function fetchConstructorFailure(error:string):ConstructorActions{
+    return {
+        type:FETCH_COUNSTRUCTOR_FAILURE,
+        payload:error
+        
+    }
+}
+
+// fetch countries data
+
+export function fetchConstuctors(constructorId:number){
+
+    return (dispatch:Dispatch)=>{
+        dispatch(fetchConstructorLoading())
+        //axios call 
+        axios.get(`https://localhost:6001/api/v1/Constructor/${constructorId}`)
+        .then((res)=>{
+            const constructor=res.data 
+            dispatch(fetchConstructorSuccess(constructor))
+        }).catch((err)=>{
+            dispatch(fetchConstructorFailure(err))
+
+        })
+    }
+}

@@ -2,7 +2,7 @@ import {ConstructorReducerState,FETCH_COUNSTRUCTORS_LOADING, FETCH_COUNSTRUCTORS
     CREATE_COUNSTRUCTOR_SUCCESS, CREATE_COUNSTRUCTOR_LOADING, CREATE_COUNSTRUCTOR_FAILURE,
     UPDATE_COUNSTRUCTOR_SUCCESS,  UPDATE_COUNSTRUCTOR_LOADING,  UPDATE_COUNSTRUCTOR_FAILURE,
     REMOVE_COUNSTRUCTOR_SUCCESS, REMOVE_COUNSTRUCTOR_LOADING, REMOVE_COUNSTRUCTOR_FAILURE,
-    SELECT_COUNSTRUCTOR_SUCCESS
+    SELECT_COUNSTRUCTOR_SUCCESS,FETCH_COUNSTRUCTOR_FAILURE,FETCH_COUNSTRUCTOR_LOADING,FETCH_COUNSTRUCTOR_SUCCESS
 } from '../../types/ConstructorTypes'
 
 const initiState:ConstructorReducerState={
@@ -18,7 +18,11 @@ const initiState:ConstructorReducerState={
     isErrorOccuredOnUpdate:false,
     isLoadingRemove:false,
     isSuccessfullyDoneRemove:false,
-    isErrorOccuredOnRemove:false
+    isErrorOccuredOnRemove:false,
+    constructor:null,
+    isLoadingConstructor:false, 
+    isErrorOccurredOnSingleConstructorFetching:false,
+    errorOnSingleConstructorFetching:'',
 }
 
 export default function constructorReducer(state:ConstructorReducerState=initiState, action:any){
@@ -152,6 +156,34 @@ export default function constructorReducer(state:ConstructorReducerState=initiSt
                             isErrorOccuredOnRemove:false,
                             selectedConstructor:action.payload
                         }
+
+                        case FETCH_COUNSTRUCTOR_LOADING:
+                            return {
+                                ...state, 
+                                constructor:null,
+                                isLoadingConstructor:true, 
+                                isErrorOccurredOnSingleConstructorFetching:false,
+                                errorOnSingleConstructorFetching:'',
+                            }
+                        //if fetching is successful 
+                        case FETCH_COUNSTRUCTOR_SUCCESS:
+                            return {
+                                ...state, 
+                                isLoadingConstructor:false, 
+                                constructor:action.payload,
+                                isErrorOccurredOnSingleConstructorFetching:false,
+                                errorOnSingleConstructorFetching:'',
+                            }
+                        //if fetching has any errors
+                        case FETCH_COUNSTRUCTOR_FAILURE:
+                            return {
+                                ...state,
+                                isLoadingConstructor:false, 
+                                constructor:null,
+                                isErrorOccurredOnSingleConstructorFetching:true,
+                                errorOnSingleConstructorFetching:action.payload,
+
+                            }
 
         default:
             return state

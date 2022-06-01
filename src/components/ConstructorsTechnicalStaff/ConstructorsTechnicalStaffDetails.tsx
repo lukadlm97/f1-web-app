@@ -1,24 +1,23 @@
 import React from 'react'
 import {useDispatch, useSelector } from 'react-redux'
+import { useParams } from "react-router-dom";
+
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
-
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
-
 import AddReactionIcon from '@mui/icons-material/AddReaction';
 
 import {AppState} from '../../types/AppState'
-import {ConstructorsTechnicalStaffState} from '../../types/ConstructorsTechnicalStaffTypes'
-
-
 import {fetchConstructorsTechnicalStaffStaff}from '../../redux/actions/ConstructorsTechnicalStaffActions'
 import StaffCard from '../StaffTable/StaffCard'
 import EmplooyStaffForm from '../EmplooyStaff/EmplooyStaffForm'
 
 
-
+interface ParamTypes {
+    constructorId: string;
+}
 
 export default function ConstructorsTechnicalStaffDetails(){
     const selectedConstructor = useSelector((state:AppState)=>state.constructorReducer.selectedConstructor)
@@ -31,9 +30,10 @@ export default function ConstructorsTechnicalStaffDetails(){
     
 
     const dispatch = useDispatch();
+    const params = useParams<ParamTypes>();
 
     React.useEffect(()=>{
-        dispatch(fetchConstructorsTechnicalStaffStaff(selectedConstructor!=null?selectedConstructor.id:17))
+        dispatch(fetchConstructorsTechnicalStaffStaff(parseInt(params.constructorId)))
     },[])
 
     

@@ -1,7 +1,8 @@
-import React from 'react'
-import {useDispatch, useSelector } from 'react-redux'
+import React,{useEffect} from 'react'
+import {useDispatch, useSelector } from 'react-redux' 
+import { useParams } from "react-router-dom";
+
 import Grid from '@mui/material/Grid'
-import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography';
 
 import ConstructorDetails from '../ConstructorDetails/ConstructorDetails'
@@ -12,15 +13,31 @@ import ConstructorPowerUnit from '../ConstructorsPowerUnit/ConstructorPowerUnit'
 import ConstructorPowerUnitHistory from '../ConstructorsPowerUnit/ConstructorPowerUnitHistory'
 import ConstructorDriversContracts from '../ConstructorDriversContracts/ConstructorDriversContracts'
 
+
+import {fetchConstructorRacingRecords} from '../../redux/actions/ConstructorRacingRecordAction'
+
+import {fetchConstuctors} from '../../redux/actions/ConstructorAction'
 import {AppState} from '../../types/AppState'
 import {CountryState} from '../../types/CountryTypes'
 
+interface ParamTypes {
+    constructorId: string;
+}
 
 export default function SingleConstructor(){
-   const selectedConstructor = useSelector((state:AppState)=>state.constructorReducer.selectedConstructor)
+   const selectedConstructor = useSelector((state:AppState)=>state.constructorReducer.constructor)
    const countires = useSelector((state: AppState) => state.countryReducer.countries)
    const staffRoles =  useSelector((state: AppState) => state.staffRoleReducer.staffRoles)
-      
+   const params = useParams<ParamTypes>();
+   const dispatch = useDispatch();  
+   
+    useEffect(()=>{
+        dispatch(fetchConstructorRacingRecords(parseInt(params.constructorId)))
+        dispatch(fetchConstuctors(parseInt(params.constructorId)))
+        console.log(params.constructorId)
+    },[]);
+
+
     const [countryValue, setCountryValue] = 
     React.useState<CountryState>(selectedConstructor!=null?
             countires.find(x=>x.id==selectedConstructor.countryId)||countires[0]:countires[0]);

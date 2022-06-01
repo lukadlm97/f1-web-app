@@ -1,79 +1,69 @@
 import React, { useEffect } from 'react'
 import {useDispatch, useSelector } from 'react-redux'
+import { useParams } from "react-router-dom";
 
 import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import Modal from '@mui/material/Modal';
-
 import CancelIcon from '@mui/icons-material/Cancel';
-import ConstructionIcon from '@mui/icons-material/Construction';
-import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import LooksOneIcon from '@mui/icons-material/LooksOne';
-import CategoryIcon from '@mui/icons-material/Category';
-import StartIcon from '@mui/icons-material/Start';
 
 import {AppState} from '../../types/AppState'
 import CreateContract from '../ConstructorPowerUnitSupplierForm/CreatePowerUnitSupplierContract'
-import RacingDetailsForm from '../RacingRecordCreation/RacingDetailsForm'
-
-
 
 import {fetchConstructorsPowerUnitSupplier,removeConstructorPowerUnitSupplier,fetchConstructorsPowerUnitSupplierHistory} 
 from '../../redux/actions/ConstructorsPowerUnitSupplierAction'
 import { wait } from '@testing-library/user-event/dist/utils';
 
+interface ParamTypes {
+    constructorId: string;
+}
 
 export default function ConstructorPowerUnit(){
     const selectedConstructorPowerUnitSupplier= 
     useSelector((state:AppState)=>state.constructorPowerUnitSupplierReducer.constructorsPowerUnit)
-    
-const powerUnitSuppliers = useSelector((state: AppState) => state.powerUnitSupplierReducer.suppliers)
-const selectedConstructor= 
-    useSelector((state:AppState)=>state.constructorReducer.selectedConstructor)
-const isLoading = useSelector((state:AppState)=>state.constructorPowerUnitSupplierReducer.isLoading)
-const isNotCreatedYet = useSelector((state:AppState)=>state.constructorPowerUnitSupplierReducer.isNotCreatedYet)
-const [openConfirmation, setOpenConfirmation] = React.useState(false);
-const handleConfirmationOpen = () => setOpenConfirmation(true);
-const handleConfirmationClose = () => setOpenConfirmation(false);
+    const powerUnitSuppliers = useSelector((state: AppState) => state.powerUnitSupplierReducer.suppliers)
+    const selectedConstructor= 
+        useSelector((state:AppState)=>state.constructorReducer.selectedConstructor)
+    const isLoading = useSelector((state:AppState)=>state.constructorPowerUnitSupplierReducer.isLoading)
+    const isNotCreatedYet = useSelector((state:AppState)=>state.constructorPowerUnitSupplierReducer.isNotCreatedYet)
+    /*
+    const [openConfirmation, setOpenConfirmation] = React.useState(false);
+    const handleConfirmationOpen = () => setOpenConfirmation(true);
+    const handleConfirmationClose = () => setOpenConfirmation(false);
+    */
+    const dispatch = useDispatch();
+    const params = useParams<ParamTypes>();
 
+    React.useEffect(()=>{
+        dispatch(fetchConstructorsPowerUnitSupplier(parseInt(params.constructorId)))
+    },[])
+  
+    const handleSupplierConversion = (supplierId: number|undefined) => {
 
-  const handleSupplierConversion = (supplierId: number|undefined) => {
+        if (supplierId == undefined)
+        return "Not supplied";
 
-    if (supplierId == undefined)
-      return "Not supplied";
+        const findedSupplier = powerUnitSuppliers.find(x => x.id == supplierId);
+        if (findedSupplier != null)
+        return findedSupplier.supplierName;
 
-    const findedSupplier = powerUnitSuppliers.find(x => x.id == supplierId);
-    if (findedSupplier != null)
-      return findedSupplier.supplierName;
+        return "Not supplied";
+    };
 
-    return "Not supplied";
-  };
-
-const dispatch = useDispatch();
-
-React.useEffect(()=>{
-
-dispatch(fetchConstructorsPowerUnitSupplier(selectedConstructor!=null?selectedConstructor.id:-1))
-
-},[])
-
-
-const handleEndContractConstructorPowerUnitSupplier=async()=> 
-{
-    if(selectedConstructor == null || selectedConstructorPowerUnitSupplier==null){
-    //must pick
-    console.log("Must pick constructor");
-    
-    return
-    }
-    console.log(selectedConstructorPowerUnitSupplier.id)
-    dispatch(removeConstructorPowerUnitSupplier(selectedConstructorPowerUnitSupplier.id));
-    await wait(3000)
-    dispatch(fetchConstructorsPowerUnitSupplierHistory(selectedConstructor.id));
-};
+    const handleEndContractConstructorPowerUnitSupplier=async()=> 
+    {
+        if(selectedConstructor == null || selectedConstructorPowerUnitSupplier==null){
+            //must pick
+            console.log("Must pick constructor");
+        
+            return
+        }
+        console.log(selectedConstructorPowerUnitSupplier.id)
+        dispatch(removeConstructorPowerUnitSupplier(selectedConstructorPowerUnitSupplier.id));
+        await wait(3000)
+        dispatch(fetchConstructorsPowerUnitSupplierHistory(selectedConstructor.id));
+    };
 
 
     return(

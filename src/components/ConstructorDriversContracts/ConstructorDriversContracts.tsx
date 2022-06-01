@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import {useDispatch, useSelector } from 'react-redux'
+import { useParams } from "react-router-dom";
 
 import Grid from '@mui/material/Grid'
 
@@ -11,21 +12,30 @@ import CreateDriverContract from '../Contract/CreateContract';
 
 import {fetchCurrentConstructorDrivers,fetchHistoryOfConstructorDrivers} 
 from '../../redux/actions/ContactAction'
+import {fetchAllDrivers} from '../../redux/actions/DriverAction'
+import {fetchAllDriverRoles} from '../../redux/actions/DriverRoleAction'
+
+interface ParamTypes {
+    constructorId: string;
+}
+
 
 
 export default function ConstructorDriversContracts(){   
-    const dispatch = useDispatch();
-
     const selectedConstructor= useSelector((state:AppState)=>state.constructorReducer.selectedConstructor)
     const drivers= useSelector((state:AppState)=>state.driverReducer.drivers)
 
     const isLoadingCurrentContructorsDrivers= useSelector((state:AppState)=>state.contractReducer.isLoadingCurrentConstructorContracts)
     const currentConstructorDrivers = useSelector((state:AppState)=>state.contractReducer.currentConstructorContracts)
     const isConstructorHaveCurrentDriver = useSelector((state:AppState)=>state.contractReducer.isContructorHaveActiveContracts)
-
+    
+    const dispatch = useDispatch();
+    const params = useParams<ParamTypes>();
     React.useEffect(()=>{
-        dispatch(fetchCurrentConstructorDrivers(selectedConstructor!=null?selectedConstructor.id:-1))
-        dispatch(fetchHistoryOfConstructorDrivers(selectedConstructor!=null?selectedConstructor.id:-1))
+        dispatch(fetchCurrentConstructorDrivers(parseInt(params.constructorId)))
+        dispatch(fetchHistoryOfConstructorDrivers(parseInt(params.constructorId)))
+        dispatch(fetchAllDrivers())
+        dispatch(fetchAllDriverRoles())
     },[])
 
 

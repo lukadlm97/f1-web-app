@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import {useDispatch, useSelector } from 'react-redux'
+import { useParams } from "react-router-dom";
 
 import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
@@ -13,6 +14,9 @@ import {fetchConstructorsPowerUnitSupplierHistory}
 from '../../redux/actions/ConstructorsPowerUnitSupplierAction'
 
 
+interface ParamTypes {
+  constructorId: string;
+}
 
 
 export default function ConstructorPowerUnitSupplierHistory(){
@@ -22,9 +26,11 @@ export default function ConstructorPowerUnitSupplierHistory(){
     const historyOfSuppliers =  useSelector((state:AppState)=>state.constructorPowerUnitSupplierReducer.suppliersHistory)
     const selectedConstructor= useSelector((state:AppState)=>state.constructorReducer.selectedConstructor)
     const dispatch = useDispatch();
-    
+    const params = useParams<ParamTypes>();
+
+
     React.useEffect(()=>{
-        dispatch(fetchConstructorsPowerUnitSupplierHistory(selectedConstructor!=null?selectedConstructor.id:-1))
+        dispatch(fetchConstructorsPowerUnitSupplierHistory(parseInt(params.constructorId)))
     },[])
 
     
